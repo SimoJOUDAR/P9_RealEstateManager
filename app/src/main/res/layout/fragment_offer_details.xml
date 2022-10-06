@@ -293,7 +293,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Sale date"
+                            android:text="Closure date"
                             android:theme="@style/ExtraSubTitleText_grey"
                             android:layout_marginTop="30dp"/>
                         <TextView
