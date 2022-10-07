@@ -5,6 +5,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import kotlinx.android.parcel.Parcelize
 import fr.mjoudar.realestatemanager.BR
+import fr.mjoudar.realestatemanager.db.entities.AgentEntity
 
 @Parcelize
 data class Agent (
@@ -55,5 +56,15 @@ data class Agent (
 
     override fun toString(): String {
         return name!!
+    }
+
+    fun toEntity(): AgentEntity {
+        return AgentEntity(
+            id,
+            name,
+            avatar,
+            email,
+            phone
+        )
     }
 }

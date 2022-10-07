@@ -5,18 +5,19 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import java.time.LocalDate
 import fr.mjoudar.realestatemanager.BR
+import fr.mjoudar.realestatemanager.db.entities.OfferEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Offer (
-    val _id: String,
+    val _id: String?,
     var _propertyType: PropertyType? = PropertyType.HOUSE,
     var _offerType: OfferType? = OfferType.SALE,
-    var _availability: Boolean = false,
-    var _price: Long = 0,
-    var _surface: Int = 0,
-    var _rooms: Int = 0,
-    var _bathrooms: Int = 0,
+    var _availability: Boolean? = false,
+    var _price: Long? = 0,
+    var _surface: Int? = 0,
+    var _rooms: Int? = 0,
+    var _bathrooms: Int? = 0,
     var _particularities: MutableList<Particularities>? = mutableListOf(),
     var _description: String? = "",
     var _photos: MutableList<Photo>? = mutableListOf(),
@@ -29,7 +30,7 @@ data class Offer (
     var _staticMap: String? = null
         ) : Parcelable, BaseObservable() {
 
-    val id: String
+    val id
         get() = _id
 
     @get:Bindable
@@ -172,6 +173,28 @@ data class Offer (
         get() =  propertyType?.equals(null) ?: true || offerType?.equals(null) ?: true
                 || price == 0.toLong() || surface != 0 || rooms != 0 || bathrooms != 0
                 || description!!.isEmpty() || address!!.isEmpty || agent != null || publicationDate != null
+
+
+    fun toEntity(agent_id: String, model: Offer) : OfferEntity {
+        return OfferEntity(
+            id,
+            propertyType,
+            offerType,
+            availability,
+            price,
+            surface,
+            rooms,
+            bathrooms,
+            particularities,
+            description,
+            mainPhoto?.id,
+            poi,
+            agent?.id,
+            publicationDate,
+            closureDate,
+            staticMap
+        )
+    }
 
 }
 

@@ -3,11 +3,11 @@ package fr.mjoudar.realestatemanager.domain.models
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import fr.mjoudar.realestatemanager.db.entities.AddressEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Address(
-    val id: String,
     @get:Bindable
     val vicinity: String? = "",
     @get:Bindable
@@ -40,4 +40,19 @@ class Address(
         }
         return address
     }
+
+    fun toEntity(property_id: String) : AddressEntity {
+        return AddressEntity(
+            property_id = property_id,
+            vicinity = vicinity,
+            complement = complement,
+            zipcode = zipcode,
+            city = city,
+            state = state,
+            country = country,
+            lat = lat,
+            lng = lng
+        )
+    }
+
         }
