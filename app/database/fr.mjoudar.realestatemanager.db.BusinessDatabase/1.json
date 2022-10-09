@@ -1,0 +1,324 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "732b2edcb9e8aea25352e15d7764dfa4",
+    "entities": [
+      {
+        "tableName": "agent",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `avatar` TEXT, `email` TEXT, `phone` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "avatar",
+            "columnName": "avatar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "offer",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `property_type` TEXT, `offer_type` TEXT, `availability` INTEGER, `price` INTEGER, `surface` INTEGER, `rooms` INTEGER, `bathrooms` INTEGER, `particularities` TEXT NOT NULL, `description` TEXT, `main_photo_id` INTEGER, `poi` TEXT NOT NULL, `agent_id` TEXT, `publication_date` INTEGER, `closure_date` INTEGER, `static_map` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`agent_id`) REFERENCES `agent`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "property_type",
+            "columnName": "property_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "offer_type",
+            "columnName": "offer_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "availability",
+            "columnName": "availability",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "surface",
+            "columnName": "surface",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rooms",
+            "columnName": "rooms",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bathrooms",
+            "columnName": "bathrooms",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "particularities",
+            "columnName": "particularities",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "main_photo_id",
+            "columnName": "main_photo_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poi",
+            "columnName": "poi",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "agent_id",
+            "columnName": "agent_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "publication_date",
+            "columnName": "publication_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "closure_date",
+            "columnName": "closure_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "static_map",
+            "columnName": "static_map",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "agent",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "agent_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "photo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`photo_id` INTEGER PRIMARY KEY AUTOINCREMENT, `offer_id` TEXT, `uri` TEXT NOT NULL, `description` TEXT NOT NULL, FOREIGN KEY(`offer_id`) REFERENCES `offer`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "photo_id",
+            "columnName": "photo_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "offer_id",
+            "columnName": "offer_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uri",
+            "columnName": "uri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "photo_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_photo_offer_id",
+            "unique": false,
+            "columnNames": [
+              "offer_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photo_offer_id` ON `${TABLE_NAME}` (`offer_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "offer",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "offer_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "address",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`address_id` INTEGER PRIMARY KEY AUTOINCREMENT, `offer_id` TEXT, `vicinity` TEXT, `complement` TEXT, `zipcode` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `lat` REAL, `lng` REAL)",
+        "fields": [
+          {
+            "fieldPath": "address_id",
+            "columnName": "address_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "offer_id",
+            "columnName": "offer_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vicinity",
+            "columnName": "vicinity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "complement",
+            "columnName": "complement",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "zipcode",
+            "columnName": "zipcode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lat",
+            "columnName": "lat",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lng",
+            "columnName": "lng",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "address_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_address_offer_id",
+            "unique": false,
+            "columnNames": [
+              "offer_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_address_offer_id` ON `${TABLE_NAME}` (`offer_id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '732b2edcb9e8aea25352e15d7764dfa4')"
+    ]
+  }
+}

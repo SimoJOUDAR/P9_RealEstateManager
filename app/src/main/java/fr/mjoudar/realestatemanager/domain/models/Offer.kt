@@ -6,11 +6,12 @@ import androidx.databinding.Bindable
 import java.time.LocalDate
 import fr.mjoudar.realestatemanager.BR
 import fr.mjoudar.realestatemanager.db.entities.OfferEntity
-import kotlinx.android.parcel.Parcelize
+import fr.mjoudar.realestatemanager.db.relationships.OfferEntityAggregate
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Offer (
-    val _id: String?,
+    val _id: String = "",
     var _propertyType: PropertyType? = PropertyType.HOUSE,
     var _offerType: OfferType? = OfferType.SALE,
     var _availability: Boolean? = false,
@@ -18,15 +19,15 @@ data class Offer (
     var _surface: Int? = 0,
     var _rooms: Int? = 0,
     var _bathrooms: Int? = 0,
-    var _particularities: MutableList<Particularities>? = mutableListOf(),
+    var _particularities: MutableList<Particularities> = mutableListOf(),
     var _description: String? = "",
-    var _photos: MutableList<Photo>? = mutableListOf(),
-    var _mainPhoto: Photo? = null,
+    var _photos: MutableList<Photo> = mutableListOf(),
+    var _mainPhotoId: Long? = null,
     var _address: Address? = null,
-    var _poi: MutableList<POI>? = mutableListOf(),
-    var _agent: Agent? = null,
-    var _publicationDate: LocalDate? = LocalDate.now(),
-    var _closureDate: LocalDate? = null,
+    var _poi: MutableList<POI> = mutableListOf(),
+    var _agentId: String? = null,
+    var _publicationDate: Long? = null,
+    var _closureDate: Long? = null,
     var _staticMap: String? = null
         ) : Parcelable, BaseObservable() {
 
@@ -114,11 +115,11 @@ data class Offer (
         }
 
         @get:Bindable
-    var mainPhoto
-        get() = _mainPhoto
+    var mainPhotoId
+        get() = _mainPhotoId
         set(value) {
-            _mainPhoto = value
-            notifyPropertyChanged(BR.mainPhoto)
+            _mainPhotoId = value
+            notifyPropertyChanged(BR.mainPhotoId)
         }
 
         @get:Bindable
@@ -138,11 +139,11 @@ data class Offer (
         }
 
         @get:Bindable
-    var agent
-        get() = _agent
+    var agentId
+        get() = _agentId
         set(value) {
-            _agent = value
-            notifyPropertyChanged(BR.agent)
+            _agentId = value
+            notifyPropertyChanged(BR.agentId)
         }
 
         @get:Bindable
@@ -172,10 +173,10 @@ data class Offer (
     val isEmpty
         get() =  propertyType?.equals(null) ?: true || offerType?.equals(null) ?: true
                 || price == 0.toLong() || surface != 0 || rooms != 0 || bathrooms != 0
-                || description!!.isEmpty() || address!!.isEmpty || agent != null || publicationDate != null
+                || description!!.isEmpty() || address!!.isEmpty || agentId != null || publicationDate != null
 
 
-    fun toEntity(agent_id: String, model: Offer) : OfferEntity {
+    private fun toEntity() : OfferEntity {
         return OfferEntity(
             id,
             propertyType,
@@ -187,29 +188,37 @@ data class Offer (
             bathrooms,
             particularities,
             description,
-            mainPhoto?.id,
+            mainPhotoId,
             poi,
-            agent?.id,
+            agentId,
             publicationDate,
             closureDate,
             staticMap
         )
     }
 
+    fun toEntityAggregate() : OfferEntityAggregate {
+        return OfferEntityAggregate(
+            toEntity(),
+            photos.map { it.toEntity(id) },
+            address!!.toEntity(id)
+        )
+    }
+
 }
 
 enum class PropertyType {
-    HOUSE, APARTMENT, DUPLEX, MANSION;
+    HOUSE, APARTMENT, DUPLEX, MANSION
 }
 
 enum class OfferType {
     SALE, RENT
 }
 
-enum class POI {
-    SCHOOL, MARKET, MEDICAL_CENTER, SPORT_CENTER, CULTURAL_CENTER, BUS_STATION, PARK, FOREST, BAR, COFFEE_SHOP, RESTAURANT, MALL, GAZ_STATION, DOWNTOWN, HOTEL, RESORT
-}
-
 enum class Particularities {
     GARAGE, PARKING_LOT, BASEMENT, BALCONY, BACKYARD, GYM_ROOM, HOME_CINEMA, SWIMMING_POOL, GARDEN, JACUZZI
+}
+
+enum class POI {
+    SCHOOL, MARKET, MEDICAL_CENTER, SPORT_CENTER, CULTURAL_CENTER, BUS_STATION, PARK, FOREST, BAR, COFFEE_SHOP, RESTAURANT, MALL, GAZ_STATION, DOWNTOWN, HOTEL, RESORT
 }

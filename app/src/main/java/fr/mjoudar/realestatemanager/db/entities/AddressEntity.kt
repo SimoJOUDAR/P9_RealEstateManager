@@ -11,8 +11,8 @@ import fr.mjoudar.realestatemanager.domain.models.Address
 data class AddressEntity(
     @PrimaryKey(autoGenerate = true)
     var address_id: Long? = null,
-    @ColumnInfo(name = "property_id", index = true)
-    var property_id: String?,
+    @ColumnInfo(name = "offer_id", index = true)
+    var offer_id: String?,
     val vicinity: String?,
     val complement: String?,
     val zipcode: String?,
