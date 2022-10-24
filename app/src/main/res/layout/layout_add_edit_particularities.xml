@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/section_add_edit_offer_characteristics_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/particularities"
+            android:textStyle="bold"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_garage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/garage"
+                android:checked="@={viewModel.boolParticularities[0]}" />
+            <CheckBox
+                android:id="@+id/add_edit_offer_parking_lot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/parking_lot"
+                android:checked="@={viewModel.boolParticularities[1]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_basement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/basement"
+                android:checked="@={viewModel.boolParticularities[2]}"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_balcony"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/balcony"
+                android:checked="@={viewModel.boolParticularities[3]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_backyard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/backyard"
+                android:checked="@={viewModel.boolParticularities[4]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_swimming_pool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/swimming_pool"
+                android:checked="@={viewModel.boolParticularities[5]}"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_gym_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/gym"
+                android:checked="@={viewModel.boolParticularities[6]}" />
+            <CheckBox
+                android:id="@+id/add_edit_offer_garden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/garden"
+                android:checked="@={viewModel.boolParticularities[7]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_jacuzzi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/jacuzzi"
+                android:checked="@={viewModel.boolParticularities[8]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_sauna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sauna"
+                android:checked="@={viewModel.boolParticularities[9]}"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

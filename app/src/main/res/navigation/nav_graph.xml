@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainViewpagerFragment">
+
+    <fragment
+        android:id="@+id/mainViewpagerFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragment"
+        android:label="fragment_main_viewpager"
+        tools:layout="@layout/fragment_main_viewpager" />
+    <fragment
+        android:id="@+id/listViewFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.list.ListViewFragment"
+        android:label="fragment_list_view"
+        tools:layout="@layout/fragment_list_view" >
+        <action
+            android:id="@+id/action_listViewFragment_to_offerDetailsFragment"
+            app:destination="@id/offerDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapViewFragment2"
+        android:name="fr.mjoudar.realestatemanager.ui.map.MapViewFragment"
+        android:label="MapViewFragment" />
+    <fragment
+        android:id="@+id/addEditAgentFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.addEditAgent.AddEditAgentFragment"
+        android:label="AddEditAgentFragment" />
+    <fragment
+        android:id="@+id/addEditOfferFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment"
+        android:label="AddEditOfferFragment" />
+    <fragment
+        android:id="@+id/offerDetailsFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment"
+        android:label="fragment_offer_details"
+        tools:layout="@layout/fragment_offer_details" />
+    <fragment
+        android:id="@+id/loadSimulatorFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.loan.LoadSimulatorFragment"
+        android:label="LoadSimulatorFragment" />
+    <activity
+        android:id="@+id/homepageActivity"
+        android:name="fr.mjoudar.realestatemanager.ui.homepage.HomepageActivity"
+        android:label="HomepageActivity" />
+    <dialog
+        android:id="@+id/filterDialogFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.filter.FilterDialogFragment"
+        android:label="FilterDialogFragment" />
+    <dialog
+        android:id="@+id/pictureSelectorDialogFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.pictureSelector.PictureSelectorDialogFragment"
+        android:label="PictureSelectorDialogFragment" />
+</navigation>

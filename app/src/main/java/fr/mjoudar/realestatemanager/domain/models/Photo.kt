@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Photo (
-    var id: Long? = 0.toLong(),
+    var id: String,
     @get:Bindable
     var uri: String,
     @get:Bindable
@@ -17,6 +17,7 @@ data class Photo (
 
     fun toEntity(offer_id: String?): PhotoEntity {
         return  PhotoEntity(
+            photo_id = id,
             offer_id = offer_id,
             uri = uri,
             description = description

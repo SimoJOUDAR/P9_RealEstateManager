@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="fr.mjoudar.realestatemanager.ui.loan.LoadSimulatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/loan_simulator_property_value_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/LoanSimulatorTitles"
+            android:text="@string/property_value_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_simulator_property_value_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_property_value_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_simulator_property_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/property_value_hint"
+                android:inputType="number"
+                android:singleLine="true"
+                android:drawableStart="@drawable/ic_money_24"
+                android:drawablePadding="5dp"
+                android:text="@={viewModel.propertyValueString}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/loan_simulator_down_payment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/LoanSimulatorTitles"
+            android:text="@string/down_payment_title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_property_value_layout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_simulator_down_payment_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_down_payment_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_simulator_down_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/down_payment_hint"
+                android:inputType="number"
+                android:singleLine="true"
+                android:drawableStart="@drawable/ic_money_24"
+                android:drawablePadding="5dp"
+                android:text="@={viewModel.downPaymentString}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/loan_simulator_interest_rate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/LoanSimulatorTitles"
+            android:text="@string/interest_rate_title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_down_payment_layout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loan_simulator_interest_rate_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_interest_rate_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_simulator_interest_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/interest_rate_hint"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:drawableStart="@drawable/ic_percent_24"
+                android:drawablePadding="5dp"
+                android:text="@={viewModel.interestRateString}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/loan_simulator_currency_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/LoanSimulatorTitles"
+            android:text="@string/interest_rate_title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_interest_rate_layout"/>
+
+        <RadioGroup
+            android:id="@+id/loan_simulator_currency_radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/radio_button_dollar"
+            android:orientation="horizontal"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_currency_title"
+            >
+
+            <RadioButton
+                android:id="@+id/radio_button_dollar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/usd"
+                android:drawableStart="@drawable/ic_money_24"
+                android:checked="@={viewModel.dollar}"/>
+
+            <RadioButton
+                android:id="@+id/radio_button_euro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:text="@string/euro"
+                android:drawableStart="@drawable/ic_euro_24"
+                android:checked="@={viewModel.euro}"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/loan_simulator_loan_term_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/LoanSimulatorTitles"
+            android:text="@string/loan_term_title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_currency_radioGroup"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/loan_simulator_loan_term_slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:value="@{viewModel.loanTerm}"
+            android:valueFrom="5.0"
+            android:valueTo="30.0"
+            android:stepSize="5.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loan_simulator_loan_term_title" />
+
+        <Button
+            android:id="@+id/loan_simulator_calculate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="@{()-> viewModel.calculate()}"
+            android:text="@string/calculate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loan_simulator_loan_term_slider" />
+
+        <TextView
+            android:id="@+id/loan_simulator_results_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:theme="@style/Body_title"
+            android:text="@{ @string/loan_simulator_results_body(viewModel.interestRate,viewModel.loanTerm) }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_calculate_button"/>
+        <TextView
+            android:id="@+id/loan_simulator_results_monthly_payments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:theme="@style/Body_title"
+            android:text="@{ @string/loan_simulator_monthly_payments(viewModel.monthlyPayment) }"
+            android:textSize="30sp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_simulator_results_body"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

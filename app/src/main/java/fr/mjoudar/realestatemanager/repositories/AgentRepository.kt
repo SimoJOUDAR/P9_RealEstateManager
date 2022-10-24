@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AgentRepository @Inject constructor(
-    private val agentDao: AgentDao
-    ) {
+class AgentRepository @Inject constructor(private val agentDao: AgentDao) {
 
     suspend fun saveAgent(agent: Agent) {
         return agentDao.insertAgent(agent.toEntity())

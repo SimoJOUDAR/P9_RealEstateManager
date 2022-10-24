@@ -16,8 +16,8 @@ import fr.mjoudar.realestatemanager.domain.models.Photo
     )]
 )
 data class PhotoEntity(
-    @PrimaryKey(autoGenerate = true)
-    var photo_id: Long? = null,
+    @PrimaryKey(autoGenerate = false)
+    var photo_id: String,
     @ColumnInfo(name = "offer_id", index = true)
     var offer_id: String?,
     var uri: String,

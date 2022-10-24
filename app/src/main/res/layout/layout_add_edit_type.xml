@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.R.layout" />
+
+        <variable
+            name="viewModel"
+            type="fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/section_add_edit_offer_type_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_offer_property_type_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_property_type">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_edit_offer_property_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/add_edit_offer_property_type"
+                android:inputType="textAutoComplete"
+                android:text="@={viewModel.propertyType"
+                entries="@{viewModel.propertyTypeValues}"
+                itemLayout="@{layout.simple_spinner_dropdown_item}"
+                textViewId="@{@android:id/text1}"
+                value="@{viewModel.propertyType}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_edit_offer_offer_type_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_offer_type"
+            android:layout_marginTop="20dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_edit_offer_offer_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/add_edit_offer_offer_type"
+                android:inputType="textAutoComplete"
+                android:text="@={viewModel.offerType"
+                entries="@{viewModel.offerTypeValues}"
+                itemLayout="@{layout.simple_spinner_dropdown_item}"
+                textViewId="@{@android:id/text1}"
+                value="@{viewModel.offerType}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+</layout>

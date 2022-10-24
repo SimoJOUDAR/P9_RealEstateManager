@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="fr.mjoudar.realestatemanager.ui.filter.FilterDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/section_filter_price_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_price_min_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filter_price_max_layout"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_price_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_price_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/min_price"
+                android:inputType="number"
+                android:singleLine="true"
+                android:scrollbars="horizontal"
+                android:text="@={viewModel.minPrice}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_price_max_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toEndOf="@id/filter_price_min_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_price_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_price_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/max_price"
+                android:inputType="number"
+                android:scrollbars="horizontal"
+                android:singleLine="true"
+                android:text="@={viewModel.maxPrice }" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/section_filter_surface_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/surface"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_price_min_layout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_surface_min_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filter_surface_max_layout"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_surface_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_surface_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/min_surface"
+                android:inputType="number"
+                android:singleLine="true"
+                android:scrollbars="horizontal"
+                android:text="@={viewModel.minSurface}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_surface_max_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toEndOf="@id/filter_surface_min_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_surface_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_surface_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/max_surface"
+                android:inputType="number"
+                android:scrollbars="horizontal"
+                android:singleLine="true"
+                android:text="@={viewModel.maxSurface }" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/section_filter_rooms_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/rooms"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_surface_min_layout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_rooms_min_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filter_rooms_max_layout"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_rooms_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_rooms_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/min_rooms"
+                android:inputType="number"
+                android:singleLine="true"
+                android:scrollbars="horizontal"
+                android:text="@={viewModel.minRooms}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_rooms_max_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toEndOf="@id/filter_rooms_min_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_rooms_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_rooms_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/max_rooms"
+                android:inputType="number"
+                android:scrollbars="horizontal"
+                android:singleLine="true"
+                android:text="@={viewModel.maxRooms }" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/section_filter_bathrooms_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/bathrooms"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_rooms_min_layout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_bathrooms_min_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filter_bathrooms_max_layout"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_bathrooms_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_bathrooms_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/min_bathrooms"
+                android:inputType="number"
+                android:singleLine="true"
+                android:scrollbars="horizontal"
+                android:text="@={viewModel.minBathrooms}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_bathrooms_max_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="0.5"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey_light"
+            app:layout_constraintStart_toEndOf="@id/filter_bathrooms_min_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_filter_bathrooms_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_bathrooms_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/max_bathrooms"
+                android:inputType="number"
+                android:scrollbars="horizontal"
+                android:singleLine="true"
+                android:text="@={viewModel.maxBathrooms }" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

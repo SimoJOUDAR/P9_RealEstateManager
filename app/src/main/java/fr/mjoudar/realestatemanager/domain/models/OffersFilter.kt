@@ -1,7 +1,5 @@
 package fr.mjoudar.realestatemanager.domain.models
 
-import java.time.LocalDate
-
 data class OffersFilter(
     var _propertyTypes: List<PropertyType> = arrayListOf(),
     var _offerTypes: List<OfferType> = arrayListOf(),
@@ -15,7 +13,7 @@ data class OffersFilter(
     var _minBathrooms: Int? = null,
     var _maxBathrooms: Int? = null,
     var _particularities: List<Particularities> = arrayListOf(),
-    var _withPhotos: Boolean? = null,
+    var _withPictures: Boolean? = null,
     var _city: String? = null,
     var _state: String? = null,
     var _country: String? = null,
@@ -61,7 +59,7 @@ data class OffersFilter(
             builder.setLength(builder.length-5)
             builder.append(") AND ")
         }
-        if (_withPhotos == true) builder.append("(main_photo_id IS NOT NULL) AND ")
+        if (_withPictures == true) builder.append("(main_photo_id IS NOT NULL) AND ")
         if (_city != null) builder.append("(city IS $_city) AND ")
         if (_state != null) builder.append("(state IS $_state) AND ")
         if (_country != null) builder.append("(country IS $_country) AND ")

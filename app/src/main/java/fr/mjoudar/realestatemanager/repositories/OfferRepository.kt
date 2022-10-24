@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class OfferRepository @Inject constructor(
-    private val offerDao: OfferDao
-        ) {
+class OfferRepository @Inject constructor(private val offerDao: OfferDao) {
 
     suspend fun saveOffer(offer: Offer) {
         offerDao.insertOffer(offer.toEntityAggregate())

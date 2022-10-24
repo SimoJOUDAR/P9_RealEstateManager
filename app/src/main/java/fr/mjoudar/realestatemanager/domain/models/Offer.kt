@@ -22,7 +22,7 @@ data class Offer (
     var _particularities: MutableList<Particularities> = mutableListOf(),
     var _description: String? = "",
     var _photos: MutableList<Photo> = mutableListOf(),
-    var _mainPhotoId: Long? = null,
+    var _mainPhotoId: String? = null,
     var _address: Address? = null,
     var _poi: MutableList<POI> = mutableListOf(),
     var _agentId: String? = null,
@@ -216,9 +216,9 @@ enum class OfferType {
 }
 
 enum class Particularities {
-    GARAGE, PARKING_LOT, BASEMENT, BALCONY, BACKYARD, GYM_ROOM, HOME_CINEMA, SWIMMING_POOL, GARDEN, JACUZZI
+    GARAGE, PARKING_LOT, BASEMENT, BALCONY, BACKYARD, SWIMMING_POOL, GYM_ROOM, GARDEN, JACUZZI, SAUNA
 }
 
 enum class POI {
-    SCHOOL, MARKET, MEDICAL_CENTER, SPORT_CENTER, CULTURAL_CENTER, BUS_STATION, PARK, FOREST, BAR, COFFEE_SHOP, RESTAURANT, MALL, GAZ_STATION, DOWNTOWN, HOTEL, RESORT
+    BUS_STATION, MARKET_MALL, MEDICAL_CENTER, SPORT_CENTER, CULTURAL_CENTER, SCHOOL, PARK, BAR_COFFEESHOP, RESTAURANT
 }

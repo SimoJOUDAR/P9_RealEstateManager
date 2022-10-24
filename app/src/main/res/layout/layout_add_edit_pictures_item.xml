@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="photo"
+            type="fr.mjoudar.realestatemanager.domain.models.Photo" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/add_edit_picture_item_photo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            tools:src="@drawable/home_img_sample"
+            android:contentDescription="@{photo.description}"
+            app:shapeAppearanceOverlay="@style/AllRounderCornersSize10Percent" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="3">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_edit_picture_item_description_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/grey_light">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_edit_picture_item_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/photo"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:scrollbars="horizontal"
+                    android:text="@={photo.description}"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/add_edit_picture_item_delete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_delete_24"
+                android:contentDescription="@string/delete_icon" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

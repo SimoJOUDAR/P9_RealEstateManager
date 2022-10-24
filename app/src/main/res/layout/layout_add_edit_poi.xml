@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/section_add_edit_offer_poi_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/poi"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_bus_station"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bus_station"
+                android:layout_weight="1"
+                android:checked="@={viewModel.boolPoi[0]}" />
+            <CheckBox
+                android:id="@+id/add_edit_offer_market_mall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/market_mall"
+                android:checked="@={viewModel.boolPoi[1]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_medical_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/medical_center"
+                android:checked="@={viewModel.boolPoi[2]}"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_sport_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sport_centern"
+                android:layout_weight="1"
+                android:checked="@={viewModel.boolPoi[3]}" />
+            <CheckBox
+                android:id="@+id/add_edit_offer_cultural_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cultural_center"
+                android:checked="@={viewModel.boolPoi[4]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/school"
+                android:checked="@={viewModel.boolPoi[5]}"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/add_edit_offer_park"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/park"
+                android:layout_weight="1"
+                android:checked="@={viewModel.boolPoi[6]}" />
+            <CheckBox
+                android:id="@+id/add_edit_offer_bar_coffee_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/bar_coffee_shop"
+                android:checked="@={viewModel.boolPoi[7]}"/>
+            <CheckBox
+                android:id="@+id/add_edit_offer_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/restaurant"
+                android:checked="@={viewModel.boolPoi[8]}"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

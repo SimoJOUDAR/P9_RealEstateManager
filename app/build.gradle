@@ -3,8 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-//    id 'dagger.hilt.android.plugin'
-//    id 'com.google.gms.google-services'
+    id 'com.google.gms.google-services'
+    id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -39,7 +41,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        dataBinding true
+        viewBinding true
     }
 
     dataBinding {
@@ -47,10 +50,13 @@ android {
         enabledForTests = true
     }
 
+
+
     kapt {
         arguments {
             arg("room.schemaLocation", "$projectDir/database")
         }
+        correctErrorTypes = true
     }
 }
 
@@ -60,7 +66,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     // ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -87,6 +92,12 @@ dependencies {
     //Desugar
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     //Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -94,8 +105,8 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:2.4.3"
 
     //Hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    annotationProcessor "com.google.dagger:hilt-compiler:2.40.5"
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
     androidTestImplementation "com.google.dagger:hilt-android-testing:2.36"
     androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:2.40.5"
     //Hilt-WorkerManager
@@ -108,4 +119,21 @@ dependencies {
 
     //Gson
     implementation 'com.google.code.gson:gson:2.9.1'
+
+    //Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
+
+    //RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
+    // Google Maps aps SDK
+    implementation 'com.google.maps.android:maps-ktx:3.1.0'
+    implementation 'com.google.maps.android:maps-utils-ktx:3.1.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 }

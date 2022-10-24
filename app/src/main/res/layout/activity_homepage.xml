@@ -1,32 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/offer_details_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black_shadow"
-    android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".ui.activities.HomepageActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+
+        <variable
+            name="isAlignmentRight"
+            type="java.lang.Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your Real Estate \nManager"
-        android:gravity="center"
-        android:layout_margin="20dp"
-        android:theme="@style/TitleText" />
+        android:layout_height="match_parent"
+        tools:context=".ui.homepage.HomepageActivity">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment_activity_main"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/fab_background_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_agent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/bottom_app_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/BottomAppBarFloatingButtonsShape"
+            android:layout_margin="24dp"
+            android:contentDescription="@string/add_agent"
+            android:src="@drawable/ic_person_add_24dp"
+            app:fabSize="mini"
+            android:background="@color/orange_shadow"
+            android:tint="@color/orange_shadow"
+            android:backgroundTint="@color/orange_shadow"
+            app:rippleColor="@color/orange_shadow"
+            android:clickable="true"
+            android:focusable="true"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/fab_add_agent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/BottomAppBarFloatingButtonsShape"
+            android:layout_margin="24dp"
+            android:contentDescription="@string/add_agent"
+            android:src="@drawable/ic_house_24dp"
+            app:fabSize="mini"
+            android:background="@color/orange_shadow"
+            android:tint="@color/orange_shadow"
+            android:backgroundTint="@color/orange_shadow"
+            app:rippleColor="@color/orange_shadow"
+            android:clickable="true"
+            android:focusable="true"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+            />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:backgroundTint="@color/black_shadow"
+            app:hideOnScroll="true"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            tools:ignore="BottomAppBar">
+<!--            Used a custom layout instead of a Menu because of the quantity of the buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/bottom_btn_list_sorting"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_sort_24"
+                    android:text="@string/sorting"/>
+                <ImageButton
+                    android:id="@+id/bottom_btn_list_filter"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_filter_24"
+                    android:text="@string/filter"/>
+                <ImageButton
+                    android:id="@+id/bottom_btn_loan_simulator"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_loan_24"
+                    android:text="@string/loan_simulator"/>
+                <ImageButton
+                    android:id="@+id/bottom_btn_currency_converter"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_currency_converter_off"
+                    android:text="@string/currency_converter"/>
+                <ImageButton
+                    android:id="@+id/bottom_btn_list_filter_off"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_filter_off_24"
+                    android:text="@string/clear_filter"/>
+                <ImageButton
+                    android:id="@+id/bottom_btn_add"
+                    style="@style/BottomAppBarButtons"
+                    android:src="@drawable/ic_add_24dp"
+                    android:text="@string/add"/>
+
+            </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
 
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

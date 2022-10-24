@@ -3,7 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="fr.mjoudar.realestatemanager">
 
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="${MAPS_API_KEY}" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +21,7 @@
         android:theme="@style/Theme.RealEstateManager"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.HomepageActivity"
+            android:name=".ui.homepage.HomepageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

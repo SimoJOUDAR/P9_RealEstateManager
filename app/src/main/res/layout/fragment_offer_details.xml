@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_shadow"
-    tools:context=".ui.fragments.OfferDetailsFragment">
+    tools:context=".ui.details.OfferDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -69,38 +69,6 @@
             android:layout_height="match_parent"
             android:layout_margin="25dp">
 
-            <TextView
-                android:id="@+id/type"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/roboto"
-                android:text="Home"
-                android:theme="@style/TitleText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/type"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"
-                android:theme="@style/SubTitleText_white"
-                android:text="500.000"
-                android:drawablePadding="8dp"
-                app:drawableStartCompat="@drawable/ic_dollar_24" />
-
-            <TextView
-                android:id="@+id/availability"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:theme="@style/SubTitleText_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price"
-                android:text="Sold" />
-
             <LinearLayout
                 android:id="@+id/surface_tile"
                 android:layout_width="wrap_content"
@@ -159,20 +127,96 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bathrooms_tile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:minHeight="70dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rooms_tile"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_tile"
+                android:paddingBottom="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/bathrooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:theme="@style/SubTitleText_grey"
+                    android:layout_gravity="center"
+                    android:text="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-15dp"
+                    android:theme="@style/Sign_accent"
+                    android:layout_gravity="center"
+                    android:text="WC" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto"
+                android:text="Home"
+                android:theme="@style/TitleText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bathrooms_tile"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/bathrooms_tile"
+                app:layout_constraintStart_toEndOf="@id/type"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:theme="@style/SubTitleText_white"
+                android:text="500.000"
+                android:drawablePadding="8dp"
+                app:drawableStartCompat="@drawable/ic_dollar_24" />
+
+            <TextView
+                android:id="@+id/availability_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:theme="@style/SubTitleText_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price"
+                android:text="Sold" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/availability"
+                app:layout_constraintTop_toBottomOf="@id/availability_type"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
+                android:paddingBottom="30dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Body_title"
+                    android:text="Particularities" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/Body_grey"
+                    android:theme="@style/Body_white"
+                    android:text="Garage, Basement, Balcony, Swimming pool, Backyard"
+                    android:layout_marginTop="6dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Body_title"
                     android:text="Description"
-                    android:drawablePadding="8dp" />
+                    android:layout_marginTop="20dp"/>
 
                 <TextView
                     android:id="@+id/description"
@@ -180,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/Body_white"
                     android:text="@string/sample_text"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="6dp"/>
 
                 <LinearLayout
                     android:layout_marginTop="48dp"
@@ -203,7 +247,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:theme="@style/Body_grey"
+                        android:theme="@style/Body_title"
                         android:text="Address"
                         android:layout_marginTop="16dp"
                         android:drawablePadding="8dp" />
@@ -221,7 +265,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/Body_grey"
+                    android:theme="@style/Body_title"
                     android:gravity="center"
                     android:text="Nearby\n points of interest"
                     android:layout_marginTop="16dp"
@@ -234,7 +278,7 @@
                     android:theme="@style/Body_white"
                     android:gravity="center"
                     android:text="Hospital, school, Market"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="6dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -256,7 +300,7 @@
                             android:scaleType="centerCrop"
                             android:background="@color/black_shadow"
                             android:layout_weight="1"
-                            android:src="@drawable/avatar_circle"/>
+                            android:src="@drawable/agent_avatar_circle"/>
 
                         <TextView
                             android:id="@+id/agent_name"
@@ -280,7 +324,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Publication date"
-                            android:theme="@style/ExtraSubTitleText_grey"/>
+                            android:theme="@style/Body_title"/>
                         <TextView
                             android:id="@+id/publication_date"
                             android:layout_width="match_parent"
@@ -294,7 +338,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Closure date"
-                            android:theme="@style/ExtraSubTitleText_grey"
+                            android:theme="@style/Body_title"
                             android:layout_marginTop="30dp"/>
                         <TextView
                             android:id="@+id/sale_date"
