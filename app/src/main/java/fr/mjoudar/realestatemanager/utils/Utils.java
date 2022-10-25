@@ -19,8 +19,8 @@ public class Utils {
      * @param dollars
      * @return
      */
-    public static int convertDollarToEuro(int dollars){
-        return (int) Math.round(dollars * 0.812);
+    public static long convertDollarToEuro(long dollars){
+        return (long) Math.round(dollars * 0.812);
     }
 
     /**

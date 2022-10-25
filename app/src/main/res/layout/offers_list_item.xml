@@ -1,69 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="160dp"
-    android:layout_height="160dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/gradient_tile"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:src="@drawable/home_img_sample"
-        app:shapeAppearanceOverlay="@style/AllRounderCornersSize10Percent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <FrameLayout
-        android:id="@+id/sold_rented_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/sold_rented_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sold_rented_text"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="offer"
+            type="fr.mjoudar.realestatemanager.domain.models.Offer" />
+
+        <variable
+            name="isEuroCurrency"
+            type="java.lang.Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:background="@drawable/gradient_tile"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/SoldRentedForeground"
-            tools:text="Rented"
-            app:autoSizeTextType="uniform"
-            android:lines="1"
-            android:padding="20dp"
-            />
-    </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:background="@drawable/round_top_corners_tile_bg"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:theme="@style/Sign_accent"
-            android:text="Condo"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:theme="@style/Body_white"
-            android:layout_marginTop="-8dp"
-            android:text="Location"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:theme="@style/Sign_accent"
-            android:layout_marginTop="-8dp"
-            android:text="500.000"/>
-    </LinearLayout>
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:shapeAppearanceOverlay="@style/AllRounderCornersSize10Percent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            mainPhoto="@{offer.photos[0]}"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/sold_rented_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{offer.availability ? View.VISIBLE : View.GONE }">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:background="@drawable/sold_rented_foreground"
+                app:shapeAppearanceOverlay="@style/AllRounderCornersSize10Percent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sold_rented_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/SoldRentedForeground"
+                offerType="@{offer.offerType}"
+                app:autoSizeTextType="uniform"
+                android:lines="1"
+                android:padding="20dp"
+                />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:background="@drawable/round_top_corners_tile_bg"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:theme="@style/Sign_accent"
+                propertyType="@{offer.propertyType}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:theme="@style/Body_white"
+                android:layout_marginTop="-8dp"
+                propertyCity="@{offer.address}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:theme="@style/Sign_accent"
+                android:layout_marginTop="-8dp"
+                price="@{offer.price}"
+                isEuroCurrency="@{isEuroCurrency}"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

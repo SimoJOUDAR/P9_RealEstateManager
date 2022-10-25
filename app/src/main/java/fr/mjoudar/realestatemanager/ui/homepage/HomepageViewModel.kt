@@ -1,9 +1,12 @@
 package fr.mjoudar.realestatemanager.ui.homepage
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.mjoudar.realestatemanager.domain.models.Agent
+import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
 import fr.mjoudar.realestatemanager.repositories.OfferRepository
 import fr.mjoudar.realestatemanager.utils.DataState
@@ -18,12 +21,22 @@ class HomepageViewModel @Inject constructor(
     private val offerRepository: OfferRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<DataState<List<Agent>>>(DataState.loading(null))
-    val state: StateFlow<DataState<List<Agent>>>
-        get() = _state
+    private val _stateAgents = MutableStateFlow<DataState<List<Agent>>>(DataState.loading(null))
+    val stateAgents: StateFlow<DataState<List<Agent>>>
+        get() = _stateAgents
+
+    private val _stateOffers = MutableStateFlow<DataState<List<Offer>>>(DataState.loading(null))
+    val stateOffers: StateFlow<DataState<List<Offer>>>
+        get() = _stateOffers
 
     private val demoData = DatabaseDemoDataGenerator()
-    var isCurrencyEuro = false
+    //var isCurrencyEuro = false
+    var isCurrencyEuro = MutableLiveData<Boolean>(false)
+
+    init {
+        isCurrencyEuro.value = false
+        fetchAgents()
+    }
 
     /**********************************************************************************************
      ** Sample data initialization
@@ -54,20 +67,33 @@ class HomepageViewModel @Inject constructor(
      **********************************************************************************************/
 
     fun toggleCurrency() {
-        isCurrencyEuro = !isCurrencyEuro
+        isCurrencyEuro.value = !isCurrencyEuro.value!!
     }
 
     /**********************************************************************************************
      ** Fetch agents
      **********************************************************************************************/
-    fun fetchAgents() {
+    private fun fetchAgents() {
         viewModelScope.launch {
             agentRepository.getAllAgents()
                 .catch { e ->
-                    _state.value = (DataState.error(e.toString(), null))
+                    _stateAgents.value = (DataState.error(e.toString(), null))
                 }
                 .collectLatest {
-                    _state.value = DataState.success(it)
+                    _stateAgents.value = DataState.success(it)
+                    if (it.isNotEmpty()) fetchOffers()
+                }
+        }
+    }
+
+    private fun fetchOffers() {
+        viewModelScope.launch {
+            offerRepository.getAllOffers()
+                .catch { e ->
+                    _stateOffers.value = (DataState.error(e.toString(), null))
+                }
+                .collectLatest {
+                    _stateOffers.value = DataState.success(it)
                 }
         }
     }

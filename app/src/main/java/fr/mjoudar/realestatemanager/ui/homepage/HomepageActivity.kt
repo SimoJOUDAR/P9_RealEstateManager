@@ -1,5 +1,7 @@
 package fr.mjoudar.realestatemanager.ui.homepage
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +25,9 @@ import fr.mjoudar.realestatemanager.repositories.OfferRepository
 import fr.mjoudar.realestatemanager.utils.DataState
 import fr.mjoudar.realestatemanager.utils.DatabaseDemoDataGenerator
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -105,12 +109,12 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         binding.bottomBtnListFilterOff.setOnClickListener { clearFilter() }
         binding.bottomBtnAdd.setOnClickListener {
             when (isFabVisible) {
-                false -> openFab()
-                true -> closeFab()
+                false -> startFabOpeningAnimation()
+                true -> startFabClosingAnimation()
             }
         }
         binding.fabBackgroundLayout.setOnClickListener {
-            closeFab()
+            startFabClosingAnimation()
         }
     }
 
@@ -136,27 +140,45 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     // Sets the fab behavior for Homepage - To deploy the fab
-    private fun openFab() {
+    private fun startFabOpeningAnimation() {
         binding.fabAddAgent.startAnimation(fabOpen)
         binding.fabAddOffer.startAnimation(fabOpen)
-        binding.fabAddAgent.isClickable = true
-        binding.fabAddOffer.isClickable = true
-        binding.fabBackgroundLayout.visibility = View.VISIBLE
-        binding.fabBackgroundLayout.alpha = 0.5F
-        isFabVisible = true
+        showFab()
+
     }
 
     // Sets the fab behavior for Homepage - To close the fab
-    private fun closeFab() {
+    private fun startFabClosingAnimation() {
         binding.fabAddAgent.startAnimation(fabClose)
         binding.fabAddOffer.startAnimation(fabClose)
+        hideFab()
+    }
+
+    private fun showFab() {
+        binding.fabAddAgent.isClickable = true
+        binding.fabAddOffer.isClickable = true
+        binding.fabAddAgent.alpha = 1F
+        binding.fabAddOffer.alpha = 1F
+        binding.fabBackgroundLayout.alpha = 0.5F
+        binding.fabContainer.visibility = View.VISIBLE
+        binding.fabBackgroundLayout.visibility = View.VISIBLE
+        isFabVisible = true
+    }
+
+    private fun hideFab() {
         binding.fabAddAgent.isClickable = false
         binding.fabAddOffer.isClickable = false
         binding.fabBackgroundLayout.alpha = 0F
         binding.fabBackgroundLayout.visibility = View.GONE
         isFabVisible = false
+        Timer().schedule(800) {
+            runOnUiThread {
+                binding.fabAddAgent.alpha = 0F
+                binding.fabAddOffer.alpha = 0F
+                binding.fabContainer.visibility = View.GONE
+            }
+        }
     }
-
 
     private fun toggleCurrencyButtonIcon() {
         homepageViewModel.toggleCurrency()
@@ -164,7 +186,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun setCurrencyButtonIcon() {
-        if (homepageViewModel.isCurrencyEuro) binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_on)
+        if (homepageViewModel.isCurrencyEuro.value!!) binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_on)
         else binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_off)
     }
 
@@ -197,7 +219,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun removeBottomAppBar() {
-        closeFab()
+        startFabClosingAnimation()
         binding.bottomAppBar.visibility = View.GONE
         binding.bottomAppBar.performHide()
     }
@@ -207,7 +229,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     // Observers homepageViewModel' states
     private fun setObserver() {
         lifecycleScope.launchWhenStarted {
-            val value = homepageViewModel.state
+            val value = homepageViewModel.stateAgents
             value.collect {
                 when (it.status) {
                     DataState.Status.SUCCESS -> {
@@ -244,14 +266,14 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
 
     private fun setupData() {
         val sharedPreference =  getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        homepageViewModel.isCurrencyEuro = sharedPreference.getBoolean("isCurrencyEuro", false)
+        homepageViewModel.isCurrencyEuro.value = sharedPreference.getBoolean("isCurrencyEuro", false)
         setCurrencyButtonIcon()
     }
 
     private fun saveUpData() {
         val sharedPreference =  getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreference.edit()
-        editor.putBoolean("isCurrencyEuro", homepageViewModel.isCurrencyEuro)
+        editor.putBoolean("isCurrencyEuro", homepageViewModel.isCurrencyEuro.value!!)
         editor.commit()
     }
 

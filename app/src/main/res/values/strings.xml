@@ -81,6 +81,8 @@
     <string name="calculate">Calculate</string>
     <string name="loan_simulator_results_body">A loan of %1$f % interest rate over %2$i years period is estimated to a monthly payment of:</string>
     <string name="loan_simulator_monthly_payments">$%1$f</string>
+    <string name="sold">Sold</string>
+    <string name="rented">Rented</string>
     <string name="house">House</string>
     <string name="apartment">Apartment</string>
     <string name="duplex">Duplex</string>

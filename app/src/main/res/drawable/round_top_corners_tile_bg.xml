@@ -4,5 +4,7 @@
         android:color="@color/translucent_black"/>
     <corners
         android:topLeftRadius="25dp"
-        android:topRightRadius="25dp"/>
+        android:topRightRadius="25dp"
+        android:bottomLeftRadius="16dp"
+        android:bottomRightRadius="16dp"/>
 </shape>

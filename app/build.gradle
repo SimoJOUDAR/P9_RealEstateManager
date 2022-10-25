@@ -71,6 +71,10 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     //TabLayout
     implementation 'com.google.android.material:material:1.6.1'
+    //Swiperefreshlayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    //Coil
+    implementation("io.coil-kt:coil:2.2.2")
 
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
