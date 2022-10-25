@@ -11,8 +11,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -23,7 +21,7 @@ import fr.mjoudar.realestatemanager.domain.models.Agent
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
 import fr.mjoudar.realestatemanager.repositories.OfferRepository
 import fr.mjoudar.realestatemanager.utils.DataState
-import fr.mjoudar.realestatemanager.utils.DatabaseSampleDataGenerator
+import fr.mjoudar.realestatemanager.utils.DatabaseDemoDataGenerator
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,7 +38,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
 
     private val homepageViewModel: HomepageViewModel by viewModels()
     private var agentList: List<Agent>? = arrayListOf()
-    private var isEuroCurrency = false
 
     private val navHostFragment by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment }
     private val navController by lazy { navHostFragment.navController }
@@ -49,7 +46,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     //TODO: Test------------------------------------------------------------------------------------
     @Inject lateinit var agentRepo : AgentRepository
     @Inject lateinit var offerRepo : OfferRepository
-    val dataSample = DatabaseSampleDataGenerator()
+    val dataSample = DatabaseDemoDataGenerator()
     //TODO: Test------------------------------------------------------------------------------------
 
     /**********************************************************************************************
@@ -61,10 +58,21 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         binding.lifecycleOwner = this
         setContentView(binding.root)
         hideStatusBar()
+        setupDemoData() //TODO: Test <<----------------------------------------- to delete
         setObserver()
-        initAnimation()
-        setupButtonsListeners() //TODO: To include in addOnDestinationChangedListener()
-        setupDemoData() //TODO: Test <<-----------------------------------------
+        initGraphics()
+        setupButtonsListeners()
+        setupDestinationChangedListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveUpData()
     }
 
     override fun onDestroy() {
@@ -81,7 +89,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         actionBar?.hide()
     }
     // Initializes the animations
-    private fun initAnimation() {
+    private fun initGraphics() {
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim)
         fabClose = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim)
     }
@@ -104,7 +112,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         binding.fabBackgroundLayout.setOnClickListener {
             closeFab()
         }
-        setupDestinationChangedListener()
     }
 
     private fun sorting() {
@@ -153,7 +160,11 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
 
     private fun toggleCurrencyButtonIcon() {
         homepageViewModel.toggleCurrency()
-        if (isEuroCurrency) binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_on)
+        setCurrencyButtonIcon()
+    }
+
+    private fun setCurrencyButtonIcon() {
+        if (homepageViewModel.isCurrencyEuro) binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_on)
         else binding.bottomBtnCurrencyConverter.setImageResource(R.drawable.ic_currency_converter_off)
     }
 
@@ -214,9 +225,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
                 }
             }
         }
-        homepageViewModel.isEuroCurrency.observe(this@HomepageActivity) {
-            this.isEuroCurrency = it
-        }
     }
 
     // Checks the agents' list at reception (null or notnull)
@@ -231,37 +239,33 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         else binding.progressBar.visibility = View.GONE
     }
     /**********************************************************************************************
+     ** SharedPreferences
+     **********************************************************************************************/
+
+    private fun setupData() {
+        val sharedPreference =  getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        homepageViewModel.isCurrencyEuro = sharedPreference.getBoolean("isCurrencyEuro", false)
+        setCurrencyButtonIcon()
+    }
+
+    private fun saveUpData() {
+        val sharedPreference =  getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putBoolean("isCurrencyEuro", homepageViewModel.isCurrencyEuro)
+        editor.commit()
+    }
+
+    /**********************************************************************************************
      ** Demo Data
      **********************************************************************************************/
     private fun setupDemoData() {
-        val sharedPreference =  getSharedPreferences("DemoData", Context.MODE_PRIVATE)
+        val sharedPreference =  getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         val isDemoDataSetup = sharedPreference.getBoolean("isDemoDataSetup", false)
         if (!isDemoDataSetup) {
-            generateDemoData()
+            homepageViewModel.generateDemoData()
             val editor = sharedPreference.edit()
             editor.putBoolean("isDemoDataSetup", true)
             editor.commit()
-        }
-
-    }
-
-    private fun generateDemoData() {
-        lifecycleScope.launchWhenCreated {
-            agentRepo.saveAgent(dataSample.agent1)
-            agentRepo.saveAgent(dataSample.agent2)
-            agentRepo.saveAgent(dataSample.agent3)
-            offerRepo.saveOffer(dataSample.offer1)
-            offerRepo.saveOffer(dataSample.offer2)
-            offerRepo.saveOffer(dataSample.offer3)
-            offerRepo.saveOffer(dataSample.offer4)
-            offerRepo.saveOffer(dataSample.offer5)
-            offerRepo.saveOffer(dataSample.offer6)
-            offerRepo.saveOffer(dataSample.offer7)
-            offerRepo.saveOffer(dataSample.offer8)
-            offerRepo.saveOffer(dataSample.offer9)
-            offerRepo.saveOffer(dataSample.offer10)
-            offerRepo.saveOffer(dataSample.offer11)
-            offerRepo.saveOffer(dataSample.offer12)
         }
     }
 

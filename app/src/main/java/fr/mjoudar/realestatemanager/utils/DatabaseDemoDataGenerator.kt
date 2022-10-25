@@ -3,7 +3,7 @@ package fr.mjoudar.realestatemanager.utils
 import fr.mjoudar.realestatemanager.domain.models.*
 import java.util.*
 
-class DatabaseSampleDataGenerator {
+class DatabaseDemoDataGenerator {
 
     /**********************************************************************************************
      ** Agents
@@ -30,10 +30,6 @@ class DatabaseSampleDataGenerator {
         "robert.kiyosaki@rem.com",
         "+1 354-607-2343"
     )
-
-    public fun getAgents() : MutableList<Agent> {
-        return mutableListOf(agent1, agent2, agent3)
-    }
 
     /**********************************************************************************************
      ** Strings
