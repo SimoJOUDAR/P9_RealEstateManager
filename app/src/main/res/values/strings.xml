@@ -32,7 +32,8 @@
     <string name="price">Price</string>
     <string name="surface">Surface</string>
     <string name="rooms">Rooms</string>
-    <string name="bathroom">bathrooms</string>
+    <string name="wc">WC</string>
+    <string name="bathroom">Bathrooms</string>
     <string name="description">Description</string>
     <string name="select_agent_in_charge">Select the agent in charge</string>
     <string name="publication_date_title">Publication date</string>
@@ -58,6 +59,7 @@
     <string name="bar_coffee_shop">Bar / Coffeeshop</string>
     <string name="restaurant">Restaurant</string>
     <string name="poi">Points of interest</string>
+    <string name="nearby_poi">Nearby\n points of interest</string>
     <string name="particularities">Particularities</string>
     <string name="garage">Garage</string>
     <string name="parking_lot">Parking lot</string>
@@ -81,6 +83,8 @@
     <string name="calculate">Calculate</string>
     <string name="loan_simulator_results_body">A loan of %1$f % interest rate over %2$i years period is estimated to a monthly payment of:</string>
     <string name="loan_simulator_monthly_payments">$%1$f</string>
+    <string name="sale">FOR SALE</string>
+    <string name="rent">FOR RENT</string>
     <string name="sold">Sold</string>
     <string name="rented">Rented</string>
     <string name="house">House</string>
@@ -115,6 +119,5 @@
     <string name="publicationDate_desc">Publication date descending</string>
     <string name="closureDate_asc">Closure date ascending</string>
     <string name="closureDate_desc">Closure date descending</string>
-
 
 </resources>

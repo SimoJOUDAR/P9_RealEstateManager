@@ -1,6 +1,5 @@
 package fr.mjoudar.realestatemanager.ui.homepage
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,13 +20,12 @@ class HomepageViewModel @Inject constructor(
     private val offerRepository: OfferRepository,
 ) : ViewModel() {
 
-    private val _stateAgents = MutableStateFlow<DataState<List<Agent>>>(DataState.loading(null))
-    val stateAgents: StateFlow<DataState<List<Agent>>>
-        get() = _stateAgents
-
-    private val _stateOffers = MutableStateFlow<DataState<List<Offer>>>(DataState.loading(null))
-    val stateOffers: StateFlow<DataState<List<Offer>>>
-        get() = _stateOffers
+    private val _agentsState = MutableStateFlow<DataState<List<Agent>>>(DataState.loading(null))
+    val agentsState: StateFlow<DataState<List<Agent>>>
+        get() = _agentsState
+    private val _offersState = MutableStateFlow<DataState<List<Offer>>>(DataState.loading(null))
+    val offersState: StateFlow<DataState<List<Offer>>>
+        get() = _offersState
 
     private val demoData = DatabaseDemoDataGenerator()
     //var isCurrencyEuro = false
@@ -71,29 +69,28 @@ class HomepageViewModel @Inject constructor(
     }
 
     /**********************************************************************************************
-     ** Fetch agents
+     ** Data fetching
      **********************************************************************************************/
     private fun fetchAgents() {
         viewModelScope.launch {
             agentRepository.getAllAgents()
                 .catch { e ->
-                    _stateAgents.value = (DataState.error(e.toString(), null))
+                    _agentsState.value = (DataState.error(e.toString(), null))
                 }
                 .collectLatest {
-                    _stateAgents.value = DataState.success(it)
+                    _agentsState.value = DataState.success(it)
                     if (it.isNotEmpty()) fetchOffers()
                 }
         }
     }
-
     private fun fetchOffers() {
         viewModelScope.launch {
             offerRepository.getAllOffers()
                 .catch { e ->
-                    _stateOffers.value = (DataState.error(e.toString(), null))
+                    _offersState.value = (DataState.error(e.toString(), null))
                 }
                 .collectLatest {
-                    _stateOffers.value = DataState.success(it)
+                    _offersState.value = DataState.success(it)
                 }
         }
     }

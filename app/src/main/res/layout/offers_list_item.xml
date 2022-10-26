@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="@{offer.availability ? View.VISIBLE : View.GONE }">
+            android:visibility="@{offer.availability ? View.GONE : View.VISIBLE }">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
@@ -54,6 +54,7 @@
                 android:layout_height="match_parent"
                 style="@style/SoldRentedForeground"
                 offerType="@{offer.offerType}"
+                availability="@{offer.availability}"
                 app:autoSizeTextType="uniform"
                 android:lines="1"
                 android:padding="20dp"
@@ -80,7 +81,7 @@
                 android:gravity="center"
                 android:theme="@style/Body_white"
                 android:layout_marginTop="-8dp"
-                propertyCity="@{offer.address}"/>
+                city="@{offer.address}"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

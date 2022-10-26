@@ -12,21 +12,21 @@ class DatabaseDemoDataGenerator {
     val agent1 = Agent(
         UUID.randomUUID().toString(),
         "Richard Branson",
-        "file:///android_asset/Agents/agent_avatar_1.webp",
+        "file:///android_asset/Agents/agent_avatar_1.png",
         "richard.branson@rem.com",
         "+1 354-607-2343"
     )
     val agent2 = Agent(
         UUID.randomUUID().toString(),
         "Sara Blakely",
-        "file:///android_asset/Agents/agent_avatar_2.webp",
+        "file:///android_asset/Agents/agent_avatar_2.png",
         "sara.blakely@rem.com",
         "+1 354-607-3245"
     )
     val agent3 = Agent(
         UUID.randomUUID().toString(),
         "Robert Kiyosaki",
-        "file:///android_asset/Agents/agent_avatar_3.webp",
+        "file:///android_asset/Agents/agent_avatar_3.png",
         "robert.kiyosaki@rem.com",
         "+1 354-607-2343"
     )

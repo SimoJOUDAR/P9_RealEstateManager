@@ -14,9 +14,9 @@ import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentListViewBinding
 import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.ui.adapters.OffersAdapter
+import fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment
 import fr.mjoudar.realestatemanager.ui.homepage.HomepageViewModel
 import fr.mjoudar.realestatemanager.utils.DataState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 
@@ -44,7 +44,11 @@ class ListViewFragment : Fragment() {
     private fun setRecyclerView() {
         binding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.orange_shadow)
         val onClickListener = View.OnClickListener { itemView ->
-            itemView.findNavController().navigate(R.id.offerDetailsFragment)
+            val item = itemView.tag as Offer
+            val bundle = Bundle()
+            bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, item)
+            bundle.putBoolean(OfferDetailsFragment.iS_EURO_CURRENCY_ARG, homepageViewModel.isCurrencyEuro.value!!)
+            itemView.findNavController().navigate(R.id.offerDetailsFragment, bundle)
         }
         val onContextClickListener = View.OnContextClickListener { true }
         adapter = OffersAdapter(onClickListener, onContextClickListener, homepageViewModel.isCurrencyEuro.value?: false)
@@ -54,7 +58,7 @@ class ListViewFragment : Fragment() {
 
     private fun setObserver() {
         lifecycleScope.launchWhenStarted {
-            homepageViewModel.stateOffers.collectLatest {
+            homepageViewModel.offersState.collectLatest {
                 when (it.status) {
                     DataState.Status.SUCCESS -> {
                         displayLoading(false)
@@ -98,7 +102,7 @@ class ListViewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
-        binding.recyclerview.adapter = null
+//        _binding = null
+//        binding.recyclerview.adapter = null
     }
 }

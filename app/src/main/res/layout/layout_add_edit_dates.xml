@@ -48,7 +48,7 @@
                 android:id="@+id/add_edit_offer_publication_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                longToText="@{viewModel.publicationDate}"
+                date="@{viewModel.publicationDate}"
                 android:hint="@string/publication_date_hint"
                 android:inputType="textAutoComplete"
                 android:labelFor="@id/add_edit_offer_publication_date_layout" />
@@ -101,7 +101,7 @@
                 android:hint="@string/closure_date_hint"
                 android:labelFor="@id/add_edit_offer_closure_date_layout"
                 android:inputType="textAutoComplete"
-                longToText="@{viewModel.closureDate}"
+                date="@{viewModel.closureDate}"
                 android:visibility="@{viewModel.isOfferClosed() ? View.GONE : View.VISIBLE}" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

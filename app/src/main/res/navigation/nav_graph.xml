@@ -40,7 +40,15 @@
         android:id="@+id/offerDetailsFragment"
         android:name="fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment"
         android:label="fragment_offer_details"
-        tools:layout="@layout/fragment_offer_details" />
+        tools:layout="@layout/fragment_offer_details" >
+        <argument
+            android:name="offer"
+            app:argType="fr.mjoudar.realestatemanager.domain.models.Offer" />
+        <argument
+            android:name="isEuroCurrency"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <fragment
         android:id="@+id/loadSimulatorFragment"
         android:name="fr.mjoudar.realestatemanager.ui.loan.LoadSimulatorFragment"

@@ -1,7 +1,5 @@
 package fr.mjoudar.realestatemanager.ui.homepage
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -229,7 +227,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     // Observers homepageViewModel' states
     private fun setObserver() {
         lifecycleScope.launchWhenStarted {
-            val value = homepageViewModel.stateAgents
+            val value = homepageViewModel.agentsState
             value.collect {
                 when (it.status) {
                     DataState.Status.SUCCESS -> {
