@@ -3,7 +3,7 @@ package fr.mjoudar.realestatemanager.utils
 import fr.mjoudar.realestatemanager.domain.models.*
 import java.util.*
 
-class DatabaseDemoDataGenerator {
+object DatabaseDemoDataGenerator {
 
     /**********************************************************************************************
      ** Agents

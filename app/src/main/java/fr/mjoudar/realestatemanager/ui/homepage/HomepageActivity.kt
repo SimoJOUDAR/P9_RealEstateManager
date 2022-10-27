@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -20,6 +21,9 @@ import fr.mjoudar.realestatemanager.databinding.ActivityHomepageBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
 import fr.mjoudar.realestatemanager.repositories.OfferRepository
+import fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragment
+import fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragmentDirections
+import fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment
 import fr.mjoudar.realestatemanager.utils.DataState
 import fr.mjoudar.realestatemanager.utils.DatabaseDemoDataGenerator
 import timber.log.Timber
@@ -45,12 +49,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     private val navController by lazy { navHostFragment.navController }
     private val appBarConfiguration by lazy { AppBarConfiguration(navController.graph) }
 
-    //TODO: Test------------------------------------------------------------------------------------
-    @Inject lateinit var agentRepo : AgentRepository
-    @Inject lateinit var offerRepo : OfferRepository
-    val dataSample = DatabaseDemoDataGenerator()
-    //TODO: Test------------------------------------------------------------------------------------
-
     /**********************************************************************************************
      ** Core functions
      **********************************************************************************************/
@@ -59,8 +57,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         _binding = ActivityHomepageBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         setContentView(binding.root)
-        hideStatusBar()
-        setupDemoData() //TODO: Test <<----------------------------------------- to delete
+        setupDemoData()
         setObserver()
         initGraphics()
         setupButtonsListeners()
@@ -85,11 +82,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     /**********************************************************************************************
      ** Initializers
      **********************************************************************************************/
-    private fun hideStatusBar() {
-//        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        actionBar?.hide()
-    }
     // Initializes the animations
     private fun initGraphics() {
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim)
@@ -105,6 +97,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         binding.bottomBtnLoanSimulator.setOnClickListener { navigateToLoanSimulator() }
         binding.bottomBtnCurrencyConverter.setOnClickListener { switchCurrency() }
         binding.bottomBtnListFilterOff.setOnClickListener { clearFilter() }
+        binding.fabAddAgent.setOnClickListener { addEditAgent()}
         binding.bottomBtnAdd.setOnClickListener {
             when (isFabVisible) {
                 false -> startFabOpeningAnimation()
@@ -135,6 +128,13 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
 
     private fun clearFilter() {
         //TODO: to implement
+    }
+
+    private fun addEditAgent() {
+        val bundle = Bundle()
+        bundle.putParcelable("agent", null)
+        bundle.putBoolean("isNewAgent", true)
+        navController.navigate(R.id.addEditAgentFragment, bundle)
     }
 
     // Sets the fab behavior for Homepage - To deploy the fab

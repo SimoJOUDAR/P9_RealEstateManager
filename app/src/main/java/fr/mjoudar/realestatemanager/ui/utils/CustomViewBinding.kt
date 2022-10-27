@@ -96,7 +96,23 @@ class CustomViewBinding {
                     crossfade(true)
                     error(R.drawable.ic_broken_image_24)
                 }
-            }
+            }?: run { imgView.load(R.drawable.home_img_sample) }
+        }
+
+        /******************************************************************************************
+         ** Avatar binding
+         ******************************************************************************************/
+        @JvmStatic
+        @BindingAdapter("avatar")
+        fun bindCircleImage(imgView: ImageView, agent: Agent?) {
+            agent?.let {
+                imgView.load(agent.avatar) {
+                    placeholder(R.drawable.agent_avatar_circle)
+                    transformations(CircleCropTransformation())
+                    crossfade(true)
+                    error(R.drawable.ic_broken_image_24)
+                }
+            }?: run { imgView.load(R.drawable.agent_avatar_circle) }
         }
 
         /******************************************************************************************
@@ -140,34 +156,6 @@ class CustomViewBinding {
         }
 
         /******************************************************************************************
-         ** City binding
-         ******************************************************************************************/
-        @JvmStatic
-        @BindingAdapter("city")
-        fun bindGetPropertyCity(textView: TextView, address: Address?) {
-            address?.let {
-                textView.text = it.city
-            }
-        }
-
-        /******************************************************************************************
-         ** Price binding
-         ******************************************************************************************/
-        @JvmStatic
-        @BindingAdapter("price", "isEuroCurrency")
-        fun bindGetPriceText(textView: TextView, price: Long?, isEuroCurrency: Boolean = false) {
-            price?.let {
-                Timber.d("PRICE: $it")
-                if (isEuroCurrency)
-                    textView.text = NumberFormat.getCurrencyInstance(Locale.FRANCE)
-                        .format(convertDollarToEuro(price))
-                else {
-                    textView.text = NumberFormat.getCurrencyInstance(Locale.US).format(price)
-                }
-            }
-        }
-
-        /******************************************************************************************
          ** Particularities binding
          ******************************************************************************************/
         @JvmStatic
@@ -200,22 +188,6 @@ class CustomViewBinding {
         }
 
         /******************************************************************************************
-         ** Address binding
-         ******************************************************************************************/
-        @JvmStatic
-        @BindingAdapter("address")
-        fun bindGetAddress(textView: TextView, address: Address?) {
-            address?.let {
-                val builder = StringBuilder("")
-                builder.append(it.vicinity).append("\n")
-                builder.append(it.zipcode).append(", ").append(it.city).append("\n")
-                if (it.state!!.isNotEmpty()) builder.append(it.state).append(", ")
-                builder.append(it.country)
-                textView.text = builder.toString()
-            }
-        }
-
-        /******************************************************************************************
          ** Poi binding
          ******************************************************************************************/
         @JvmStatic
@@ -245,18 +217,42 @@ class CustomViewBinding {
         }
 
         /******************************************************************************************
-         ** Avatar binding
+         ** City binding
          ******************************************************************************************/
         @JvmStatic
-        @BindingAdapter("avatar")
-        fun bindCircleImage(imgView: ImageView, agent: Agent?) {
-            agent?.let {
-                imgView.load(agent.avatar) {
-                    placeholder(R.drawable.agent_avatar_circle)
-                    transformations(CircleCropTransformation())
-                    crossfade(true)
-                    error(R.drawable.ic_broken_image_24)
-                }
+        @BindingAdapter("city")
+        fun bindGetPropertyCity(textView: TextView, address: Address?) {
+            address?.let {
+                textView.text = it.city
+            }
+        }
+
+        /******************************************************************************************
+         ** Address binding
+         ******************************************************************************************/
+        @JvmStatic
+        @BindingAdapter("address")
+        fun bindGetAddress(textView: TextView, address: Address?) {
+            address?.let {
+                val builder = StringBuilder("")
+                builder.append(it.vicinity).append("\n")
+                builder.append(it.zipcode).append(", ").append(it.city).append("\n")
+                if (it.state!!.isNotEmpty()) builder.append(it.state).append(", ")
+                builder.append(it.country)
+                textView.text = builder.toString()
+            }
+        }
+
+        /******************************************************************************************
+         ** Price binding
+         ******************************************************************************************/
+        @JvmStatic
+        @BindingAdapter("price", "isEuroCurrency")
+        fun bindGetPriceText(textView: TextView, price: Long?, isEuroCurrency: Boolean = false) {
+            price?.let {
+                Timber.d("PRICE: $it")
+                if (isEuroCurrency) textView.text = NumberFormat.getCurrencyInstance(Locale.FRANCE).format(convertDollarToEuro(price))
+                else textView.text = NumberFormat.getCurrencyInstance(Locale.US).format(price)
             }
         }
 

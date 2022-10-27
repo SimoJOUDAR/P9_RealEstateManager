@@ -19,6 +19,10 @@
             name="isEuroCurrency"
             type="java.lang.Boolean" />
 
+        <variable
+            name="poi"
+            type="fr.mjoudar.realestatemanager.domain.models.POI" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -284,15 +288,86 @@
                         android:layout_marginTop="16dp"
                         android:drawablePadding="8dp" />
 
-                    <TextView
-                        android:id="@+id/nearby"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:theme="@style/Body_white"
-                        android:gravity="center"
-                        poi="@{offer.poi}"
-                        tools:text="Hospital, school, Market"
-                        android:layout_marginTop="6dp"/>
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/bus_station"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.BUS_STATION)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_bus_station_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/market_mall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.MARKET_MALL)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_market_mall_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/medical_center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.MEDICAL_CENTER)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_medical_center_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/sport_center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.SPORT_CENTER)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_sport_center_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/cultural_center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.CULTURAL_CENTER)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_cultural_center_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/school"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.SCHOOL)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_school_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/park"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.PARK)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_park_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/bar_coffeeshop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.BAR_COFFEESHOP)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_bar_coffeeshop_24"
+                            tools:ignore="RtlSymmetry" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="16dp"
+                            android:visibility="@{offer.poi.contains(fr.mjoudar.realestatemanager.domain.models.POI.RESTAURANT)? View.VISIBLE : View.GONE }"
+                            app:srcCompat="@drawable/ic_restaurant_24"
+                            tools:ignore="RtlSymmetry" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

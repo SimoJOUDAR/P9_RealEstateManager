@@ -9,11 +9,15 @@
         <import type="android.view.View"/>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="fr.mjoudar.realestatemanager.ui.addEditAgent.AddEditAgentViewModel" />
+        <variable
+            name="agent"
+            type="fr.mjoudar.realestatemanager.domain.models.Agent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="fr.mjoudar.realestatemanager.ui.addEditAgent.AddEditAgentFragment">
@@ -31,10 +35,10 @@
             <ImageView
                 android:id="@+id/agent_add_edit_avatar"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/agent_avatar"
                 android:scaleType="centerCrop"
-                android:src="@drawable/agent_avatar_circle" />
+                avatar="@{agent}" />
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +59,7 @@
                 android:id="@+id/agent_add_edit_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewmodel.name}" />
+                android:text="@={viewModel.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +80,7 @@
                 android:id="@+id/agent_add_edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewmodel.email}" />
+                android:text="@={viewModel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,23 +101,23 @@
                 android:id="@+id/agent_add_edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewmodel.Phone}" />
+                android:text="@={viewModel.Phone}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/agent_add_edit_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/orange_shadow"
             android:backgroundTint="@color/orange_shadow"
             android:tint="@color/orange_shadow"
             app:shapeAppearanceOverlay="@style/BottomAppBarFloatingButtonsShape"
             android:baselineAlignBottom="true"
             android:contentDescription="@string/add"
-            android:onClick="@{(view) -> viewmodel.saveAgent() }"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> viewModel.saveAgent() }"
+            app:layout_constraintTop_toBottomOf="@id/agent_add_edit_phone_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="64dp"
             android:src="@drawable/ic_check_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

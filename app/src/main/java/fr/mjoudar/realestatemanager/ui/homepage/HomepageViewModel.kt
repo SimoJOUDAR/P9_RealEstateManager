@@ -27,7 +27,6 @@ class HomepageViewModel @Inject constructor(
     val offersState: StateFlow<DataState<List<Offer>>>
         get() = _offersState
 
-    private val demoData = DatabaseDemoDataGenerator()
     //var isCurrencyEuro = false
     var isCurrencyEuro = MutableLiveData<Boolean>(false)
 
@@ -42,21 +41,21 @@ class HomepageViewModel @Inject constructor(
 
     fun generateDemoData() {
         viewModelScope.launch {
-            agentRepository.saveAgent(demoData.agent1)
-            agentRepository.saveAgent(demoData.agent2)
-            agentRepository.saveAgent(demoData.agent3)
-            offerRepository.saveOffer(demoData.offer1)
-            offerRepository.saveOffer(demoData.offer2)
-            offerRepository.saveOffer(demoData.offer3)
-            offerRepository.saveOffer(demoData.offer4)
-            offerRepository.saveOffer(demoData.offer5)
-            offerRepository.saveOffer(demoData.offer6)
-            offerRepository.saveOffer(demoData.offer7)
-            offerRepository.saveOffer(demoData.offer8)
-            offerRepository.saveOffer(demoData.offer9)
-            offerRepository.saveOffer(demoData.offer10)
-            offerRepository.saveOffer(demoData.offer11)
-            offerRepository.saveOffer(demoData.offer12)
+            agentRepository.saveAgent(DatabaseDemoDataGenerator.agent1)
+            agentRepository.saveAgent(DatabaseDemoDataGenerator.agent2)
+            agentRepository.saveAgent(DatabaseDemoDataGenerator.agent3)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer1)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer2)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer3)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer4)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer5)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer6)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer7)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer8)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer9)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer10)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer11)
+            offerRepository.saveOffer(DatabaseDemoDataGenerator.offer12)
         }
     }
 

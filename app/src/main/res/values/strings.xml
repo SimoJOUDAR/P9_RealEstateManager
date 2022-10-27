@@ -119,5 +119,6 @@
     <string name="publicationDate_desc">Publication date descending</string>
     <string name="closureDate_asc">Closure date ascending</string>
     <string name="closureDate_desc">Closure date descending</string>
+    <string name="agent_input_incomplete">The input is incomplete or invalid</string>
 
 </resources>

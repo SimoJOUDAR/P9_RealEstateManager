@@ -41,11 +41,11 @@ class OfferDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { it ->
-            it.getBoolean(iS_EURO_CURRENCY_ARG).let { it2 -> isEuroCurrency = it2 }
-            it.getParcelable<Offer>(OFFER_ARG)?.let { it1 ->
-                offer = it1
-                offer?.agentId?.let {
-                    viewModel.getAgent(it)
+            it.getBoolean(iS_EURO_CURRENCY_ARG).let { it1 -> isEuroCurrency = it1 }
+            it.getParcelable<Offer>(OFFER_ARG)?.let { it2 ->
+                offer = it2
+                offer?.agentId?.let {it3 ->
+                    viewModel.getAgent(it3)
                     setObservers()
                 }
             }

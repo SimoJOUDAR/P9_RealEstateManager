@@ -23,7 +23,6 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ListViewFragment : Fragment() {
 
-    private var offersList: List<Offer> = emptyList()
     private lateinit var adapter: OffersAdapter
     private val homepageViewModel: HomepageViewModel by activityViewModels()
     private var _binding: FragmentListViewBinding? = null
@@ -36,8 +35,9 @@ class ListViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.swipeRefreshLayout.setOnRefreshListener { setObserver() }
+        binding.swipeRefreshLayout.setOnRefreshListener { actualizeData() }
         setRecyclerView()
+        actualizeData()
         setObserver()
     }
 
@@ -55,8 +55,7 @@ class ListViewFragment : Fragment() {
         binding.recyclerview.adapter = adapter
     }
 
-
-    private fun setObserver() {
+    private fun actualizeData() {
         lifecycleScope.launchWhenStarted {
             homepageViewModel.offersState.collectLatest {
                 when (it.status) {
@@ -74,17 +73,26 @@ class ListViewFragment : Fragment() {
                     }
                 }
             }
-            homepageViewModel.isCurrencyEuro.observe(requireActivity()) {
-                if (::adapter.isInitialized)
+        }
+    }
+
+    private fun setObserver() {
+        lifecycleScope.launchWhenStarted {
+            homepageViewModel.isCurrencyEuro.observe(viewLifecycleOwner) {
+                if (::adapter.isInitialized) {
+                    binding.swipeRefreshLayout.isRefreshing = true
                     adapter.setCurrency(it)
+                    binding.recyclerview.adapter = adapter
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
             }
         }
     }
 
     private fun submitOffersList(data : List<Offer>) {
         binding.swipeRefreshLayout.isRefreshing = false
-        offersList = data
         adapter.setData(data)
+        binding.recyclerview.adapter = adapter
     }
 
     private fun displayLoading(isLoading: Boolean) {

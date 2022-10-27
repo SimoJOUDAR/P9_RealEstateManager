@@ -10,7 +10,11 @@
         android:id="@+id/mainViewpagerFragment"
         android:name="fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragment"
         android:label="fragment_main_viewpager"
-        tools:layout="@layout/fragment_main_viewpager" />
+        tools:layout="@layout/fragment_main_viewpager" >
+        <action
+            android:id="@+id/action_mainViewpagerFragment_to_addEditAgentFragment"
+            app:destination="@id/addEditAgentFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listViewFragment"
         android:name="fr.mjoudar.realestatemanager.ui.list.ListViewFragment"
@@ -31,7 +35,16 @@
     <fragment
         android:id="@+id/addEditAgentFragment"
         android:name="fr.mjoudar.realestatemanager.ui.addEditAgent.AddEditAgentFragment"
-        android:label="AddEditAgentFragment" />
+        android:label="AddEditAgentFragment" >
+        <argument
+            android:name="isNewAgent"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="agent"
+            app:argType="fr.mjoudar.realestatemanager.domain.models.Agent"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/addEditOfferFragment"
         android:name="fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment"
