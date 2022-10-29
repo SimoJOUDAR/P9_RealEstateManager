@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -32,6 +31,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
             android:hint="@string/select_property_type">
 
             <AutoCompleteTextView
@@ -40,11 +40,7 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@id/add_edit_offer_property_type"
                 android:inputType="textAutoComplete"
-                android:text="@={viewModel.propertyType"
-                entries="@{viewModel.propertyTypeValues}"
-                itemLayout="@{layout.simple_spinner_dropdown_item}"
-                textViewId="@{@android:id/text1}"
-                value="@{viewModel.propertyType}" />
+                android:text="@={viewModel.propertyType}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,13 +57,9 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@id/add_edit_offer_offer_type"
                 android:inputType="textAutoComplete"
-                android:text="@={viewModel.offerType"
-                entries="@{viewModel.offerTypeValues}"
-                itemLayout="@{layout.simple_spinner_dropdown_item}"
-                textViewId="@{@android:id/text1}"
-                value="@{viewModel.offerType}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@={viewModel.offerType}"/>
 
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

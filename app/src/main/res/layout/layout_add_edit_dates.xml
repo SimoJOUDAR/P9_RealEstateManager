@@ -41,6 +41,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            app:startIconContentDescription="Date icon"
+            app:startIconDrawable="@drawable/ic_date_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_edit_offer_publication_date_title">
 
@@ -48,9 +50,9 @@
                 android:id="@+id/add_edit_offer_publication_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                date="@{viewModel.publicationDate}"
+                calendar="@{viewModel.publicationDate}"
                 android:hint="@string/publication_date_hint"
-                android:inputType="textAutoComplete"
+                android:inputType="date"
                 android:labelFor="@id/add_edit_offer_publication_date_layout" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,12 +66,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_edit_offer_publication_date_layout" />
 
-
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/add_edit_offer_closed_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="@={viewModel.isOfferClosed()}"
+            android:checked="@={viewModel.isOfferClosed}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_edit_offer_closed_switch_title" />
 
@@ -80,17 +81,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="@string/closure_date_title"
-            android:visibility="@{viewModel.isOfferClosed() ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@id/add_edit_offer_closure_date_layout"
             app:layout_constraintTop_toBottomOf="@+id/add_edit_offer_publication_date_layout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_edit_offer_closure_date_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="300dp"
+            android:layout_width="226dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:visibility="@{viewModel.isOfferClosed() ? View.GONE : View.VISIBLE}"
+            android:clickable="@{viewModel.isOfferClosed}"
+            android:alpha="@{viewModel.isOfferClosed ? 1.0F : 0.5F}"
+            app:startIconContentDescription="Date icon"
+            app:startIconDrawable="@drawable/ic_date_24"
             app:layout_constraintStart_toEndOf="@id/add_edit_offer_closed_switch"
             app:layout_constraintTop_toBottomOf="@id/add_edit_offer_closure_date_title">
 
@@ -100,9 +103,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/closure_date_hint"
                 android:labelFor="@id/add_edit_offer_closure_date_layout"
-                android:inputType="textAutoComplete"
-                date="@{viewModel.closureDate}"
-                android:visibility="@{viewModel.isOfferClosed() ? View.GONE : View.VISIBLE}" />
+                android:clickable="@{viewModel.isOfferClosed}"
+                android:alpha="@{viewModel.isOfferClosed ? 1.0F : 0.5F}"
+                android:inputType="date"
+                calendar="@{viewModel.closureDate}" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

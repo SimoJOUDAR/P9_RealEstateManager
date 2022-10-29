@@ -21,17 +21,17 @@ abstract class UtilsModule {
             return app as BaseApplication
         }
 
-        @Singleton
-        @Provides
-        fun provideProperties(): List<Offer?> {
-            return ArrayList()
-        }
-
-        @Singleton
-        @Provides
-        fun provideProperty(): Offer {
-            return Offer()
-        }
+//        @Singleton
+//        @Provides
+//        fun provideProperties(): List<Offer?> {
+//            return ArrayList()
+//        }
+//
+//        @Singleton
+//        @Provides
+//        fun provideProperty(): Offer {
+//            return Offer("")
+//        }
     }
 
 }

@@ -120,5 +120,14 @@
     <string name="closureDate_asc">Closure date ascending</string>
     <string name="closureDate_desc">Closure date descending</string>
     <string name="agent_input_incomplete">The input is incomplete or invalid</string>
+    <string name="save_offer">Save offer</string>
+    <string name="delete_offer">Delete offer</string>
+    <string name="delete_agent">Delete agent</string>
+    <string name="save_agent">Save agent</string>
+    <string name="add_new_offer">Add a new offer</string>
+    <string name="edit_offer">Edit offer</string>
+    <string name="add_new_agent">Add a new agent</string>
+    <string name="edit_agent">Edit agent</string>
+    <string name="empty_agent_list">You can\'t create an offer if there\'s no agents. First, create an agent.</string>
 
 </resources>

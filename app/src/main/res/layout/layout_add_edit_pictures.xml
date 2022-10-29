@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/button_picture"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/layout_add_edit_pictures_item"
-            items="@{viewModel.pictures}" />
+            items="@{viewModel.photos}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

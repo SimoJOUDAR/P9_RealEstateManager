@@ -1,22 +1,33 @@
 package fr.mjoudar.realestatemanager.ui.details
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.ktx.awaitMapLoad
 import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentOfferDetailsBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
 import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.ui.adapters.OfferPicturesPagerAdapter
+import fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment
 import fr.mjoudar.realestatemanager.utils.DataState
 import timber.log.Timber
 
@@ -30,35 +41,95 @@ class OfferDetailsFragment : Fragment() {
     private var adapter = OfferPicturesPagerAdapter()
     private var isEuroCurrency = false
     private val viewModel: OfferDetailsViewModel by viewModels()
-//    private var liteMap: GoogleMap? = null
-//    private lateinit var mapView: MapView
-//    private val backPressedCallback = object : OnBackPressedCallback(true) {
-//        override fun handleOnBackPressed() {
-//            requireActivity().findNavController(R.id.nav_host_fragment_activity_main).navigate(R.id.mainViewpagerFragment)
-//        }
-//    }
+    lateinit var navController: NavController
+    private var liteMap: GoogleMap? = null
+    private lateinit var mapView: MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { it ->
-            it.getBoolean(iS_EURO_CURRENCY_ARG).let { it1 -> isEuroCurrency = it1 }
-            it.getParcelable<Offer>(OFFER_ARG)?.let { it2 ->
-                offer = it2
-                offer?.agentId?.let {it3 ->
-                    viewModel.getAgent(it3)
-                    setObservers()
-                }
-            }
-        }
+        arguments?.let { it -> retrievedArguments(it) }
+        lifecycleScope.launchWhenResumed {navController = findNavController()}
+        onBackPressedHandler()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentOfferDetailsBinding.inflate(inflater, container, false)
         // binding.lifecycleOwner is used for observing LiveData with Data Binding
         binding.lifecycleOwner = this.viewLifecycleOwner
+        initGoogleMap(savedInstanceState)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        retrievedArgumentsFromStack()
+        setListeners()
+    }
+
+    /***********************************************************************************************
+     ** Data retrieval
+     ***********************************************************************************************/
+    private fun retrievedArguments(data: Bundle) {
+        data.getParcelable<Offer>(OFFER_ARG)?.let { it ->
+            offer = it
+            offer?.agentId?.let {it2 ->
+                viewModel.getAgent(it2)
+                setObservers()
+            }
+        }
+    }
+
+    private fun retrievedArgumentsFromStack() {
+        lifecycleScope.launchWhenResumed {
+            navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Offer>(OFFER_ARG)
+                ?.observe(viewLifecycleOwner) { it ->
+                    offer = it
+                    offer?.agentId?.let {it1 ->
+                        viewModel.getAgent(it1)
+                        setObservers()
+                    }
+                }
+        }
+    }
+
+    private fun setupData() {
+        val sharedPreference =  requireActivity().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        isEuroCurrency = sharedPreference.getBoolean("isCurrencyEuro", false)
+    }
+
+    private fun initGoogleMap(savedInstanceState: Bundle?) {
+        mapView = binding.liteMapView
+        var mapViewBundle: Bundle? = null
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle("MapViewBundleKey")
+        }
+        mapView.onCreate(mapViewBundle)
+        lifecycleScope.launchWhenCreated {
+            // Get map
+            liteMap = mapView.awaitMap()
+            // Get map
+            liteMap!!.awaitMapLoad()
+            liteMap!!.uiSettings.isZoomControlsEnabled = true
+            if (offer?.address?.lat != null && offer?.address?.lng != null) {
+                val location = LatLng(offer!!.address?.lat!!, offer!!.address?.lng!!)
+                liteMap!!.moveCamera(CameraUpdateFactory.newLatLng(location))
+                addMarker(liteMap, location)
+            }
+        }
+    }
+
+    private fun addMarker(googleMap: GoogleMap?, location: LatLng) {
+        googleMap?.addMarker(
+            MarkerOptions()
+                .position(location)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                .title(offer?.address?.vicinity)
+        )
+    }
+
+    /***********************************************************************************************
+     ** Observers
+     ***********************************************************************************************/
     private fun setObservers() {
         lifecycleScope.launchWhenStarted {
             viewModel.agentState
@@ -83,12 +154,44 @@ class OfferDetailsFragment : Fragment() {
 
     private fun updateContent() {
         offer?.let {
+            setupData()
             binding.offer = it
-            adapter.submitList(it.photos)  //TODO : try to add it as DataBinding
+            adapter.submitList(it.photos)
             binding.viewpager.adapter = adapter
             binding.agent = agent
-            binding.isEuroCurrency
+            binding.isEuroCurrency = isEuroCurrency
         }
+    }
+
+    /***********************************************************************************************
+     ** Listeners
+     ***********************************************************************************************/
+    private fun setListeners() {
+        binding.customUpButton.setOnClickListener { clearBackStack() }
+        binding.editButton.setOnClickListener {
+            lifecycleScope.launchWhenResumed {
+                val bundle = Bundle()
+                bundle.putParcelable(AddEditOfferFragment.OFFER_ARG, offer)
+                navController.navigate(R.id.addEditOfferFragment, bundle)
+            }
+        }
+    }
+
+    /***********************************************************************************************
+     ** popBackStack handlers
+     ***********************************************************************************************/
+
+    private fun onBackPressedHandler() {
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                clearBackStack()
+            }
+        })
+    }
+
+    private fun clearBackStack() {
+        val entry = parentFragmentManager.getBackStackEntryAt(0)
+        parentFragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     /***********************************************************************************************

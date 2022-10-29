@@ -26,53 +26,53 @@ class CustomViewBinding {
         /******************************************************************************************
          ** AutoCompleteTextView data binding
          ******************************************************************************************/
-        @BindingAdapter("valueAttrChanged")
-        fun AutoCompleteTextView.setListener(listener: InverseBindingListener?) {
-            onItemClickListener = listener?.let {
-                AdapterView.OnItemClickListener { _, _, _, _ ->
-                    it.onChange()
-                }
-            }
-        }
-
-        @JvmStatic
-        @get:InverseBindingAdapter(attribute = "value")
-        @set:BindingAdapter("value")
-        var AutoCompleteTextView.selectedValue: Any?
-            get() =
-                if (listSelection != ListView.INVALID_POSITION) adapter.getItem(listSelection) else null
-            set(value) {
-                val newValue = value ?: adapter.getItem(0)
-                setText(newValue.toString(), true)
-                if (adapter is ArrayAdapter<*>) {
-                    val position = (adapter as ArrayAdapter<Any?>).getPosition(newValue)
-                    listSelection = position
-                }
-            }
-
-        @JvmStatic
-        @BindingAdapter("entries", "itemLayout", "textViewId", requireAll = false)
-        fun AutoCompleteTextView.bindAdapter(
-            entries: Array<Any?>,
-            @LayoutRes itemLayout: Int?,
-            @IdRes textViewId: Int?
-        ) {
-            val adapter = when {
-                itemLayout == null -> {
-                    ArrayAdapter(context, R.layout.dropdown_item, entries)
-                }
-                textViewId == null -> {
-                    ArrayAdapter(context, itemLayout, entries)
-                }
-                else -> {
-                    ArrayAdapter(context, itemLayout, textViewId, entries)
-                }
-            }
-            setAdapter(adapter)
-        }
+//        @BindingAdapter("valueAttrChanged")
+//        fun AutoCompleteTextView.setListener(listener: InverseBindingListener?) {
+//            onItemClickListener = listener?.let {
+//                AdapterView.OnItemClickListener { _, _, _, _ ->
+//                    it.onChange()
+//                }
+//            }
+//        }
+//
+//        @JvmStatic
+//        @get:InverseBindingAdapter(attribute = "value")
+//        @set:BindingAdapter("value")
+//        var AutoCompleteTextView.selectedValue: Any?
+//            get() = {
+//                if (listSelection != ListView.INVALID_POSITION) adapter.getItem(listSelection) else null
+//                Timber.tag("propertyType").d("propertyType = ${selectedValue.toString()}")
+//            }
+//
+//            set(value) {
+//                Timber.tag("propertyType").d("propertyType = ${value.toString()}")
+//                val newValue = value ?: adapter.getItem(0)
+//                setText(newValue.toString(), true)
+//                if (adapter is ArrayAdapter<*>) {
+//                    val position = (adapter as ArrayAdapter<Any?>).getPosition(newValue)
+//                    listSelection = position
+//                }
+//            }
+//
+//        @JvmStatic
+//        @BindingAdapter("entries", "itemLayout", "textViewId", requireAll = false)
+//        fun AutoCompleteTextView.bindAdapter(entries: Array<Any?>, @LayoutRes itemLayout: Int?, @IdRes textViewId: Int?) {
+//            val adapter = when {
+//                itemLayout == null -> {
+//                    ArrayAdapter(context, R.layout.dropdown_item, entries)
+//                }
+//                textViewId == null -> {
+//                    ArrayAdapter(context, itemLayout, entries)
+//                }
+//                else -> {
+//                    ArrayAdapter(context, itemLayout, textViewId, entries)
+//                }
+//            }
+//            setAdapter(adapter)
+//        }
 
         /******************************************************************************************
-         ** Pictures RecyclerView data binding
+         ** Photos RecyclerView data binding
          ******************************************************************************************/
         @JvmStatic
         @BindingAdapter("items")
@@ -251,8 +251,18 @@ class CustomViewBinding {
         fun bindGetPriceText(textView: TextView, price: Long?, isEuroCurrency: Boolean = false) {
             price?.let {
                 Timber.d("PRICE: $it")
-                if (isEuroCurrency) textView.text = NumberFormat.getCurrencyInstance(Locale.FRANCE).format(convertDollarToEuro(price))
-                else textView.text = NumberFormat.getCurrencyInstance(Locale.US).format(price)
+                Timber.tag("isEuroCurrency").d("isEuroCurrency $isEuroCurrency")
+
+                if (isEuroCurrency) {
+                    val priceFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE)
+                    priceFormat.maximumFractionDigits = 0
+                    textView.text = priceFormat.format(convertDollarToEuro(price))
+                }
+                else {
+                    val priceFormat = NumberFormat.getCurrencyInstance(Locale.US)
+                    priceFormat.maximumFractionDigits = 0
+                    textView.text = priceFormat.format(price)
+                }
             }
         }
 
@@ -264,6 +274,35 @@ class CustomViewBinding {
         fun bindLongToText(textView: TextView, date: Long?) {
             date?.let {
                 textView.text = longDateToString(it)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("calendar")
+        fun bindCalendarToText(textView: TextView, calendar: Calendar?) {
+            calendar?.let {
+                textView.text = longDateToString(it.timeInMillis)
+            }
+        }
+
+        /******************************************************************************************
+         ** Fragment title binding
+         ******************************************************************************************/
+        @JvmStatic
+        @BindingAdapter("addEditOfferFragmentTitle")
+        fun bindAddEditOfferFragmentTitle(textView: TextView, addEditOfferFragmentTitle: Boolean = true) {
+            when (addEditOfferFragmentTitle) {
+                true -> textView.text = textView.context.getText(R.string.add_new_offer)
+                false -> textView.text = textView.context.getText(R.string.edit_offer)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("addEditAgentFragmentTitle")
+        fun bindAddEditAgentFragmentTitle(textView: TextView, addEditAgentFragmentTitle: Boolean = true) {
+            when (addEditAgentFragmentTitle) {
+                true -> textView.text = textView.context.getText(R.string.add_new_agent)
+                false -> textView.text = textView.context.getText(R.string.edit_agent)
             }
         }
 

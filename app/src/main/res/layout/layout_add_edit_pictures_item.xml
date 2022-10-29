@@ -23,6 +23,7 @@
             android:adjustViewBounds="true"
             tools:src="@drawable/home_img_sample"
             android:contentDescription="@{photo.description}"
+            mainPhoto="@{photo}"
             app:shapeAppearanceOverlay="@style/AllRounderCornersSize10Percent" />
 
         <FrameLayout
@@ -64,6 +65,8 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_delete_24"
+                android:clickable="true"
+                android:focusable="true"
                 android:contentDescription="@string/delete_icon" />
 
         </FrameLayout>

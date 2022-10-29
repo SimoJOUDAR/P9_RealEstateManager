@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -19,16 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.ActivityHomepageBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
-import fr.mjoudar.realestatemanager.repositories.AgentRepository
-import fr.mjoudar.realestatemanager.repositories.OfferRepository
-import fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragment
-import fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragmentDirections
-import fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment
+import fr.mjoudar.realestatemanager.ui.addEditAgent.AddEditAgentFragment.Companion.AGENT_ARG
+import fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment.Companion.OFFER_ARG
 import fr.mjoudar.realestatemanager.utils.DataState
-import fr.mjoudar.realestatemanager.utils.DatabaseDemoDataGenerator
 import timber.log.Timber
 import java.util.*
-import javax.inject.Inject
 import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
@@ -98,6 +92,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         binding.bottomBtnCurrencyConverter.setOnClickListener { switchCurrency() }
         binding.bottomBtnListFilterOff.setOnClickListener { clearFilter() }
         binding.fabAddAgent.setOnClickListener { addEditAgent()}
+        binding.fabAddOffer.setOnClickListener { addEditOffer() }
         binding.bottomBtnAdd.setOnClickListener {
             when (isFabVisible) {
                 false -> startFabOpeningAnimation()
@@ -132,9 +127,14 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
 
     private fun addEditAgent() {
         val bundle = Bundle()
-        bundle.putParcelable("agent", null)
-        bundle.putBoolean("isNewAgent", true)
+        bundle.putParcelable(AGENT_ARG, null)
         navController.navigate(R.id.addEditAgentFragment, bundle)
+    }
+
+    private fun addEditOffer() {
+        val bundle = Bundle()
+        bundle.putParcelable(OFFER_ARG, null)
+        navController.navigate(R.id.addEditOfferFragment, bundle)
     }
 
     // Sets the fab behavior for Homepage - To deploy the fab
@@ -181,6 +181,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     private fun toggleCurrencyButtonIcon() {
         homepageViewModel.toggleCurrency()
         setCurrencyButtonIcon()
+        saveUpData()
     }
 
     private fun setCurrencyButtonIcon() {

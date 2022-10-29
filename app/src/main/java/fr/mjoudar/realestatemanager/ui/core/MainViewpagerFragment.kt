@@ -15,6 +15,7 @@ import fr.mjoudar.realestatemanager.databinding.FragmentMainViewpagerBinding
 import fr.mjoudar.realestatemanager.ui.adapters.MainViewpagerAdapter
 import fr.mjoudar.realestatemanager.ui.list.ListViewFragment
 import fr.mjoudar.realestatemanager.ui.map.MapViewFragment
+import timber.log.Timber
 
 
 class MainViewpagerFragment : Fragment() {
@@ -34,6 +35,7 @@ class MainViewpagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewpager()
+        Timber.tag("StackNavigation").d("MainViewpagerFragment created")
     }
 
     private fun setViewpager() {

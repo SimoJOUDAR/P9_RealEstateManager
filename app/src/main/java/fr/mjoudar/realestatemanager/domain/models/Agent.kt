@@ -16,8 +16,13 @@ data class Agent (
     var _phone: String? = ""
     ):  Parcelable, BaseObservable() {
 
-    val id: String
+    @get:Bindable
+    var id
         get() = _id
+        set(value) {
+            _id = value
+            notifyPropertyChanged(BR.id)
+        }
 
     @get:Bindable
     var name

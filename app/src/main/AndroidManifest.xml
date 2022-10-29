@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="fr.mjoudar.realestatemanager">
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="${MAPS_API_KEY}" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -32,6 +28,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
     </application>
 
 </manifest>

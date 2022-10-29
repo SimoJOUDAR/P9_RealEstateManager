@@ -12,7 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentAddEditAgentBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
+import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.notification.NotificationHandler
+import fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment
 
 @AndroidEntryPoint
 class AddEditAgentFragment : Fragment() {
@@ -26,23 +28,25 @@ class AddEditAgentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { it ->
-            it.getBoolean(iS_NEW_AGENT_ARG).let { it1 -> isNewAgent = it1 }
-            it.getParcelable<Agent>(AGENT_ARG).let { it2 -> agent = it2 }
-        }
+        retrievedArguments()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAddEditAgentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.agent = null
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+    }
+
+    private fun retrievedArguments() {
+        arguments?.let { it ->
+            it.getParcelable<Agent>(AGENT_ARG).let { it2 -> viewModel.loadAgent(it2) }
+        }
     }
 
     private fun setObservers() {
@@ -56,19 +60,19 @@ class AddEditAgentFragment : Fragment() {
                 NotificationHandler.createNotification(
                     requireContext(),
                     "Agent created",
-                    "The new agent was successfully create.",
+                    "The agent has been successfully saved.",
                     "",
                     autoCancel = false
                 )
-                findNavController().navigate(R.id.mainViewpagerFragment)
+                findNavController().navigate(R.id.mainViewpagerFragment)  //To return back to homepage
+//                requireActivity().supportFragmentManager.popBackStack() //To return back to the previous page
+
             }
         }
     }
 
-
     companion object {
         const val AGENT_ARG = "agent"
-        const val iS_NEW_AGENT_ARG = "isNewAgent"
     }
 
 }

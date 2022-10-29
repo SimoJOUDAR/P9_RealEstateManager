@@ -838,7 +838,9 @@ object DatabaseDemoDataGenerator {
         "V7S 1P8",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.342425,
+        -123.132672
     )
     val address2 = Address(
         "338 Taylor Way",
@@ -846,7 +848,9 @@ object DatabaseDemoDataGenerator {
         "V7T 1A6",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.326239,
+        -123.134620
     )
     val address3 = Address(
         "2974 Marine Drive",
@@ -854,7 +858,9 @@ object DatabaseDemoDataGenerator {
         "V7V 1M2",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.338734,
+        -123.198667
     )
     val address4 = Address(
         "4055 Indian River Drive",
@@ -862,7 +868,9 @@ object DatabaseDemoDataGenerator {
         "V7G 2R1",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.325111,
+        -122.959002
     )
     val address5 = Address(
         "5835 Marine Drive",
@@ -870,7 +878,9 @@ object DatabaseDemoDataGenerator {
         "V7W 2S1",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.358346,
+        -123.272099
     )
     val address6 = Address(
         "630 Holmbury Place",
@@ -878,7 +888,9 @@ object DatabaseDemoDataGenerator {
         "V7S 1P7",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.342058,
+        -123.132408
     )
     val address7 = Address(
         "4669 Rutland Road",
@@ -886,7 +898,9 @@ object DatabaseDemoDataGenerator {
         "V7W 1G6",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.347581,
+        -123.249592
     )
     val address8 = Address(
         "1737 Duchess Avenue",
@@ -894,7 +908,9 @@ object DatabaseDemoDataGenerator {
         "V7V 1P8",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.330063,
+        -123.160953
     )
     val address9 = Address(
         "338 Taylor Way",
@@ -902,7 +918,9 @@ object DatabaseDemoDataGenerator {
         "V7T 1A6",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.326241,
+        -123.134595
     )
     val address10 = Address(
         "1885 St Denis Road",
@@ -910,7 +928,9 @@ object DatabaseDemoDataGenerator {
         "V7V 3W4",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.339595,
+        -123.163265
     )
     val address11 = Address(
         "4765 Westwood Drive",
@@ -918,7 +938,9 @@ object DatabaseDemoDataGenerator {
         "V7S 3B5",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.356231,
+        -123.250612
     )
     val address12 = Address(
         "8235 Pasco Road",
@@ -926,7 +948,9 @@ object DatabaseDemoDataGenerator {
         "V7W 2T5",
         "Vancouver",
         "BC",
-        "Canada"
+        "Canada",
+        49.393051,
+        -123.255296
     )
 
     /**********************************************************************************************

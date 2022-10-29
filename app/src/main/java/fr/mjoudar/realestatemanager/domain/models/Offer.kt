@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Offer (
-    val _id: String = "",
+    val _id: String,
     var _propertyType: PropertyType? = PropertyType.HOUSE,
     var _offerType: OfferType? = OfferType.SALE,
     var _availability: Boolean? = false,

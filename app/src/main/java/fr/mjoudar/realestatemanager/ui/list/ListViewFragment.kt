@@ -39,6 +39,7 @@ class ListViewFragment : Fragment() {
         setRecyclerView()
         actualizeData()
         setObserver()
+        Timber.tag("StackNavigation").d("ListViewFragment created")
     }
 
     private fun setRecyclerView() {
@@ -47,7 +48,6 @@ class ListViewFragment : Fragment() {
             val item = itemView.tag as Offer
             val bundle = Bundle()
             bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, item)
-            bundle.putBoolean(OfferDetailsFragment.iS_EURO_CURRENCY_ARG, homepageViewModel.isCurrencyEuro.value!!)
             itemView.findNavController().navigate(R.id.offerDetailsFragment, bundle)
         }
         val onContextClickListener = View.OnContextClickListener { true }
@@ -55,6 +55,9 @@ class ListViewFragment : Fragment() {
         binding.recyclerview.adapter = adapter
     }
 
+    /***********************************************************************************************
+     ** Data retrieval
+     ***********************************************************************************************/
     private fun actualizeData() {
         lifecycleScope.launchWhenStarted {
             homepageViewModel.offersState.collectLatest {
@@ -76,6 +79,15 @@ class ListViewFragment : Fragment() {
         }
     }
 
+    private fun submitOffersList(data : List<Offer>) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter.setData(data)
+        binding.recyclerview.adapter = adapter
+    }
+
+    /***********************************************************************************************
+     ** Observers
+     ***********************************************************************************************/
     private fun setObserver() {
         lifecycleScope.launchWhenStarted {
             homepageViewModel.isCurrencyEuro.observe(viewLifecycleOwner) {
@@ -89,12 +101,10 @@ class ListViewFragment : Fragment() {
         }
     }
 
-    private fun submitOffersList(data : List<Offer>) {
-        binding.swipeRefreshLayout.isRefreshing = false
-        adapter.setData(data)
-        binding.recyclerview.adapter = adapter
-    }
 
+    /***********************************************************************************************
+     ** Utils
+     ***********************************************************************************************/
     private fun displayLoading(isLoading: Boolean) {
         if (isLoading) binding.progressBar.visibility = View.VISIBLE
         else binding.progressBar.visibility = View.GONE

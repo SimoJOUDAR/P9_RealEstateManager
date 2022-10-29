@@ -18,39 +18,45 @@ import javax.inject.Inject
 class AddEditAgentViewModel @Inject constructor(
     private val agentRepository: AgentRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow<DataState<Agent>>(DataState.loading(null))
-    val state: StateFlow<DataState<Agent>>
-        get() = _state
+//    private val _state = MutableStateFlow<DataState<Agent>>(DataState.loading(null))
+//    val state: StateFlow<DataState<Agent>>
+//        get() = _state
 
-    var agent: Agent? = null
     var isNewAgent = true
-    var inputIncomplete = MutableLiveData<Boolean>(false) // TODO: implement observer in fragment for incorrect input handling
-    var isAgentSaved = MutableLiveData<Boolean>(false) // TODO: implement observer in fragment for success notification
+    var agent: Agent? = null
+    var inputIncomplete = MutableLiveData<Boolean>(false)
+    var isAgentSaved = MutableLiveData<Boolean>(false)
 
     val avatar = MutableLiveData<String>()
     val name = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val phone = MutableLiveData<String>()
 
-
     private fun checkInput(): Boolean {
-        //return (avatar.value != null && name.value != null && email.value != null && phone.value != null)
         return (name.value != null && email.value != null && phone.value != null)
     }
+
+    fun loadAgent(data: Agent?) {
+        data?.let {
+            isNewAgent = false
+            agent = data
+            avatar.value = agent!!.avatar
+            name.value = agent!!.name
+            email.value = agent!!.email
+            phone.value = agent!!.phone
+        }
+    }
+
     fun saveAgent() {
-        Timber.tag("saveAgent").d("clicked")
         when (checkInput()) {
             true -> {
-                Timber.tag("saveAgent").d("input not null")
                 when (isNewAgent) {
                     true -> {
-                        Timber.tag("saveAgent").d("new agent")
                         //agent = Agent(UUID.randomUUID().toString(), name.value, avatar.value, email.value, phone.value)
                         agent = Agent(UUID.randomUUID().toString(), name.value, "file:///android_asset/Agents/agent_avatar_3.png", email.value, phone.value)
                         createAgent(agent)
                     }
-                    else -> {
-                        Timber.tag("saveAgent").d("update agent")
+                    false -> {
                         agent!!.name = name.value
                         agent!!.avatar = avatar.value
                         agent!!.email = email.value
@@ -59,10 +65,7 @@ class AddEditAgentViewModel @Inject constructor(
                     }
                 }
             }
-            false -> {
-                Timber.tag("saveAgent").d("input null")
-                inputIncomplete.value = true
-            }
+            false -> inputIncomplete.value = true
         }
     }
 
@@ -82,6 +85,10 @@ class AddEditAgentViewModel @Inject constructor(
                 isAgentSaved.value = true
             }
         }
+    }
+
+    fun deleteAgent() {
+        // TODO : Not required
     }
 
 }
