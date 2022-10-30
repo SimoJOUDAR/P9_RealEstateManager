@@ -16,6 +16,11 @@ Clone/Download this repository and open it with **Android Studio**
 ```bash
 git clone https://github.com/SimoJOUDAR/P9_RealEstateManager
 ```
+Add your Google map Api key to your local.properties file as follow
+```bash
+MAPS_API_KEY=put_your_api_key_in_here
+```
+And add you google-services.json file to the "app" foler.
 
 ## Run the App
 Once the project opened, you can run the App using Android studio's AVD to execute it.
