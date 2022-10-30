@@ -113,7 +113,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun navigateToLoanSimulator() {
-        //TODO: to implement
+        navController.navigate(R.id.loadSimulatorFragment)
     }
 
     private fun switchCurrency() {

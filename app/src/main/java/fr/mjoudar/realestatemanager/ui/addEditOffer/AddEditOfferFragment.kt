@@ -186,7 +186,7 @@ class AddEditOfferFragment : Fragment() {
         viewModel.inputIncomplete.observe(viewLifecycleOwner) {
             if (it) {
 //                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.agent_input_incomplete, Snackbar.LENGTH_SHORT).show()
-                Toast.makeText(requireContext(), R.string.agent_input_incomplete, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.invalid_input, Toast.LENGTH_LONG).show()
             }
         }
     }

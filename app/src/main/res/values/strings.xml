@@ -81,8 +81,8 @@
     <string name="euro">EURO</string>
     <string name="loan_term_title">Loan Term:</string>
     <string name="calculate">Calculate</string>
-    <string name="loan_simulator_results_body">A loan of %1$f % interest rate over %2$i years period is estimated to a monthly payment of:</string>
-    <string name="loan_simulator_monthly_payments">$%1$f</string>
+    <string name="loan_simulator_results_body">A loan of %1$s\%% interest rate over %2$s years period is estimated to a monthly payment of:</string>
+    <string name="loan_simulator_monthly_payments">%1$s</string>
     <string name="sale">FOR SALE</string>
     <string name="rent">FOR RENT</string>
     <string name="sold">Sold</string>
@@ -119,7 +119,7 @@
     <string name="publicationDate_desc">Publication date descending</string>
     <string name="closureDate_asc">Closure date ascending</string>
     <string name="closureDate_desc">Closure date descending</string>
-    <string name="agent_input_incomplete">The input is incomplete or invalid</string>
+    <string name="invalid_input">The input is incomplete or invalid</string>
     <string name="save_offer">Save offer</string>
     <string name="delete_offer">Delete offer</string>
     <string name="delete_agent">Delete agent</string>

@@ -12,9 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentAddEditAgentBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
-import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.notification.NotificationHandler
-import fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment
 
 @AndroidEntryPoint
 class AddEditAgentFragment : Fragment() {
@@ -52,7 +50,7 @@ class AddEditAgentFragment : Fragment() {
     private fun setObservers() {
         viewModel.inputIncomplete.observe(viewLifecycleOwner) {
             if (it) {
-                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.agent_input_incomplete, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.invalid_input, Snackbar.LENGTH_SHORT).show()
             }
         }
         viewModel.isAgentSaved.observe(viewLifecycleOwner) {
