@@ -34,6 +34,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/44e7719fae7d66111a343781459c7eae/transformed/room-ktx-2.4.3-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/6d78daa42126649eca67f951eaa0d357/transformed/hilt-work-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/c4ed22bf20966ae9cd9078bffb58687d/transformed/hilt-android-2.44-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/5f1c37e3e86ab90a1f277a5b18f3716c/transformed/dexter-6.2.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9b820069cb0f4eacd3fc8a8315eb2aea/transformed/material-1.6.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/32d662c93ced2deb492960d8315f0374/transformed/appcompat-1.5.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/8c7c7795d587c256e5e5a2851c93ac84/transformed/viewpager2-1.0.0-api.jar</arg>
@@ -343,6 +344,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.bumptech.glide:glide:4.12.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.bumptech.glide:gifdecoder:4.12.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.exifinterface:exifinterface:1.2.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.karumi:dexter:6.2.2@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="RealEstateManager.app.main" />
 </module>

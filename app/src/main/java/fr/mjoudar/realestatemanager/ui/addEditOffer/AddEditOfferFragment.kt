@@ -1,7 +1,14 @@
 package fr.mjoudar.realestatemanager.ui.addEditOffer
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.Parcelable
+import android.provider.MediaStore
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -16,6 +24,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import fr.mjoudar.realestatemanager.BuildConfig
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentAddEditOfferBinding
 import fr.mjoudar.realestatemanager.domain.models.Agent
@@ -23,9 +32,18 @@ import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.domain.models.Photo
 import fr.mjoudar.realestatemanager.notification.NotificationHandler
 import fr.mjoudar.realestatemanager.ui.adapters.AddEditOfferPicturesAdapter
+import fr.mjoudar.realestatemanager.utils.compressImageFile
+import fr.mjoudar.realestatemanager.utils.setUpPermissionsUtil
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
 import java.util.*
 
+private const val REQ_CAPTURE = 100
+private const val RES_IMAGE = 100
+private const val FILE_PROVIDER_NAME = ".fileprovider"
 
 @AndroidEntryPoint
 class AddEditOfferFragment : Fragment() {
@@ -38,6 +56,10 @@ class AddEditOfferFragment : Fragment() {
     private val viewModel: AddEditOfferViewModel by viewModels()
     private var photos: List<Photo> = emptyList()
     private lateinit var adapter: AddEditOfferPicturesAdapter
+    private var isPermissionsAllowed: Boolean = false
+    private var imageUri: Uri? = null
+    private var imgPath: String = ""
+    private var queryImageUrl: String = ""
 
     // Date picker listeners
     private val publicationDateListener by lazy {
@@ -77,8 +99,9 @@ class AddEditOfferFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setAdapters()
         setObservers()
-        setDatePickersListeners()
+        setListener()
         setSoftKeyboardOff()
+        isPermissionsAllowed = setUpPermissionsUtil(requireContext())
     }
 
     //TODO: Test----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -232,6 +255,11 @@ class AddEditOfferFragment : Fragment() {
     /***********************************************************************************************
      ** Listeners
      ***********************************************************************************************/
+    private fun setListener() {
+        setDatePickersListeners()
+        setupAddPictureListener()
+    }
+
     private fun setDatePickersListeners() {
         binding.sectionAddEditDates.addEditOfferPublicationDate.setOnClickListener {
             datePickerLauncher(publicationDateListener, viewModel.publicationDate.value!!)
@@ -278,4 +306,134 @@ class AddEditOfferFragment : Fragment() {
     companion object {
         const val OFFER_ARG = "offer"
     }
+
+
+    //TODO: Photo----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    private fun setupAddPictureListener() {
+        binding.sectionAddEditPictures.buttonPicture.setOnClickListener {
+            chooseImage()
+            if (isPermissionsAllowed) {
+                chooseImage()
+            }
+        }
+    }
+
+    // when permission granted
+    private fun chooseImage() {
+        startActivityForResult(getPickImageIntent(), RES_IMAGE)
+    }
+
+    // Opens the image selector
+    private fun getPickImageIntent(): Intent? {
+        var chooserIntent: Intent? = null
+        var intentList: MutableList<Intent> = ArrayList()
+        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri())
+        intentList = addIntentsToList(requireContext(), intentList, pickIntent)
+        intentList = addIntentsToList(requireContext(), intentList, takePhotoIntent)
+        if (intentList.size > 0) {
+            chooserIntent = Intent.createChooser(
+                intentList.removeAt(intentList.size - 1),
+                getString(R.string.select_capture_image)
+            )
+            chooserIntent!!.putExtra(
+                Intent.EXTRA_INITIAL_INTENTS,
+                intentList.toTypedArray<Parcelable>()
+            )
+        }
+        return chooserIntent
+    }
+
+    private fun addIntentsToList(context: Context, list: MutableList<Intent>, intent: Intent): MutableList<Intent> {
+        val resInfo = context.packageManager.queryIntentActivities(intent, 0)
+        for (resolveInfo in resInfo) {
+            val packageName = resolveInfo.activityInfo.packageName
+            val targetedIntent = Intent(intent)
+            targetedIntent.setPackage(packageName)
+            list.add(targetedIntent)
+        }
+        return list
+    }
+
+    private fun setImageUri(): Uri {
+        val folder = File("${requireContext().getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
+        folder.mkdirs()
+        val file = File(folder, "Image_Tmp.jpg")
+        if (file.exists())
+            file.delete()
+        file.createNewFile()
+        imageUri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID + FILE_PROVIDER_NAME, file)
+        imgPath = file.absolutePath
+        return imageUri!!
+    }
+
+    // when picture has been selected
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RES_IMAGE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    handleImageRequest(data)
+                }
+            }
+        }
+    }
+
+    // when picture has been selected => handle the results (the picture)
+    private fun handleImageRequest(data: Intent?) {
+        val exceptionHandler = CoroutineExceptionHandler { _, t ->
+            t.printStackTrace()
+            Toast.makeText(requireContext(), t.localizedMessage ?: getString(R.string.unknown_error_msg), Toast.LENGTH_SHORT).show()
+        }
+        lifecycleScope.launch(Dispatchers.Main + exceptionHandler) {
+            if (data?.data != null) {
+                //Selected photos from Gallery
+                imageUri = data.data
+                queryImageUrl = imageUri?.path!!
+                queryImageUrl = requireActivity().compressImageFile(queryImageUrl, false, imageUri!!)
+            } else {
+                // Camera picture
+                queryImageUrl = imgPath
+                requireActivity().compressImageFile(queryImageUrl, uri = imageUri!!)
+            }
+            imageUri = Uri.fromFile(File(queryImageUrl))
+
+            if (queryImageUrl.isNotEmpty()) {
+                submitPhotoToList(Photo(UUID.randomUUID().toString(),imageUri.toString(), "")) // TODO: To add description here
+            }
+        }
+    }
+
+    private fun submitPhotoToList(photo: Photo) {
+        viewModel.photos.value!!.add(photo)
+    }
+
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQ_CAPTURE -> {
+                if (isPermissionsAllowed) {
+                    chooseImage()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.permission_denied),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+
+
+
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.utils
+package fr.mjoudar.realestatemanager.utils
 
 import android.content.Context
 import android.location.Address

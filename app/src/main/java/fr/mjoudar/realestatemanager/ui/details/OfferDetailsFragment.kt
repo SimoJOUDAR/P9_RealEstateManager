@@ -198,44 +198,37 @@ class OfferDetailsFragment : Fragment() {
      ** Memory control
      **********************************************************************************************/
 
-    override fun onLowMemory() {
-        super.onLowMemory()
+//    override fun onLowMemory() {
+//        super.onLowMemory()
 //        mapView.onLowMemory()
-    }
-
-    override fun onStart() {
-        super.onStart()
+//    }
+//
+//    override fun onStart() {
+//        super.onStart()
 //        mapView.onStart()
-//        requireActivity().onBackPressedDispatcher.addCallback(callback)
-    }
-
-    override fun onResume() {
-        super.onResume()
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
 //        mapView.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
 //        mapView.onStop()
-//        callback.remove()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
 //        mapView.onDestroy()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-//        viewPager!!.adapter = null
-//        viewPager = null
-//        dotsIndicator = null
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
 //        mapView.onDestroy()
-    }
+//    }
 
     companion object {
         const val OFFER_ARG = "offer"
-        const val iS_EURO_CURRENCY_ARG = "isEuroCurrency"
     }
 }

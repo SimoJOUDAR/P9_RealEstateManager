@@ -5,11 +5,11 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.openclassrooms.realestatemanager.utils.GeocodeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.mjoudar.realestatemanager.domain.models.*
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
 import fr.mjoudar.realestatemanager.repositories.OfferRepository
+import fr.mjoudar.realestatemanager.utils.GeocodeUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -47,8 +47,7 @@ class AddEditOfferViewModel @Inject constructor(
     val rooms = MutableLiveData<String>("")
     val bathrooms = MutableLiveData<String>("")
     //Particularities
-    //val boolParticularities = mutableListOf( MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false))
-    val boolParticularities = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false, false, false, false, false, false))
+    val boolParticularities = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false, false, false, false, false, false, false))
     val namedParticularities = mutableListOf(Particularities.GARAGE, Particularities.PARKING_LOT, Particularities.BASEMENT, Particularities.BALCONY, Particularities.BACKYARD, Particularities.SWIMMING_POOL, Particularities.GYM_ROOM, Particularities.GARDEN, Particularities.JACUZZI, Particularities.SAUNA)
     var particularities: MutableList<Particularities> = mutableListOf()
     //Description
@@ -63,7 +62,6 @@ class AddEditOfferViewModel @Inject constructor(
     private var addressLat: Double? = 0.0
     private var addressLng: Double? = 0.0
     //Poi
-    //val boolPoi = mutableListOf( MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false), MutableLiveData(false))
     val boolPoi = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false, false, false, false, false, false))
     val namedPoi = mutableListOf(POI.BUS_STATION, POI.MARKET_MALL, POI.MEDICAL_CENTER, POI.SPORT_CENTER, POI.CULTURAL_CENTER, POI.SCHOOL, POI.PARK, POI.BAR_COFFEESHOP, POI.RESTAURANT)
     var poi: MutableList<POI> = mutableListOf()
@@ -75,7 +73,7 @@ class AddEditOfferViewModel @Inject constructor(
     var publicationDate = MutableLiveData<Calendar>(Calendar.getInstance())
     var closureDate = MutableLiveData<Calendar>(Calendar.getInstance())
     //Photos
-    var photos = MutableLiveData<List<Photo>>(mutableListOf())
+    var photos = MutableLiveData<MutableList<Photo>>(mutableListOf())
 
     //Additional objects
     var mainPhoto: Photo? = null
@@ -201,7 +199,7 @@ class AddEditOfferViewModel @Inject constructor(
         viewModelScope.launch {
             particularitiesConverter()
             poiConverter()
-            generateLatLng(context)
+            //generateLatLng(context)
             saveOfferOnDatabase(buildOffer())
         }
     }
@@ -250,7 +248,7 @@ class AddEditOfferViewModel @Inject constructor(
             bathrooms.value!!.toInt(),
             particularities,
             description.value,
-            photos.value!!.toMutableList(),
+            photos.value!!,
             mainPhoto?.id,
             addressObject,
             poi,
@@ -269,10 +267,11 @@ class AddEditOfferViewModel @Inject constructor(
 
     private fun saveOfferOnDatabase(offer: Offer) {
         Timber.tag("isOfferClosed_Test").d("viewModel.saveOfferOnDatabase() called")
-        when (isNewOffer) {
-            true -> createOfferOnDatabase(offer)
-            false -> updateOfferOnDatabase(offer)
-        }
+//        when (isNewOffer) {
+//            true -> createOfferOnDatabase(offer)
+//            false -> updateOfferOnDatabase(offer)
+//        }
+        createOfferOnDatabase(offer)
     }
 
     private fun createOfferOnDatabase(offer : Offer?) {
