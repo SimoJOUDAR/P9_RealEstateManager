@@ -151,11 +151,6 @@ class AddEditOfferFragment : Fragment() {
         setInputIncompleteObserver()
         setIsOfferSavedObserver()
         setIsAgentListEmptyObserver()
-
-        viewModel.isOfferClosed.observe(requireActivity()) {
-            Timber.tag("isOfferClosed_Test").d("viewModel.isOfferClosed = ${viewModel.isOfferClosed.value}")
-            Timber.tag("isOfferClosed_Test").d("viewModel.offer.isOfferClosed = ${!(viewModel.offer?.availability)!!}")
-        }
     }
 
     // Observes agentList to setup the agents' autocomplete adapter

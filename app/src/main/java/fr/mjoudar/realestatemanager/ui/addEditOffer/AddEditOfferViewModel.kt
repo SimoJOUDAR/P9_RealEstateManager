@@ -74,10 +74,7 @@ class AddEditOfferViewModel @Inject constructor(
     var closureDate = MutableLiveData<Calendar>(Calendar.getInstance())
     //Photos
     var photos = MutableLiveData<MutableList<Photo>>(mutableListOf())
-
-    //Additional objects
-    var mainPhoto: Photo? = null
-    //TODO : Check to optimize ---------------------------------------------------------------------
+    var mainPhoto: Photo? = null // TODO: To analyse
 
     init {
         fetchAgents()

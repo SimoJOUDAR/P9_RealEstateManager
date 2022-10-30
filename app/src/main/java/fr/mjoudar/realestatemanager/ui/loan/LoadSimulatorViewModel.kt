@@ -6,6 +6,7 @@ import fr.mjoudar.realestatemanager.utils.Utils
 import timber.log.Timber
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.pow
 
 class LoadSimulatorViewModel : ViewModel() {
 
@@ -51,8 +52,8 @@ class LoadSimulatorViewModel : ViewModel() {
     }
 
     private fun calculate() {
-        val interest = (interestRate * (propertyValue - downPayment) * loanTerm)
-        monthlyPayment = (interest + interestRate - downPayment) / (12 * loanTerm)
+        val loan = propertyValue - downPayment
+        monthlyPayment = (((loan*interestRate)/12) / (1-(1+(interestRate/12)).pow(-(loanTerm*12))))
         formatMonthlyPayment()
     }
 

@@ -2,9 +2,11 @@
 
 ## About
 This is my ninth project for Openclassrooms' **Android App Development program**.
-This **Native Android App "RealEstateManager"** is, as the name indicates, a real estate management app ordered by a real estate company for attend their specific needs. 
+This **Native Android App "RealEstateManager"** is, as the name indicates, a real estate management app ordered by a real estate company to attend to their specific needs. 
 
-It allows company's personnel to access their real estate offers (sales and rentals), to display an offer in details, to edit an existing offer or to create a new one and assign it to an agent, all from their mobile equipment. It offers also the functionalies to create an new agent profile, to display all real estates in a map view and to simulate a loan. The app is also multi currency view. It has offline Data persistence -done using a SQLite local room database- for offline usage.
+It allows company's personnel to access their real estate offers (sales and rentals), to display an offer in details, to edit an existing offer or to create a new one and assign it to an agent, all from their mobile equipment.
+
+It offers also the functionalies to create a new agent profile and to display all real estates in a map view. The app is also multi currency, it has a currency converter and a multi currency loan simulator. And it has an offline Data persistence -done using a SQLite local room database- for offline usage.
 
 ## Testing
 This source code package incorporates **unit tests** and **instrumentation tests** as well as **HTML results** of these tests.
@@ -30,6 +32,6 @@ From Android Studio:
 ## Preview
 <img src = "media/P9_RealEstateManager_1.png" height="550"> <img src = "media/P9_RealEstateManager_2.png" height="550"> <img src = "media/P9_RealEstateManager_3.png" height="550"> 
 <img src = "media/P9_RealEstateManager_4.png" height="550"> <img src = "media/P9_RealEstateManager_5.png" height="550"> <img src = "media/P9_RealEstateManager_6.png" height="550"> 
-<img src = "media/P9_RealEstateManager_7.png" height="550"> <img src = "media/P9_RealEstateManager_8.png" height="550"> <img src = "media/P9_RealEstateManager_9.png" height="550">
+<img src = "media/P9_RealEstateManager_7.png" height="550"> <img src = "media/P9_RealEstateManager_8.png" height="550"> <img src = "media/P9_RealEstateManager_9.png" height="550"> <img src = "media/P9_RealEstateManager_10.png" height="550"> <img src = "media/P9_RealEstateManager_11.png" height="550"> <img src = "media/P9_RealEstateManager_12.png" height="550">
 
 Video_link_coming_soon
