@@ -35,13 +35,11 @@ data class OfferEntityAggregate(
             _particularities = offerEntity.particularities.toMutableList(),
             _description = offerEntity.description,
             _photos = photoEntities.map { it.toModel() }.toMutableList(),
-            _mainPhotoId = offerEntity.main_photo_id,
             _address = addressEntity.toModel(),
             _poi = offerEntity.poi.toMutableList(),
             _agentId = offerEntity.agent_id,
             _publicationDate = offerEntity.publication_date,
             _closureDate = offerEntity.closure_date,
-            _staticMap = offerEntity.static_map
         )
     }
 }

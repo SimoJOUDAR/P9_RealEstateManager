@@ -15,8 +15,7 @@
         <RadioGroup
             android:id="@+id/section_filter_sorting_radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkedButton="@+id/radio_button_publicationDate_desc">
+            android:layout_height="wrap_content">
             <RadioButton
                 android:id="@+id/radio_button_price_asc"
                 android:layout_width="wrap_content"

@@ -28,10 +28,8 @@ data class OfferEntity(
     var bathrooms: Int?,
     var particularities: List<Particularities> = arrayListOf(),
     var description: String?,
-    var main_photo_id: String?,
     var poi: List<POI> = arrayListOf(),
     var agent_id: String?,
     var publication_date: Long?,
-    var closure_date: Long?,
-    var static_map: String?
+    var closure_date: Long?
 )

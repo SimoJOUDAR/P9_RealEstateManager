@@ -43,7 +43,7 @@
                 android:inputType="date"
                 android:singleLine="true"
                 android:scrollbars="horizontal"
-                android:text="@={viewModel.stringPublicationDateFrom}" />
+                calendar="@{viewModel.publicationDateFrom}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +67,7 @@
                 android:inputType="date"
                 android:scrollbars="horizontal"
                 android:singleLine="true"
-                android:text="@={viewModel.stringPublicationDateTo }" />
+                calendar="@{viewModel.publicationDateTo}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +102,7 @@
                 android:inputType="date"
                 android:singleLine="true"
                 android:scrollbars="horizontal"
-                android:text="@={viewModel.stringClosureDateFrom}" />
+                calendar="@{viewModel.closureDateFrom}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +126,7 @@
                 android:inputType="date"
                 android:scrollbars="horizontal"
                 android:singleLine="true"
-                android:text="@={viewModel.stringClosureDateTo }" />
+                calendar="@{viewModel.closureDateTo}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

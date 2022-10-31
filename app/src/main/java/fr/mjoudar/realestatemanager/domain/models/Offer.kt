@@ -22,13 +22,11 @@ data class Offer (
     var _particularities: MutableList<Particularities> = mutableListOf(),
     var _description: String? = "",
     var _photos: MutableList<Photo> = mutableListOf(),
-    var _mainPhotoId: String? = null,
     var _address: Address? = null,
     var _poi: MutableList<POI> = mutableListOf(),
     var _agentId: String? = null,
     var _publicationDate: Long? = null,
     var _closureDate: Long? = null,
-    var _staticMap: String? = null
         ) : Parcelable, BaseObservable() {
 
     val id
@@ -115,14 +113,6 @@ data class Offer (
         }
 
         @get:Bindable
-    var mainPhotoId
-        get() = _mainPhotoId
-        set(value) {
-            _mainPhotoId = value
-            notifyPropertyChanged(BR.mainPhotoId)
-        }
-
-        @get:Bindable
     var address
         get() = _address
         set(value) {
@@ -162,14 +152,6 @@ data class Offer (
             notifyPropertyChanged(BR.closureDate)
         }
 
-        @get:Bindable
-    var staticMap
-        get() = _staticMap
-        set(value) {
-            _staticMap = value
-            notifyPropertyChanged(BR.staticMap)
-        }
-
     val isEmpty
         get() =  propertyType?.equals(null) ?: true || offerType?.equals(null) ?: true
                 || price == 0.toLong() || surface != 0 || rooms != 0 || bathrooms != 0
@@ -188,12 +170,10 @@ data class Offer (
             bathrooms,
             particularities,
             description,
-            mainPhotoId,
             poi,
             agentId,
             publicationDate,
-            closureDate,
-            staticMap
+            closureDate
         )
     }
 

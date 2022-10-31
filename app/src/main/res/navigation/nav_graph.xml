@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/mainViewpagerFragment"
-        android:name="fr.mjoudar.realestatemanager.ui.core.MainViewpagerFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.homepage.MainViewpagerFragment"
         android:label="fragment_main_viewpager"
         tools:layout="@layout/fragment_main_viewpager" />
     <fragment
@@ -67,8 +67,4 @@
         android:id="@+id/filterDialogFragment"
         android:name="fr.mjoudar.realestatemanager.ui.filter.FilterDialogFragment"
         android:label="FilterDialogFragment" />
-    <dialog
-        android:id="@+id/pictureSelectorDialogFragment"
-        android:name="fr.mjoudar.realestatemanager.ui.pictureSelector.PictureSelectorDialogFragment"
-        android:label="PictureSelectorDialogFragment" />
 </navigation>

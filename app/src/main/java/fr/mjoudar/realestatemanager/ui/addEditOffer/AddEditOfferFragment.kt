@@ -104,8 +104,6 @@ class AddEditOfferFragment : Fragment() {
         isPermissionsAllowed = setUpPermissionsUtil(requireContext())
     }
 
-    //TODO: Test----------------------------------------------------------------------------------------------------------------------------------------------------
-
     /***********************************************************************************************
      ** Data retrieval
      ***********************************************************************************************/
@@ -156,10 +154,12 @@ class AddEditOfferFragment : Fragment() {
     // Observes agentList to setup the agents' autocomplete adapter
     private fun setAgentListObserver() {
         viewModel.agentList.observe(viewLifecycleOwner) { it1 ->
-            it1?.let {
-                binding.sectionAddEditAgent.addEditOfferAgent.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, it1))
-                binding.sectionAddEditAgent.addEditOfferAgent.setOnItemClickListener { parent, _, position, _ ->
-                    viewModel.agent.value = parent.getItemAtPosition(position) as Agent
+            it1?.let { it2 ->
+                if (it2.isNotEmpty()) {
+                    binding.sectionAddEditAgent.addEditOfferAgent.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, it1))
+                    binding.sectionAddEditAgent.addEditOfferAgent.setOnItemClickListener { parent, _, position, _ ->
+                        viewModel.agent.value = parent.getItemAtPosition(position) as Agent
+                    }
                 }
             }
         }
@@ -302,8 +302,6 @@ class AddEditOfferFragment : Fragment() {
         const val OFFER_ARG = "offer"
     }
 
-
-    //TODO: Photo----------------------------------------------------------------------------------------------------------------------------------------------------
 
     private fun setupAddPictureListener() {
         binding.sectionAddEditPictures.buttonPicture.setOnClickListener {

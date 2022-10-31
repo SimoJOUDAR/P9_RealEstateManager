@@ -135,7 +135,7 @@ class MapViewFragment : Fragment() {
                 googleMap.isMyLocationEnabled = true
                 googleMap.uiSettings.isMyLocationButtonEnabled = true
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f))
-                actualizeData()
+                actualizedDataObserver()
             }
         }
     }
@@ -187,6 +187,15 @@ class MapViewFragment : Fragment() {
                 val location = LatLng(offer.address?.lat!!, offer.address?.lng!!)
                 addMarkers(location, offer)
             }
+        }
+    }
+
+    /***********************************************************************************************
+     ** Observers
+     ***********************************************************************************************/
+    private fun actualizedDataObserver() {
+        homepageViewModel.dataActualized.observe(viewLifecycleOwner) {
+            if (it) actualizeData()
         }
     }
 

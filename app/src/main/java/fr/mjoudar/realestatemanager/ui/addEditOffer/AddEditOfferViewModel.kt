@@ -196,7 +196,7 @@ class AddEditOfferViewModel @Inject constructor(
         viewModelScope.launch {
             particularitiesConverter()
             poiConverter()
-            //generateLatLng(context)
+            generateLatLng(context)
             saveOfferOnDatabase(buildOffer())
         }
     }
@@ -222,7 +222,8 @@ class AddEditOfferViewModel @Inject constructor(
     private fun generateLatLng(context: Context) {
         Timber.tag("isOfferClosed_Test").d("viewModel.generateLatLng() called")
         val offerAddress = if (state.value!!.isNotEmpty()) "$address, $city, $state, $zipCode, $country" else "$address, $city, $zipCode, $country"
-        runBlocking {
+        //runBlocking
+        viewModelScope.launch{
             val location = GeocodeUtils.getLatLngFromAddress(offerAddress, context)
             addressLat = location?.latitude.toString().toDoubleOrNull()
             addressLng = location?.longitude.toString().toDoubleOrNull()
@@ -246,7 +247,6 @@ class AddEditOfferViewModel @Inject constructor(
             particularities,
             description.value,
             photos.value!!,
-            mainPhoto?.id,
             addressObject,
             poi,
             agent.value?.id,

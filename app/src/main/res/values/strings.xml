@@ -104,8 +104,6 @@
     <string name="bathrooms">Bathrooms</string>
     <string name="min_bathrooms">Min bathrooms</string>
     <string name="max_bathrooms">Max bathrooms</string>
-    <string name="with_pictures_title">With pictures</string>
-    <string name="with_pictures_body">Show only offers with pictures of the property</string>
     <string name="location">Location</string>
     <string name="publication_date">Publication date</string>
     <string name="from">From…</string>
@@ -136,5 +134,10 @@
     <string name="select_capture_image"><![CDATA[Please select or capture image]]></string>
     <string name="unknown_error_msg">An unknown error has occurred</string>
     <string name="permission_denied">Permission denied</string>
+    <string name="sales">Sales</string>
+    <string name="rentals">Rentals</string>
+    <string name="filter_already_off">The is no filter to clear</string>
+    <string name="filter_turned_off">The filter has been cleared</string>
+    <string name="all">All</string>
 
 </resources>

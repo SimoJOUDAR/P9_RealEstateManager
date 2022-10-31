@@ -106,22 +106,6 @@
                 android:checked="@={viewModel.boolParticularities[9]}"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/section_filter_withPicture_title"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/with_pictures_title"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/filter_withPictures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/with_pictures_body"
-            android:checked="@={viewModel.withPictures}"/>
-
     </LinearLayout>
 
 </layout>

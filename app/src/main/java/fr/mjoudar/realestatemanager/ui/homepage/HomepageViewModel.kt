@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.mjoudar.realestatemanager.domain.models.Agent
 import fr.mjoudar.realestatemanager.domain.models.Offer
+import fr.mjoudar.realestatemanager.domain.models.OffersFilter
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
 import fr.mjoudar.realestatemanager.repositories.OfferRepository
 import fr.mjoudar.realestatemanager.utils.DataState
 import fr.mjoudar.realestatemanager.utils.DatabaseDemoDataGenerator
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,9 +25,13 @@ class HomepageViewModel @Inject constructor(
     private val _agentsState = MutableStateFlow<DataState<List<Agent>>>(DataState.loading(null))
     val agentsState: StateFlow<DataState<List<Agent>>>
         get() = _agentsState
+
     private val _offersState = MutableStateFlow<DataState<List<Offer>>>(DataState.loading(null))
     val offersState: StateFlow<DataState<List<Offer>>>
         get() = _offersState
+
+    val dataActualized = MutableLiveData<Boolean>(false)
+    var dataFiltered = false
 
     //var isCurrencyEuro = false
     var isCurrencyEuro = MutableLiveData<Boolean>(false)
@@ -82,7 +88,8 @@ class HomepageViewModel @Inject constructor(
                 }
         }
     }
-    private fun fetchOffers() {
+
+    fun fetchOffers() {
         viewModelScope.launch {
             offerRepository.getAllOffers()
                 .catch { e ->
@@ -90,6 +97,27 @@ class HomepageViewModel @Inject constructor(
                 }
                 .collectLatest {
                     _offersState.value = DataState.success(it)
+                    dataFiltered = false
+                    dataActualized.value = true
+                }
+        }
+    }
+
+    /**********************************************************************************************
+     ** Filtering
+     **********************************************************************************************/
+    fun getFilteredOfferList(offersFilter: OffersFilter) {
+        viewModelScope.launch {
+            offerRepository.getFilteredOffers(offersFilter)
+                .catch { e ->
+                    _offersState.value = (DataState.error(e.toString(), null))
+                }
+                .collectLatest {
+                    val list = it.toSet().toList() // Remove duplicates
+                    _offersState.value = DataState.success(list)
+                    Timber.tag("Filter").d("Filter results = ${it.size} Vr. Cleaned results = ${list.size}")
+                    dataFiltered = true
+                    dataActualized.value = true
                 }
         }
     }

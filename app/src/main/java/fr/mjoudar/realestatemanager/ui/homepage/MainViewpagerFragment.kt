@@ -1,4 +1,4 @@
-package fr.mjoudar.realestatemanager.ui.core
+package fr.mjoudar.realestatemanager.ui.homepage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

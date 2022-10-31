@@ -37,7 +37,6 @@ class ListViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.swipeRefreshLayout.setOnRefreshListener { actualizeData() }
         setRecyclerView()
-        actualizeData()
         setObserver()
         Timber.tag("StackNavigation").d("ListViewFragment created")
     }
@@ -89,6 +88,11 @@ class ListViewFragment : Fragment() {
      ** Observers
      ***********************************************************************************************/
     private fun setObserver() {
+        setCurrencyObserver()
+        actualizedDataObserver()
+    }
+
+    private fun setCurrencyObserver() {
         lifecycleScope.launchWhenStarted {
             homepageViewModel.isCurrencyEuro.observe(viewLifecycleOwner) {
                 if (::adapter.isInitialized) {
@@ -98,6 +102,12 @@ class ListViewFragment : Fragment() {
                     binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
+        }
+    }
+
+    private fun actualizedDataObserver() {
+        homepageViewModel.dataActualized.observe(viewLifecycleOwner) {
+            if (it) actualizeData()
         }
     }
 

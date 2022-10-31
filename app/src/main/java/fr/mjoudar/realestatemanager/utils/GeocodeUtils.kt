@@ -18,8 +18,8 @@ object GeocodeUtils {
 
         try {
             resultAddresses = geocoder.getFromLocationName(address, 1)
-            // 3
-            if (null != resultAddresses && resultAddresses.isNotEmpty()) {
+
+            if (resultAddresses != null && resultAddresses.isNotEmpty()) {
                 resultAddress = resultAddresses[0]
                 if (resultAddress.maxAddressLineIndex > -1) {
                     latLng = LatLng(resultAddress.latitude, resultAddress.longitude)

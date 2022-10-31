@@ -63,11 +63,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         setupData()
     }
 
-    override fun onPause() {
-        super.onPause()
-        saveUpData()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -109,7 +104,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun applyFilter() {
-        //TODO: to implement
+        navController.navigate(R.id.filterDialogFragment)
     }
 
     private fun navigateToLoanSimulator() {
@@ -117,12 +112,19 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun switchCurrency() {
-        //TODO: to implement
-        toggleCurrencyButtonIcon()
+        homepageViewModel.toggleCurrency()
+        setCurrencyButtonIcon()
+        saveUpData()
     }
 
     private fun clearFilter() {
-        //TODO: to implement
+        when (homepageViewModel.dataFiltered) {
+            true -> {
+                homepageViewModel.fetchOffers()
+                Toast.makeText(this, R.string.filter_turned_off, Toast.LENGTH_LONG).show()
+            }
+            false -> Toast.makeText(this, R.string.filter_already_off, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun addEditAgent() {
@@ -176,12 +178,6 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
                 binding.fabContainer.visibility = View.GONE
             }
         }
-    }
-
-    private fun toggleCurrencyButtonIcon() {
-        homepageViewModel.toggleCurrency()
-        setCurrencyButtonIcon()
-        saveUpData()
     }
 
     private fun setCurrencyButtonIcon() {
@@ -300,5 +296,4 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
             Toast.makeText(this, "Unknown error", Toast.LENGTH_LONG).show()
         }
     }
-
 }

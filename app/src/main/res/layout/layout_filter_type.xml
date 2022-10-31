@@ -71,14 +71,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="@string/house"
+                android:text="@string/sales"
                 android:checked="@={viewModel.boolOfferTypes[0]}" />
             <CheckBox
                 android:id="@+id/filter_rent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="@string/apartment"
+                android:text="@string/rentals"
                 android:checked="@={viewModel.boolOfferTypes[1]}"/>
         </LinearLayout>
         <TextView
@@ -89,13 +89,14 @@
             android:text="@string/availability"
             android:textStyle="bold"
             />
+
         <RadioGroup
             android:id="@+id/filter_availability_radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/filter_radio_button_available"
             android:orientation="horizontal"
-            android:layout_marginStart="60dp">
+            >
 
             <RadioButton
                 android:id="@+id/filter_radio_button_available"
@@ -112,7 +113,16 @@
                 android:text="@string/closed"
                 android:checked="@={viewModel.closed}"/>
 
+            <RadioButton
+                android:id="@+id/filter_radio_button_na"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:text="@string/all"
+                android:checked="@={viewModel.all}"/>
+
         </RadioGroup>
+
 
 
     </LinearLayout>
