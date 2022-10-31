@@ -160,7 +160,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         viewModel.offersFilter.observe(viewLifecycleOwner) {
             if (it != null) {
                 homepageViewModel.getFilteredOfferList(it)
-                findNavController().popBackStack()
+                findNavController().navigate(FilterDialogFragmentDirections.actionFilterDialogFragmentToMainViewpagerFragment())
             }
         }
     }

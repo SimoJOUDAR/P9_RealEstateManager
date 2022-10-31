@@ -76,20 +76,23 @@ data class OffersFilter(
             _closureDateFrom != null && _closureDateTo == null -> builder.append("(closure_date >= $_closureDateFrom) AND ")
             _closureDateFrom == null && _closureDateTo != null -> builder.append("(closure_date <= $_closureDateTo) AND ")
         }
-        builder.setLength(builder.length-5)
-//        if (_sorting != null) {
-//            when(_sorting) {
-//                Sorting.PRICE_ASC -> builder.append(" ORDER BY price ASC")
-//                Sorting.PRICE_DESC -> builder.append(" ORDER BY price DESC")
-//                Sorting.SURFACE_ASC -> builder.append(" ORDER BY surface ASC")
-//                Sorting.SURFACE_DESC -> builder.append(" ORDER BY surface DESC")
-//                Sorting.PUBLICATION_DATE_ASC -> builder.append(" ORDER BY publicationDate ASC")
-//                Sorting.PUBLICATION_DATE_DESC -> builder.append(" ORDER BY publicationDate DESC")
-//                Sorting.CLOSURE_DATE_ASC -> builder.append(" ORDER BY closureDate ASC")
-//                Sorting.CLOSURE_DATE_DESC -> builder.append(" ORDER BY closureDate DESC")
-//                else -> { builder.append(" ORDER BY publicationDate DESC") }
-//            }
-//        }
+
+        if(builder.endsWith("WHERE ")) builder.setLength(builder.length-6)
+        else if(builder.endsWith("AND ")) builder.setLength(builder.length-4)
+
+        if (_sorting != null) {
+            when(_sorting) {
+                Sorting.PRICE_ASC -> builder.append(" ORDER BY price ASC")
+                Sorting.PRICE_DESC -> builder.append(" ORDER BY price DESC")
+                Sorting.SURFACE_ASC -> builder.append(" ORDER BY surface ASC")
+                Sorting.SURFACE_DESC -> builder.append(" ORDER BY surface DESC")
+                Sorting.PUBLICATION_DATE_ASC -> builder.append(" ORDER BY publication_date ASC")
+                Sorting.PUBLICATION_DATE_DESC -> builder.append(" ORDER BY publication_date DESC")
+                Sorting.CLOSURE_DATE_ASC -> builder.append(" ORDER BY closure_date ASC")
+                Sorting.CLOSURE_DATE_DESC -> builder.append(" ORDER BY closure_date DESC")
+                else -> { builder.append(" ORDER BY publication_date DESC") }
+            }
+        }
         Timber.d("SQLiteQuery: $builder")
         return builder.toString()
     }

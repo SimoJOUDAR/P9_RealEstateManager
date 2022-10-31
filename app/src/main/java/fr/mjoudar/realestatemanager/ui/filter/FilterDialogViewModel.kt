@@ -15,9 +15,9 @@ class FilterDialogViewModel : ViewModel() {
 
     //Type
     val boolPropertyTypes = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false))
-    val namedPropertyTypes = mutableListOf(PropertyType.HOUSE, PropertyType.APARTMENT, PropertyType.DUPLEX, PropertyType.MANSION)
+    private val namedPropertyTypes = mutableListOf(PropertyType.HOUSE, PropertyType.APARTMENT, PropertyType.DUPLEX, PropertyType.MANSION)
     val boolOfferTypes = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false))
-    val namedOfferTypes = mutableListOf(OfferType.SALE, OfferType.RENT)
+    private val namedOfferTypes = mutableListOf(OfferType.SALE, OfferType.RENT)
     val available = MutableLiveData<Boolean?>(true)
     val closed = MutableLiveData<Boolean?>(false)
     val all = MutableLiveData<Boolean?>(false)
@@ -40,7 +40,7 @@ class FilterDialogViewModel : ViewModel() {
     val country = MutableLiveData<String?>(null)
     //Poi
     val boolPoi = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false, false, false, false, false, false))
-    val namedPoi = mutableListOf(POI.BUS_STATION, POI.MARKET_MALL, POI.MEDICAL_CENTER, POI.SPORT_CENTER, POI.CULTURAL_CENTER, POI.SCHOOL, POI.PARK, POI.BAR_COFFEESHOP, POI.RESTAURANT)
+    private val namedPoi = mutableListOf(POI.BUS_STATION, POI.MARKET_MALL, POI.MEDICAL_CENTER, POI.SPORT_CENTER, POI.CULTURAL_CENTER, POI.SCHOOL, POI.PARK, POI.BAR_COFFEESHOP, POI.RESTAURANT)
     //Agent
     val agent = MutableLiveData<Agent>(null)
     //Dates
@@ -52,7 +52,7 @@ class FilterDialogViewModel : ViewModel() {
     //Radio group
 //    var _sorting: Sorting? = Sorting.PUBLICATION_DATE_DESC
     val boolSorting = MutableLiveData<MutableList<Boolean>>(mutableListOf(false, false, false, false, false, true, false, false))
-    val namedSorting = mutableListOf(Sorting.PRICE_ASC, Sorting.PRICE_ASC, Sorting.PRICE_DESC, Sorting.SURFACE_ASC, Sorting.SURFACE_DESC, Sorting.PUBLICATION_DATE_ASC, Sorting.PUBLICATION_DATE_DESC, Sorting.CLOSURE_DATE_ASC, Sorting.CLOSURE_DATE_DESC)
+    private val namedSorting = mutableListOf(Sorting.PRICE_ASC, Sorting.PRICE_DESC, Sorting.SURFACE_ASC, Sorting.SURFACE_DESC, Sorting.PUBLICATION_DATE_ASC, Sorting.PUBLICATION_DATE_DESC, Sorting.CLOSURE_DATE_ASC, Sorting.CLOSURE_DATE_DESC)
 
     fun buildOfferFilter() {
         val filter = OffersFilter(

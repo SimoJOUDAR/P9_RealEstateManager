@@ -34,9 +34,7 @@ import fr.mjoudar.realestatemanager.notification.NotificationHandler
 import fr.mjoudar.realestatemanager.ui.adapters.AddEditOfferPicturesAdapter
 import fr.mjoudar.realestatemanager.utils.compressImageFile
 import fr.mjoudar.realestatemanager.utils.setUpPermissionsUtil
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -46,7 +44,7 @@ private const val RES_IMAGE = 100
 private const val FILE_PROVIDER_NAME = ".fileprovider"
 
 @AndroidEntryPoint
-class AddEditOfferFragment : Fragment() {
+class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
 
     private var _binding: FragmentAddEditOfferBinding? = null
     private val binding get() = _binding!!
@@ -190,10 +188,7 @@ class AddEditOfferFragment : Fragment() {
         viewModel.isOfferSaved.observe(viewLifecycleOwner) {
             if (it) {
                 launchNotification()
-                when (viewModel.isNewOffer) {
-                    true -> clearBackStack()
-                    false -> popBackStackWithArgument(viewModel.offer!!)
-                }
+                popBackHandler(viewModel.offer!!)
             }
         }
     }
@@ -216,25 +211,16 @@ class AddEditOfferFragment : Fragment() {
     private fun onBackPressedHandler() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                popBackStackWithArgument(argOffer)
+                popBackHandler(argOffer)
             }
         })
     }
 
-    private fun launchNotification() {
-        NotificationHandler.createNotification(
-            requireContext(),
-            "Offer saved",
-            "The offer has been successfully saved.",
-            "",
-            autoCancel = false
-        )
-    }
-
-    private fun clearBackStack() {
-        Timber.tag("popBack").d("clearBackStack")
-        val entry = parentFragmentManager.getBackStackEntryAt(0)
-        parentFragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    private fun popBackHandler(data: Offer) {
+        when (viewModel.isNewOffer) {
+            true -> navController.navigate(AddEditOfferFragmentDirections.actionAddEditOfferFragmentToMainViewpagerFragment())
+            false -> popBackStackWithArgument(data)
+        }
     }
 
     private fun popBackStackWithArgument(data : Offer) {
@@ -242,8 +228,6 @@ class AddEditOfferFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             navController.previousBackStackEntry?.savedStateHandle?.set(OFFER_ARG, data)
             navController.popBackStack()
-            //val id = navController.previousBackStackEntry?.destination?.id
-            //navController.popBackStack(id!!, true)
         }
     }
 
@@ -298,11 +282,19 @@ class AddEditOfferFragment : Fragment() {
         findNavController().navigate(R.id.mainViewpagerFragment)
     }
 
-    companion object {
-        const val OFFER_ARG = "offer"
+    private fun launchNotification() {
+        NotificationHandler.createNotification(
+            requireContext(),
+            "Offer saved",
+            "The offer has been successfully saved.",
+            "",
+            autoCancel = false
+        )
     }
 
-
+    /***********************************************************************************************
+     ** Photos adding
+     ***********************************************************************************************/
     private fun setupAddPictureListener() {
         binding.sectionAddEditPictures.buttonPicture.setOnClickListener {
             chooseImage()
@@ -426,7 +418,9 @@ class AddEditOfferFragment : Fragment() {
         }
     }
 
-
+    companion object {
+        const val OFFER_ARG = "offer"
+    }
 
 
 }

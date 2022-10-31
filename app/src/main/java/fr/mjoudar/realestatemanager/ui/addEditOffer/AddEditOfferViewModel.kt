@@ -196,8 +196,8 @@ class AddEditOfferViewModel @Inject constructor(
         viewModelScope.launch {
             particularitiesConverter()
             poiConverter()
-            generateLatLng(context)
-            saveOfferOnDatabase(buildOffer())
+            //generateLatLng(context)
+            createOfferOnDatabase(buildOffer())
         }
     }
 
@@ -260,15 +260,6 @@ class AddEditOfferViewModel @Inject constructor(
     private fun createAddress(): Address {
         Timber.tag("isOfferClosed_Test").d("viewModel.createAddress() called")
         return Address(address.value, complement.value, zipCode.value, city.value, state.value, country.value, addressLat, addressLng)
-    }
-
-    private fun saveOfferOnDatabase(offer: Offer) {
-        Timber.tag("isOfferClosed_Test").d("viewModel.saveOfferOnDatabase() called")
-//        when (isNewOffer) {
-//            true -> createOfferOnDatabase(offer)
-//            false -> updateOfferOnDatabase(offer)
-//        }
-        createOfferOnDatabase(offer)
     }
 
     private fun createOfferOnDatabase(offer : Offer?) {

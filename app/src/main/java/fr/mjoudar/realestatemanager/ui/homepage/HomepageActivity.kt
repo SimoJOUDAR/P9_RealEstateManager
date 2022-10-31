@@ -100,7 +100,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
     }
 
     private fun sorting() {
-        //TODO: to implement
+        navController.navigate(R.id.sortingDialogFragment)
     }
 
     private fun applyFilter() {

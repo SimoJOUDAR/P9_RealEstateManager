@@ -15,15 +15,7 @@
         android:id="@+id/listViewFragment"
         android:name="fr.mjoudar.realestatemanager.ui.list.ListViewFragment"
         android:label="fragment_list_view"
-        tools:layout="@layout/fragment_list_view" >
-        <action
-            android:id="@+id/action_listViewFragment_to_offerDetailsFragment"
-            app:destination="@id/offerDetailsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_list_view" />
     <fragment
         android:id="@+id/mapViewFragment"
         android:name="fr.mjoudar.realestatemanager.ui.map.MapViewFragment"
@@ -45,6 +37,11 @@
             android:name="offer"
             app:argType="fr.mjoudar.realestatemanager.domain.models.Offer"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_addEditOfferFragment_to_mainViewpagerFragment"
+            app:destination="@id/mainViewpagerFragment"
+            app:popUpTo="@id/mainViewpagerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/offerDetailsFragment"
@@ -54,6 +51,11 @@
         <argument
             android:name="offer"
             app:argType="fr.mjoudar.realestatemanager.domain.models.Offer" />
+        <action
+            android:id="@+id/action_offerDetailsFragment_to_mainViewpagerFragment"
+            app:destination="@id/mainViewpagerFragment"
+            app:popUpTo="@id/mainViewpagerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loadSimulatorFragment"
@@ -66,5 +68,20 @@
     <dialog
         android:id="@+id/filterDialogFragment"
         android:name="fr.mjoudar.realestatemanager.ui.filter.FilterDialogFragment"
-        android:label="FilterDialogFragment" />
+        android:label="FilterDialogFragment" >
+        <action
+            android:id="@+id/action_filterDialogFragment_to_mainViewpagerFragment"
+            app:destination="@id/mainViewpagerFragment"
+            app:popUpTo="@id/mainViewpagerFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/sortingDialogFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.sorting.SortingDialogFragment"
+        android:label="SortingDialogFragment" >
+        <action
+            android:id="@+id/action_sortingDialogFragment2_to_mainViewpagerFragment"
+            app:destination="@id/mainViewpagerFragment"
+            app:popUpTo="@id/mainViewpagerFragment" />
+    </dialog>
 </navigation>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentListViewBinding
@@ -48,6 +49,7 @@ class ListViewFragment : Fragment() {
             val bundle = Bundle()
             bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, item)
             itemView.findNavController().navigate(R.id.offerDetailsFragment, bundle)
+//            findNavController().navigate(ListViewFragmentDirections.actionListViewFragmentToOfferDetailsFragment(item))
         }
         val onContextClickListener = View.OnContextClickListener { true }
         adapter = OffersAdapter(onClickListener, onContextClickListener, homepageViewModel.isCurrencyEuro.value?: false)
@@ -127,6 +129,7 @@ class ListViewFragment : Fragment() {
             Toast.makeText(requireContext(), "Unknown error", Toast.LENGTH_LONG).show()
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

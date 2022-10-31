@@ -190,8 +190,7 @@ class OfferDetailsFragment : Fragment() {
     }
 
     private fun clearBackStack() {
-        val entry = parentFragmentManager.getBackStackEntryAt(0)
-        parentFragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        navController.navigate(OfferDetailsFragmentDirections.actionOfferDetailsFragmentToMainViewpagerFragment())
     }
 
     /***********************************************************************************************
