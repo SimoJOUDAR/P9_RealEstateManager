@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.mjoudar.realestatemanager.domain.models.*
 import fr.mjoudar.realestatemanager.repositories.AgentRepository
@@ -12,8 +13,6 @@ import fr.mjoudar.realestatemanager.repositories.OfferRepository
 import fr.mjoudar.realestatemanager.utils.GeocodeUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -28,11 +27,9 @@ class AddEditOfferViewModel @Inject constructor(
     var offer: Offer? = null
     // Indicators observed by the fragment
     var isNewOffer = true
-    var inputIncomplete = MutableLiveData(false)
     var isOfferSaved = MutableLiveData(false)
     var isAgentListEmpty = MutableLiveData(false)
     var errorMessage: String? = null
-    private val context = getApplication<Application>().applicationContext
 
     // Offer's data
     //Type
@@ -159,40 +156,19 @@ class AddEditOfferViewModel @Inject constructor(
     /***********************************************************************************************
      ** Save offer
      ***********************************************************************************************/
-    fun saveOffer() {
-        when (isValidInput()) {
-            true -> handleOfferCreation()
-            false -> inputIncomplete.value = true
-        }
-    }
 
-    private fun isValidInput(): Boolean {
-        return propertyType.value!!.isNotEmpty() &&
-                offerType.value!!.isNotEmpty() &&
-                price.value!!.isNotEmpty() &&
-                surface.value!!.isNotEmpty() &&
-                rooms.value!!.isNotEmpty() &&
-                bathrooms.value!!.isNotEmpty() &&
-                description.value!!.isNotEmpty() &&
-                photos.value!!.isNotEmpty() &&
-                address.value!!.isNotEmpty()&&
-                city.value!!.isNotEmpty() &&
-                zipCode.value!!.isNotEmpty() &&
-                country.value!!.isNotEmpty() &&
-                agent.value != null &&
-                publicationDate.value != null &&
-                (if (isOfferClosed.value!!) closureDate.value != null else true)
-    }
-
-
-
-    private fun handleOfferCreation() {
+    fun handleOfferCreation(data: LatLng) {
         viewModelScope.launch {
+            setLatLng(data)
             particularitiesConverter()
             poiConverter()
-            //generateLatLng(context)
             createOfferOnDatabase(buildOffer())
         }
+    }
+
+    private fun setLatLng(data: LatLng) {
+        addressLat = data.latitude//.toString().toDoubleOrNull()
+        addressLng = data.longitude//.toString().toDoubleOrNull()
     }
 
     private fun particularitiesConverter() {
@@ -213,19 +189,12 @@ class AddEditOfferViewModel @Inject constructor(
         poi = list
     }
 
-    private fun generateLatLng(context: Context) {
-        val offerAddress = if (state.value!!.isNotEmpty()) "$address, $city, $state, $zipCode, $country" else "$address, $city, $zipCode, $country"
-        //runBlocking
-        viewModelScope.launch{
-            val location = GeocodeUtils.getLatLngFromAddress(offerAddress, context)
-            addressLat = location?.latitude.toString().toDoubleOrNull()
-            addressLng = location?.longitude.toString().toDoubleOrNull()
-        }
+    private fun createAddress(): Address {
+        return Address(address.value, complement.value, zipCode.value, city.value, state.value, country.value, addressLat, addressLng)
     }
 
     private fun buildOffer(): Offer {
         val addressObject = createAddress()
-        if (isOfferClosed.value!!) closureDate
         val offerId: String = if (isNewOffer) UUID.randomUUID().toString() else offer!!.id
         val newOffer = Offer(
             offerId,
@@ -247,10 +216,6 @@ class AddEditOfferViewModel @Inject constructor(
         )
         offer = newOffer
         return newOffer
-    }
-
-    private fun createAddress(): Address {
-        return Address(address.value, complement.value, zipCode.value, city.value, state.value, country.value, addressLat, addressLng)
     }
 
     private fun createOfferOnDatabase(offer : Offer?) {

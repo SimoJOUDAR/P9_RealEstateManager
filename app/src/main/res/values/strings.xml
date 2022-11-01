@@ -144,5 +144,6 @@
     <string name="delete_offer_not_allowed">Deleting an offer is currently not allowed</string>
     <string name="delete_agent_not_allowed">Deleting an agent is currently not allowed</string>
     <string name="select_existing_agent">Edit an existing agent</string>
+    <string name="invalid_address">Address not found on Google Map. You won\'t be able to display it on mapview</string>
 
 </resources>

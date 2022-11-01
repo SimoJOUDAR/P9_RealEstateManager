@@ -5,9 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Parcelable
+import android.os.*
 import android.provider.MediaStore
 import android.text.InputType
 import android.view.LayoutInflater
@@ -19,9 +17,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.BuildConfig
 import fr.mjoudar.realestatemanager.R
@@ -31,11 +31,11 @@ import fr.mjoudar.realestatemanager.notification.NotificationHandler
 import fr.mjoudar.realestatemanager.ui.adapters.AddEditOfferPicturesAdapter
 import fr.mjoudar.realestatemanager.utils.compressImageFile
 import fr.mjoudar.realestatemanager.utils.setUpPermissionsUtil
+import fr.mjoudar.realestatemanager.utils.GeocodeUtils
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
 import java.util.*
-import kotlin.concurrent.thread
 
 private const val REQ_CAPTURE = 100
 private const val RES_IMAGE = 100
@@ -151,7 +151,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun setObservers() {
         setAgentListObserver()
         setPhotosObserver()
-        setInputIncompleteObserver()
         setIsOfferSavedObserver()
         setIsAgentListEmptyObserver()
     }
@@ -170,14 +169,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
                 adapter.setData(it2)
                 binding.sectionAddEditPictures.picturesRecyclerView.adapter = adapter
                 setRecyclerViewBackground(it1)
-            }
-        }
-    }
-
-    private fun setInputIncompleteObserver() {
-        viewModel.inputIncomplete.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(requireContext(), R.string.invalid_input, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -204,7 +195,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     }
 
     /***********************************************************************************************
-     ** popBackStack handlers
+     ** Back navigation
      ***********************************************************************************************/
     private fun onBackPressedHandler() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
@@ -234,6 +225,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun setListener() {
         setDatePickersListeners()
         setupAddPictureListener()
+        saveButtonListener()
         deleteButtonListener()
     }
 
@@ -257,6 +249,12 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         picker.datePicker.maxDate = Calendar.getInstance().timeInMillis
         minDate?.let { picker.datePicker.minDate = minDate }
         picker.show()
+    }
+
+    private fun saveButtonListener() {
+        binding.btnSaveOffer.setOnClickListener {
+            saveOffer()
+        }
     }
 
     private fun deleteButtonListener() {
@@ -397,10 +395,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
      ** Utils
      ***********************************************************************************************/
 
-    companion object {
-        const val OFFER_ARG = "offer"
-    }
-
     private fun setRecyclerViewBackground(data:  MutableList<Photo>) {
         when (data.isEmpty()) {
             true -> {
@@ -441,5 +435,62 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         )
     }
 
+    private fun isValidInput(): Boolean {
+        return viewModel.propertyType.value!!.isNotEmpty() &&
+                viewModel.offerType.value!!.isNotEmpty() &&
+                viewModel.price.value!!.isNotEmpty() &&
+                viewModel.surface.value!!.isNotEmpty() &&
+                viewModel.rooms.value!!.isNotEmpty() &&
+                viewModel.bathrooms.value!!.isNotEmpty() &&
+                viewModel.description.value!!.isNotEmpty() &&
+                viewModel.photos.value!!.isNotEmpty() &&
+                viewModel.address.value!!.isNotEmpty()&&
+                viewModel.city.value!!.isNotEmpty() &&
+                viewModel.zipCode.value!!.isNotEmpty() &&
+                viewModel.country.value!!.isNotEmpty() &&
+                viewModel.agent.value != null &&
+                viewModel.publicationDate.value != null &&
+                (if (viewModel.isOfferClosed.value!!) viewModel.closureDate.value != null else true)
+    }
 
+    /***********************************************************************************************
+     ** Save offer
+     ***********************************************************************************************/
+    private fun saveOffer() {
+        when (isValidInput()) {
+            true -> fetchLanLng()
+            false -> Toast.makeText(requireContext(), R.string.invalid_input, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun fetchLanLng() {
+        val address = if (viewModel.state.value!!.isNotEmpty()) "${viewModel.address.value}, ${viewModel.city.value}, ${viewModel.state.value}, ${viewModel.state.value}, ${viewModel.country.value}" else "${viewModel.address.value}, ${viewModel.city.value}, ${viewModel.zipCode.value}, ${viewModel.country.value}"
+        val geocode = GeocodeUtils
+        geocode.getLatLngFromAddress(address, requireContext(), GeoCoderHandler(this))
+    }
+
+
+    companion object {
+
+        const val OFFER_ARG = "offer"
+
+        private class GeoCoderHandler(private val fragment: AddEditOfferFragment) : Handler() {
+            override fun handleMessage(message: Message) {
+                val result: LatLng? = when (message.what) {
+                    1 -> {
+                        val bundle = message.data
+                        bundle.getParcelable("latLng")
+                    }
+                    else -> null
+                }
+                Timber.tag("LatLng").d("LatLng - geocode fun called")
+                result?.let {
+                    fragment.viewModel.handleOfferCreation(result)
+                } ?: run {
+                    Toast.makeText(fragment.requireContext(), R.string.invalid_address, Toast.LENGTH_LONG).show()
+                    fragment.viewModel.handleOfferCreation(LatLng(0.0, 0.0))
+                }
+            }
+        }
+    }
 }

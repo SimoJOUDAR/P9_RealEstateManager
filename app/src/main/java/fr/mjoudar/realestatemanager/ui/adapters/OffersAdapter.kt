@@ -43,13 +43,11 @@ class OffersAdapter (
 
     fun setData(data: List<Offer>) {
         offers = data
-        Timber.d("Data added")
         notifyDataSetChanged()
     }
 
     fun setCurrency(isEuro: Boolean) {
         isCurrencyEuro = isEuro
-        Timber.d("CURRENCY $isEuro")
         notifyDataSetChanged()
     }
 }

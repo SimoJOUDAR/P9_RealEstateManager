@@ -167,7 +167,6 @@
                         android:paddingRight="15dp"
                         android:backgroundTint="@color/orange_shadow"
                         android:text="@string/save_offer"
-                        android:onClick="@{() -> viewModel.saveOffer() }"
                         android:layout_gravity="center"
                         android:drawableLeft="@drawable/ic_check_24dp" />
 
@@ -186,7 +185,6 @@
                         android:paddingRight="15dp"
                         android:backgroundTint="@color/orange_shadow"
                         android:text="@string/delete_offer"
-                        android:onClick="@{() -> viewModel.deleteOffer() }"
                         android:layout_gravity="center"
                         android:drawableLeft="@drawable/ic_delete_24" />
 
