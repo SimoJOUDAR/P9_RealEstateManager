@@ -1,13 +1,15 @@
 package fr.mjoudar.realestatemanager.ui.addEditAgent
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentAddEditAgentBinding
@@ -21,12 +23,9 @@ class AddEditAgentFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AddEditAgentViewModel by viewModels()
-    private var agent: Agent? = null
-    private var isNewAgent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retrievedArguments()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,38 +38,99 @@ class AddEditAgentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+        setSoftKeyboardOff()
+        deleteButtonListener()
     }
 
-    private fun retrievedArguments() {
-        arguments?.let { it ->
-            it.getParcelable<Agent>(AGENT_ARG).let { it2 -> viewModel.loadAgent(it2) }
+    /***********************************************************************************************
+     ** Adapters
+     ***********************************************************************************************/
+    private fun setAgentsAdapter(data: List<Agent>) {
+        binding.addEditOfferAgent.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, data))
+        binding.addEditOfferAgent.setOnItemClickListener { parent, _, position, _ ->
+            viewModel.agent.value = parent.getItemAtPosition(position) as Agent
         }
     }
 
+    /***********************************************************************************************
+     ** Observers
+     ***********************************************************************************************/
     private fun setObservers() {
+        setAgentListObserver()
+        setAgentObserver()
+        setInputIncompleteObserver()
+        setIsAgentSavedObserver()
+        setErrorMessageObserver()
+    }
+
+    private fun setAgentListObserver() {
+        viewModel.agentList.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) setAgentsAdapter(it)
+        }
+    }
+
+    private fun setAgentObserver() {
+        viewModel.agent.observe(viewLifecycleOwner) {
+            it?.let { viewModel.loadAgent() }
+        }
+    }
+
+    private fun setInputIncompleteObserver() {
         viewModel.inputIncomplete.observe(viewLifecycleOwner) {
             if (it) {
-                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.invalid_input, Snackbar.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.isAgentSaved.observe(viewLifecycleOwner) {
-            if (it) {
-                NotificationHandler.createNotification(
-                    requireContext(),
-                    "Agent created",
-                    "The agent has been successfully saved.",
-                    "",
-                    autoCancel = false
-                )
-                findNavController().navigate(R.id.mainViewpagerFragment)  //To return back to homepage
-//                requireActivity().supportFragmentManager.popBackStack() //To return back to the previous page
-
+//                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.invalid_input, Snackbar.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.invalid_input, Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    private fun setIsAgentSavedObserver() {
+        viewModel.isAgentSaved.observe(viewLifecycleOwner) {
+            if (it) {
+                createNotification()
+                navigateBack()
+            }
+        }
+    }
+
+    private fun setErrorMessageObserver() {
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /***********************************************************************************************
+     ** Listeners
+     ***********************************************************************************************/
+    private fun deleteButtonListener() {
+        binding.btnDeleteAgent.setOnClickListener {
+            Toast.makeText(requireContext(), R.string.delete_agent_not_allowed, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /***********************************************************************************************
+     ** Utils
+     ***********************************************************************************************/
     companion object {
         const val AGENT_ARG = "agent"
+    }
+
+    private fun setSoftKeyboardOff() {
+        binding.addEditOfferAgent.inputType = InputType.TYPE_NULL
+    }
+
+    private fun createNotification() {
+        NotificationHandler.createNotification(
+            requireContext(),
+            "Agent created",
+            "The agent has been successfully saved.",
+            "",
+            autoCancel = false
+        )
+    }
+
+    private fun navigateBack() {
+        findNavController().navigate(AddEditAgentFragmentDirections.actionAddEditAgentFragmentToMainViewpagerFragment())
     }
 
 }

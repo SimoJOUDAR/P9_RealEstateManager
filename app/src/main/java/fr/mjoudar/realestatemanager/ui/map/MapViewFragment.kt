@@ -40,8 +40,6 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MapViewFragment : Fragment() {
 
-    // TODO: Names refactoring
-
     private var _binding: FragmentMapViewBinding? = null
     private val binding get() = _binding!!
     private val homepageViewModel: HomepageViewModel by activityViewModels()

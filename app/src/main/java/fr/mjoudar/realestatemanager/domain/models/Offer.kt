@@ -187,7 +187,6 @@ data class Offer (
 
 }
 
-// TODO : override toString Vs. upgrade enum to key-value
 enum class PropertyType {
     HOUSE, APARTMENT, DUPLEX, MANSION
 }

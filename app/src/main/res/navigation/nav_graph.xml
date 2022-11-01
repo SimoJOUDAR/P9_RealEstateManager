@@ -28,6 +28,11 @@
             android:name="agent"
             app:argType="fr.mjoudar.realestatemanager.domain.models.Agent"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_addEditAgentFragment_to_mainViewpagerFragment"
+            app:destination="@id/mainViewpagerFragment"
+            app:popUpTo="@id/mainViewpagerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addEditOfferFragment"

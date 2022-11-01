@@ -37,9 +37,7 @@ class AddEditOfferViewModel @Inject constructor(
     // Offer's data
     //Type
     val propertyType = MutableLiveData<String>("")
-    val propertyTypeValues = PropertyType.values()
     val offerType = MutableLiveData<String>("")
-    val offerTypeValues = OfferType.values()
     //Price
     val price = MutableLiveData<String>("")
     //Characteristics
@@ -74,7 +72,6 @@ class AddEditOfferViewModel @Inject constructor(
     var closureDate = MutableLiveData<Calendar>(Calendar.getInstance())
     //Photos
     var photos = MutableLiveData<MutableList<Photo>>(mutableListOf())
-    var mainPhoto: Photo? = null // TODO: To analyse
 
     init {
         fetchAgents()
@@ -163,7 +160,6 @@ class AddEditOfferViewModel @Inject constructor(
      ** Save offer
      ***********************************************************************************************/
     fun saveOffer() {
-        Timber.tag("isOfferClosed_Test").d("viewModel.saveOffer() called")
         when (isValidInput()) {
             true -> handleOfferCreation()
             false -> inputIncomplete.value = true
@@ -171,7 +167,6 @@ class AddEditOfferViewModel @Inject constructor(
     }
 
     private fun isValidInput(): Boolean {
-        Timber.tag("isOfferClosed_Test").d("viewModel.isValidInput() called")
         return propertyType.value!!.isNotEmpty() &&
                 offerType.value!!.isNotEmpty() &&
                 price.value!!.isNotEmpty() &&
@@ -192,7 +187,6 @@ class AddEditOfferViewModel @Inject constructor(
 
 
     private fun handleOfferCreation() {
-        Timber.tag("isOfferClosed_Test").d("viewModel.handleOfferCreation() called")
         viewModelScope.launch {
             particularitiesConverter()
             poiConverter()
@@ -220,7 +214,6 @@ class AddEditOfferViewModel @Inject constructor(
     }
 
     private fun generateLatLng(context: Context) {
-        Timber.tag("isOfferClosed_Test").d("viewModel.generateLatLng() called")
         val offerAddress = if (state.value!!.isNotEmpty()) "$address, $city, $state, $zipCode, $country" else "$address, $city, $zipCode, $country"
         //runBlocking
         viewModelScope.launch{
@@ -231,7 +224,6 @@ class AddEditOfferViewModel @Inject constructor(
     }
 
     private fun buildOffer(): Offer {
-        Timber.tag("isOfferClosed_Test").d("viewModel.buildOffer() called")
         val addressObject = createAddress()
         if (isOfferClosed.value!!) closureDate
         val offerId: String = if (isNewOffer) UUID.randomUUID().toString() else offer!!.id
@@ -258,12 +250,10 @@ class AddEditOfferViewModel @Inject constructor(
     }
 
     private fun createAddress(): Address {
-        Timber.tag("isOfferClosed_Test").d("viewModel.createAddress() called")
         return Address(address.value, complement.value, zipCode.value, city.value, state.value, country.value, addressLat, addressLng)
     }
 
     private fun createOfferOnDatabase(offer : Offer?) {
-        Timber.tag("isOfferClosed_Test").d("viewModel.createOfferOnDatabase() called")
         offer?.let {
             viewModelScope.launch {
                 offerRepository.saveOffer(it)

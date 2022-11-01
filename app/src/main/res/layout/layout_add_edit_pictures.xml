@@ -33,17 +33,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pictures_recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="480dp"
             android:layout_marginTop="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_picture"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/layout_add_edit_pictures_item"
-            items="@{viewModel.photos}" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/recyclerview_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/add_photo_rv_bg"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pictures_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="480dp"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/layout_add_edit_pictures_item"
+                android:visibility="invisible"
+                items="@{viewModel.photos}" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

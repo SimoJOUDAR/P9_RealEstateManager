@@ -26,7 +26,7 @@ class AddEditOfferPicturesAdapter (
     override fun onBindViewHolder(holder: AddEditOfferPicturesViewHolder, position: Int) {
         val photo = photos[position]
         holder.binding.photo = photo
-        with(holder.itemView) {
+        with(holder.binding.addEditPictureItemDelete) {
             tag = photo
             setOnClickListener(onClickListener)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {

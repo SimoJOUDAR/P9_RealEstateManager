@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -27,9 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.BuildConfig
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentAddEditOfferBinding
-import fr.mjoudar.realestatemanager.domain.models.Agent
-import fr.mjoudar.realestatemanager.domain.models.Offer
-import fr.mjoudar.realestatemanager.domain.models.Photo
+import fr.mjoudar.realestatemanager.domain.models.*
 import fr.mjoudar.realestatemanager.notification.NotificationHandler
 import fr.mjoudar.realestatemanager.ui.adapters.AddEditOfferPicturesAdapter
 import fr.mjoudar.realestatemanager.utils.compressImageFile
@@ -38,6 +35,7 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
 import java.util.*
+import kotlin.concurrent.thread
 
 private const val REQ_CAPTURE = 100
 private const val RES_IMAGE = 100
@@ -52,7 +50,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     lateinit var navController: NavController
 
     private val viewModel: AddEditOfferViewModel by viewModels()
-    private var photos: List<Photo> = emptyList()
     private lateinit var adapter: AddEditOfferPicturesAdapter
     private var isPermissionsAllowed: Boolean = false
     private var imageUri: Uri? = null
@@ -81,7 +78,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retrievedArguments()
         lifecycleScope.launchWhenResumed {navController = findNavController()}
         onBackPressedHandler()
     }
@@ -100,6 +96,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         setListener()
         setSoftKeyboardOff()
         isPermissionsAllowed = setUpPermissionsUtil(requireContext())
+        retrievedArguments()
     }
 
     /***********************************************************************************************
@@ -123,19 +120,29 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     }
 
     private fun setTypeAdapters() {
-        binding.sectionAddEditType.addEditOfferPropertyType.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, viewModel.propertyTypeValues))
-        binding.sectionAddEditType.addEditOfferOfferType.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, viewModel.offerTypeValues))
+        binding.sectionAddEditType.addEditOfferPropertyType.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, PropertyType.values()))
+        binding.sectionAddEditType.addEditOfferPropertyType.threshold = 100 // to prevent the dropdown menu from collapsing to only one single value
+        binding.sectionAddEditType.addEditOfferOfferType.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, OfferType.values()))
+        binding.sectionAddEditType.addEditOfferOfferType.threshold
     }
 
     private fun setPhotosAdapter() {
-        // TODO: Set up delete listener
         val onClickListener = View.OnClickListener { itemView ->
             val item = itemView.tag as Photo
-            // TODO: Setup onDeletePicture() method
+            val list = viewModel.photos.value!!
+            list.remove(item)
+            viewModel.photos.value = list
         }
         val onContextClickListener = View.OnContextClickListener { true }
         adapter = AddEditOfferPicturesAdapter(onClickListener, onContextClickListener)
-        binding.sectionAddEditPictures.picturesRecyclerView.adapter = adapter
+    }
+
+    private fun setAgentsAdapter(data: List<Agent>) {
+        binding.sectionAddEditAgent.addEditOfferAgent.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, data))
+        binding.sectionAddEditAgent.addEditOfferAgent.threshold = 100
+        binding.sectionAddEditAgent.addEditOfferAgent.setOnItemClickListener { parent, _, position, _ ->
+            viewModel.agent.value = parent.getItemAtPosition(position) as Agent
+        }
     }
 
     /***********************************************************************************************
@@ -152,14 +159,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     // Observes agentList to setup the agents' autocomplete adapter
     private fun setAgentListObserver() {
         viewModel.agentList.observe(viewLifecycleOwner) { it1 ->
-            it1?.let { it2 ->
-                if (it2.isNotEmpty()) {
-                    binding.sectionAddEditAgent.addEditOfferAgent.setAdapter(ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, it1))
-                    binding.sectionAddEditAgent.addEditOfferAgent.setOnItemClickListener { parent, _, position, _ ->
-                        viewModel.agent.value = parent.getItemAtPosition(position) as Agent
-                    }
-                }
-            }
+            it1?.let { it2 -> if (it2.isNotEmpty()) setAgentsAdapter(it2) }
         }
     }
 
@@ -167,10 +167,9 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun setPhotosObserver() {
         viewModel.photos.observe(viewLifecycleOwner) { it1 ->
             it1?.let { it2 ->
-                photos = it2 // TODO : To remove ?
                 adapter.setData(it2)
                 binding.sectionAddEditPictures.picturesRecyclerView.adapter = adapter
-                //TODO : update the recyclerView adapter
+                setRecyclerViewBackground(it1)
             }
         }
     }
@@ -178,7 +177,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun setInputIncompleteObserver() {
         viewModel.inputIncomplete.observe(viewLifecycleOwner) {
             if (it) {
-//                Snackbar.make(requireActivity().findViewById(R.id.root_layout), R.string.agent_input_incomplete, Snackbar.LENGTH_SHORT).show()
                 Toast.makeText(requireContext(), R.string.invalid_input, Toast.LENGTH_LONG).show()
             }
         }
@@ -188,7 +186,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         viewModel.isOfferSaved.observe(viewLifecycleOwner) {
             if (it) {
                 launchNotification()
-                popBackHandler(viewModel.offer!!)
+                navigateBack(viewModel.offer!!)
             }
         }
     }
@@ -211,12 +209,12 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun onBackPressedHandler() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                popBackHandler(argOffer)
+                navigateBack(argOffer)
             }
         })
     }
 
-    private fun popBackHandler(data: Offer) {
+    private fun navigateBack(data: Offer) {
         when (viewModel.isNewOffer) {
             true -> navController.navigate(AddEditOfferFragmentDirections.actionAddEditOfferFragmentToMainViewpagerFragment())
             false -> popBackStackWithArgument(data)
@@ -224,7 +222,6 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     }
 
     private fun popBackStackWithArgument(data : Offer) {
-        Timber.tag("popBack").d("popBackStackWithArgument")
         lifecycleScope.launchWhenResumed {
             navController.previousBackStackEntry?.savedStateHandle?.set(OFFER_ARG, data)
             navController.popBackStack()
@@ -237,6 +234,7 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     private fun setListener() {
         setDatePickersListeners()
         setupAddPictureListener()
+        deleteButtonListener()
     }
 
     private fun setDatePickersListeners() {
@@ -261,35 +259,10 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         picker.show()
     }
 
-
-    /***********************************************************************************************
-     ** Utils
-     ***********************************************************************************************/
-    private fun setSoftKeyboardOff() {
-        binding.sectionAddEditType.addEditOfferPropertyType.inputType = InputType.TYPE_NULL
-        binding.sectionAddEditType.addEditOfferOfferType.inputType = InputType.TYPE_NULL
-        binding.sectionAddEditAgent.addEditOfferAgent.inputType = InputType.TYPE_NULL
-        binding.sectionAddEditDates.addEditOfferPublicationDate.inputType = InputType.TYPE_NULL
-        binding.sectionAddEditDates.addEditOfferClosureDate.inputType = InputType.TYPE_NULL
-    }
-
-    private fun emptyAgentListHandler(error: String? = null) {
-        error?.let {
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
-        }?: run {
-            Toast.makeText(requireContext(), getString(R.string.empty_agent_list), Toast.LENGTH_SHORT).show()
+    private fun deleteButtonListener() {
+        binding.btnDeleteOffer.setOnClickListener {
+            Toast.makeText(requireContext(), getString(R.string.delete_offer_not_allowed), Toast.LENGTH_SHORT).show()
         }
-        findNavController().navigate(R.id.mainViewpagerFragment)
-    }
-
-    private fun launchNotification() {
-        NotificationHandler.createNotification(
-            requireContext(),
-            "Offer saved",
-            "The offer has been successfully saved.",
-            "",
-            autoCancel = false
-        )
     }
 
     /***********************************************************************************************
@@ -386,13 +359,15 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
             imageUri = Uri.fromFile(File(queryImageUrl))
 
             if (queryImageUrl.isNotEmpty()) {
-                submitPhotoToList(Photo(UUID.randomUUID().toString(),imageUri.toString(), "")) // TODO: To add description here
+                submitPhotoToList(Photo(UUID.randomUUID().toString(),imageUri.toString(), ""))
             }
         }
     }
 
     private fun submitPhotoToList(photo: Photo) {
-        viewModel.photos.value!!.add(photo)
+        val list = viewModel.photos.value!!
+        list.add(photo)
+        viewModel.photos.value = list
     }
 
 
@@ -418,8 +393,52 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
         }
     }
 
+    /***********************************************************************************************
+     ** Utils
+     ***********************************************************************************************/
+
     companion object {
         const val OFFER_ARG = "offer"
+    }
+
+    private fun setRecyclerViewBackground(data:  MutableList<Photo>) {
+        when (data.isEmpty()) {
+            true -> {
+                binding.sectionAddEditPictures.recyclerviewBackground.visibility = View.VISIBLE
+                binding.sectionAddEditPictures.picturesRecyclerView.visibility = View.INVISIBLE
+            }
+            false -> {
+                binding.sectionAddEditPictures.recyclerviewBackground.visibility = View.INVISIBLE
+                binding.sectionAddEditPictures.picturesRecyclerView.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun setSoftKeyboardOff() {
+        binding.sectionAddEditType.addEditOfferPropertyType.inputType = InputType.TYPE_NULL
+        binding.sectionAddEditType.addEditOfferOfferType.inputType = InputType.TYPE_NULL
+        binding.sectionAddEditAgent.addEditOfferAgent.inputType = InputType.TYPE_NULL
+        binding.sectionAddEditDates.addEditOfferPublicationDate.inputType = InputType.TYPE_NULL
+        binding.sectionAddEditDates.addEditOfferClosureDate.inputType = InputType.TYPE_NULL
+    }
+
+    private fun emptyAgentListHandler(error: String? = null) {
+        error?.let {
+            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+        }?: run {
+            Toast.makeText(requireContext(), getString(R.string.empty_agent_list), Toast.LENGTH_SHORT).show()
+        }
+        findNavController().navigate(R.id.mainViewpagerFragment)
+    }
+
+    private fun launchNotification() {
+        NotificationHandler.createNotification(
+            requireContext(),
+            "Offer saved",
+            "The offer has been successfully saved.",
+            "",
+            autoCancel = false
+        )
     }
 
 
