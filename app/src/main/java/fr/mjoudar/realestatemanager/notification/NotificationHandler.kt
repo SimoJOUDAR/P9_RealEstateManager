@@ -6,9 +6,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import fr.mjoudar.realestatemanager.R
+import fr.mjoudar.realestatemanager.domain.models.Offer
+import fr.mjoudar.realestatemanager.ui.addEditOffer.AddEditOfferFragment
+import fr.mjoudar.realestatemanager.ui.details.OfferDetailsFragment
 import fr.mjoudar.realestatemanager.ui.homepage.HomepageActivity
 
 object NotificationHandler {
@@ -34,7 +39,38 @@ object NotificationHandler {
         }
     }
 
-    fun createNotification(
+    fun createOfferNotification(
+        context: Context,
+        title: String,
+        message: String?,
+        bigText: String,
+        autoCancel: Boolean,
+        offer: Offer?
+    ) {
+        val channelId = "${context.packageName}-${context.getString(R.string.app_name)}"
+        val notificationBuilder = NotificationCompat.Builder(context, channelId).apply {
+            setSmallIcon(R.drawable.ic_check_24dp)
+            setContentTitle(title)
+            setContentText(message)
+            setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            priority = NotificationCompat.PRIORITY_HIGH
+            setAutoCancel(autoCancel)
+        }
+        val bundle = Bundle()
+        bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, offer)
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setComponentName(HomepageActivity::class.java)
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.offerDetailsFragment)
+            .setArguments(bundle)
+            .createPendingIntent()
+        notificationBuilder.setContentIntent(pendingIntent)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(1001, notificationBuilder.build())
+    }
+
+    fun createAgentNotification(
         context: Context,
         title: String,
         message: String?,

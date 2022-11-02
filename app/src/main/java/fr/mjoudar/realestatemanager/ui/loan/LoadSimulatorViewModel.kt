@@ -47,7 +47,7 @@ class LoadSimulatorViewModel : ViewModel() {
         downPayment = downPaymentString.value!!.toDoubleOrNull() ?: 0.0
         interestRate = interestRateString.value!!.toDoubleOrNull()?.div(100) ?: 0.0
         loanTerm = loanTermSlide.value!!.toDouble()
-        loanTermSlideString = loanTermSlide.value.toString()
+        loanTermSlideString = loanTermSlide.value!!.toInt().toString()
         calculate()
     }
 

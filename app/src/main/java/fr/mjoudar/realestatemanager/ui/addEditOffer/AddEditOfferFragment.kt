@@ -17,7 +17,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -426,12 +425,13 @@ class AddEditOfferFragment : Fragment(), CoroutineScope by MainScope(){
     }
 
     private fun launchNotification() {
-        NotificationHandler.createNotification(
+        NotificationHandler.createOfferNotification(
             requireContext(),
             "Offer saved",
             "The offer has been successfully saved.",
             "",
-            autoCancel = false
+            autoCancel = false,
+            viewModel.offer
         )
     }
 

@@ -130,6 +130,11 @@ class ListViewFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+//        _binding = null
+//        binding.recyclerview.adapter = null
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

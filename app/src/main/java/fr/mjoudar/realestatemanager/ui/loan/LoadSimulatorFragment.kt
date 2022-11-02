@@ -28,6 +28,7 @@ class LoadSimulatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+        addListeners()
     }
 
     private fun setObservers() {
@@ -51,6 +52,12 @@ class LoadSimulatorFragment : Fragment() {
             binding.loanSimulatorDownPayment.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0)
         }
 
+    }
+
+    private fun addListeners() {
+        binding.loanSimulatorLoanTermSlider.addOnChangeListener { _, value, _ ->
+            viewModel.loanTermSlide.value = value
+        }
     }
 
 }

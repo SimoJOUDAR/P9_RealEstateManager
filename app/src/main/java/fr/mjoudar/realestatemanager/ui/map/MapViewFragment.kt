@@ -5,6 +5,7 @@ import fr.mjoudar.realestatemanager.domain.models.Offer
 import fr.mjoudar.realestatemanager.ui.homepage.HomepageViewModel
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
@@ -127,9 +128,13 @@ class MapViewFragment : Fragment() {
             if (mapFragment != null) {
                 googleMap = mapFragment.awaitMap()
                 googleMap.awaitMapLoad()
-                googleMap.setPadding(0, 0, 0, 300);
+                when (resources.configuration.orientation) {
+                    Configuration.ORIENTATION_PORTRAIT -> googleMap.setPadding(0, 0, 0, 300);
+                    else -> googleMap.setPadding(0, 0, 100, 300);
+                }
                 googleMap.setOnInfoWindowClickListener { marker -> viewPropertyDetail(marker.tag as Offer) }
                 googleMap.uiSettings.isZoomControlsEnabled = true
+                googleMap.uiSettings.isCompassEnabled = true
                 googleMap.isMyLocationEnabled = true
                 googleMap.uiSettings.isMyLocationButtonEnabled = true
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f))
@@ -151,7 +156,7 @@ class MapViewFragment : Fragment() {
     private fun viewPropertyDetail(offer: Offer) {
         val bundle = Bundle()
         bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, offer)
-        findNavController().navigate(fr.mjoudar.realestatemanager.R.id.offerDetailsFragment, bundle)
+        findNavController().navigate(R.id.offerDetailsFragment, bundle)
     }
 
     /***********************************************************************************************

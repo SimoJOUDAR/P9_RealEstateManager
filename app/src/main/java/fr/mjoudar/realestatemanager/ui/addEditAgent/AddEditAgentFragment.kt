@@ -120,12 +120,12 @@ class AddEditAgentFragment : Fragment() {
     }
 
     private fun createNotification() {
-        NotificationHandler.createNotification(
+        NotificationHandler.createAgentNotification(
             requireContext(),
             "Agent created",
-            "The agent has been successfully saved.",
+            "The agent ${viewModel.name.value} has been successfully saved.",
             "",
-            autoCancel = false
+             false
         )
     }
 

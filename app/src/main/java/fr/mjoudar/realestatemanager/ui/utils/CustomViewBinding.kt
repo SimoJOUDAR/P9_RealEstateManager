@@ -24,54 +24,6 @@ class CustomViewBinding {
     companion object {
 
         /******************************************************************************************
-         ** AutoCompleteTextView data binding
-         ******************************************************************************************/
-//        @BindingAdapter("valueAttrChanged")
-//        fun AutoCompleteTextView.setListener(listener: InverseBindingListener?) {
-//            onItemClickListener = listener?.let {
-//                AdapterView.OnItemClickListener { _, _, _, _ ->
-//                    it.onChange()
-//                }
-//            }
-//        }
-//
-//        @JvmStatic
-//        @get:InverseBindingAdapter(attribute = "value")
-//        @set:BindingAdapter("value")
-//        var AutoCompleteTextView.selectedValue: Any?
-//            get() = {
-//                if (listSelection != ListView.INVALID_POSITION) adapter.getItem(listSelection) else null
-//                Timber.tag("propertyType").d("propertyType = ${selectedValue.toString()}")
-//            }
-//
-//            set(value) {
-//                Timber.tag("propertyType").d("propertyType = ${value.toString()}")
-//                val newValue = value ?: adapter.getItem(0)
-//                setText(newValue.toString(), true)
-//                if (adapter is ArrayAdapter<*>) {
-//                    val position = (adapter as ArrayAdapter<Any?>).getPosition(newValue)
-//                    listSelection = position
-//                }
-//            }
-//
-//        @JvmStatic
-//        @BindingAdapter("entries", "itemLayout", "textViewId", requireAll = false)
-//        fun AutoCompleteTextView.bindAdapter(entries: Array<Any?>, @LayoutRes itemLayout: Int?, @IdRes textViewId: Int?) {
-//            val adapter = when {
-//                itemLayout == null -> {
-//                    ArrayAdapter(context, R.layout.dropdown_item, entries)
-//                }
-//                textViewId == null -> {
-//                    ArrayAdapter(context, itemLayout, entries)
-//                }
-//                else -> {
-//                    ArrayAdapter(context, itemLayout, textViewId, entries)
-//                }
-//            }
-//            setAdapter(adapter)
-//        }
-
-        /******************************************************************************************
          ** Photos RecyclerView data binding
          ******************************************************************************************/
         @JvmStatic
@@ -305,7 +257,5 @@ class CustomViewBinding {
                 false -> textView.text = textView.context.getText(R.string.edit_agent)
             }
         }
-
-
     }
 }

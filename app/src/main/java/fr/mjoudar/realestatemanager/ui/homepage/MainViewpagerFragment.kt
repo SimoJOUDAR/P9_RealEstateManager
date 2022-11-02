@@ -35,13 +35,14 @@ class MainViewpagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewpager()
+
         Timber.tag("StackNavigation").d("MainViewpagerFragment created")
     }
 
     private fun setViewpager() {
         findNavController().previousBackStackEntry?.savedStateHandle?.set("key", true)
         val fragmentList = arrayListOf(ListViewFragment(), MapViewFragment())
-        adapter = MainViewpagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)
+        adapter = MainViewpagerAdapter(fragmentList, childFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
         binding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
