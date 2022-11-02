@@ -64,7 +64,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_back_24"
-                        android:padding="8dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="4dp"
+                        android:paddingVertical="8dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:background="@drawable/round_shape_small_button"
@@ -297,8 +299,7 @@
                             android:layout_height="wrap_content"
                             android:theme="@style/Body_title"
                             android:text="@string/address"
-                            android:layout_marginTop="16dp"
-                            android:drawablePadding="8dp" />
+                            android:layout_marginTop="16dp" />
 
                         <TextView
                             android:id="@+id/address"
@@ -317,8 +318,7 @@
                         android:theme="@style/Body_title"
                         android:gravity="center"
                         android:text="@string/nearby_poi"
-                        android:layout_marginTop="16dp"
-                        android:drawablePadding="8dp" />
+                        android:layout_marginTop="16dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

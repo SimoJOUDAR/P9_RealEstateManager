@@ -306,6 +306,6 @@ class CustomViewBinding {
             }
         }
 
-        //
+
     }
 }

@@ -37,6 +37,9 @@ class LoadSimulatorFragment : Fragment() {
 
         viewModel.monthlyPaymentFormatted.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
+                val text1 = resources.getString(R.string.loan_simulator_results_body, viewModel.interestRateString.value!!, viewModel.loanTermSlideString)
+                binding.loanSimulatorResultsBody.text = text1
+                binding.loanSimulatorResultsMonthlyPayments.text = viewModel.monthlyPaymentFormatted.value!!
                 binding.loanSimulatorResultsBody.visibility = View.VISIBLE
                 binding.loanSimulatorResultsMonthlyPayments.visibility = View.VISIBLE
             }
@@ -48,13 +51,6 @@ class LoadSimulatorFragment : Fragment() {
             binding.loanSimulatorDownPayment.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0)
         }
 
-        viewModel.monthlyPaymentFormatted.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                val text1 = resources.getString(R.string.loan_simulator_results_body, viewModel.interestRateString.value!!, viewModel.loanTermSlideString)
-                binding.loanSimulatorResultsBody.text = text1
-                binding.loanSimulatorResultsMonthlyPayments.text = viewModel.monthlyPaymentFormatted.value!!
-            }
-        }
     }
 
 }

@@ -37,7 +37,7 @@
             <AutoCompleteTextView
                 android:id="@+id/add_edit_offer_agent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 android:labelFor="@id/add_edit_offer_agent"
                 android:inputType="textAutoComplete"
                 android:text="@{viewModel.agent.name}" />

@@ -15,7 +15,7 @@ class LoadSimulatorViewModel : ViewModel() {
     val downPaymentString = MutableLiveData<String>("")
     val interestRateString = MutableLiveData<String>("")
     val isEuroCurrency = MutableLiveData<Boolean>(false)
-    val loanTermSlide = MutableLiveData<Int>(15)
+    val loanTermSlide = MutableLiveData<Float>(15F)
 
     var propertyValue = 0.0
     var downPayment = 0.0
@@ -31,15 +31,15 @@ class LoadSimulatorViewModel : ViewModel() {
         Timber.tag("LoadSimulatorViewModel").d("isEuroCurrency = $isEuroCurrency")
     }
 
-    private fun isValidInput(): Boolean {
-        return (propertyValueString.value!!.isNotEmpty() && downPaymentString.value!!.isNotEmpty() && interestRateString.value!!.isNotEmpty())
-    }
-
     fun submit() {
         if (isValidInput()) {
             convertValues()
         }
         else invalidInput.value = true
+    }
+
+    private fun isValidInput(): Boolean {
+        return (propertyValueString.value!!.isNotEmpty() && downPaymentString.value!!.isNotEmpty() && interestRateString.value!!.isNotEmpty())
     }
 
     private fun convertValues() {
