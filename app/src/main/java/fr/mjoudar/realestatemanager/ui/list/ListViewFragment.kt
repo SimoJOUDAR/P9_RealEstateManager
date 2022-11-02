@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import fr.mjoudar.realestatemanager.R
 import fr.mjoudar.realestatemanager.databinding.FragmentListViewBinding
@@ -49,11 +50,18 @@ class ListViewFragment : Fragment() {
             val bundle = Bundle()
             bundle.putParcelable(OfferDetailsFragment.OFFER_ARG, item)
             itemView.findNavController().navigate(R.id.offerDetailsFragment, bundle)
-//            findNavController().navigate(ListViewFragmentDirections.actionListViewFragmentToOfferDetailsFragment(item))
         }
         val onContextClickListener = View.OnContextClickListener { true }
         adapter = OffersAdapter(onClickListener, onContextClickListener, homepageViewModel.isCurrencyEuro.value?: false)
         binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = GridLayoutManager(requireContext(), columnNumberCalculator()) // For screen size adaptability
+    }
+
+    private fun columnNumberCalculator() : Int {
+        val recyclerViewItemWidth = 160
+        val displayMetrics = requireContext().resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        return (dpWidth / recyclerViewItemWidth).toInt()
     }
 
     /***********************************************************************************************

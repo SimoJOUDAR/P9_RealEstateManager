@@ -38,6 +38,19 @@
         <entry key="app/src/main/res/layout-land/layout_filter_poi.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout-land/layout_filter_sorting.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout-land/layout_filter_type.xml" value="0.1984375" />
+        <entry key="app/src/main/res/layout-sw600dp-land/fragment_list_view.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-sw600dp-land/fragment_offer_details.xml" value="0.11" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_add_edit_agent.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_add_edit_offer.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_list_view.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_loan_simulator.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_offer_details.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_sorting_dialog.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_characteristics.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_particularities.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_type.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_filter_sorting.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_filter_type.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout/activity_homepage.xml" value="0.27219390869140625" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_add_edit_agent.xml" value="0.25" />

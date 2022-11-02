@@ -1,13 +1,16 @@
 package fr.mjoudar.realestatemanager.ui.homepage
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -24,6 +27,7 @@ import fr.mjoudar.realestatemanager.utils.DataState
 import timber.log.Timber
 import java.util.*
 import kotlin.concurrent.schedule
+
 
 @AndroidEntryPoint
 class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -51,6 +55,7 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
         _binding = ActivityHomepageBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         setContentView(binding.root)
+        setFabContainerMargin()
         setupDemoData()
         setObserver()
         initGraphics()
@@ -296,4 +301,35 @@ class HomepageActivity : AppCompatActivity(), NavController.OnDestinationChanged
             Toast.makeText(this, "Unknown error", Toast.LENGTH_LONG).show()
         }
     }
+
+    /**********************************************************************************************
+     ** Adaptivity to screen sizes
+     **********************************************************************************************/
+    private fun setFabContainerMargin() {
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+
+        val yInches = metrics.heightPixels / metrics.ydpi
+        val xInches = metrics.widthPixels / metrics.xdpi
+        val diagonalInches = Math.sqrt((xInches * xInches + yInches * yInches).toDouble())
+        if (diagonalInches >= 6.5) {
+            // 6.5inch device or bigger
+            setMargin(true)
+        } else {
+            // smaller device
+            setMargin(false)
+        }
+    }
+
+    private fun setMargin(isTablet: Boolean) {
+        val param = binding.fabContainer.layoutParams as CoordinatorLayout.LayoutParams
+
+        if (isTablet) param.setMargins(0, 0, 60, 300)  // Case Tablet device
+        else { // Case phone device
+            if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) param.setMargins(0, 0, 100, 300) // Case on Landscape mode
+            else param.setMargins(0, 0, 0, 300) // Case on Portrait mode
+        }
+        binding.fabContainer.layoutParams = param
+    }
+
 }
