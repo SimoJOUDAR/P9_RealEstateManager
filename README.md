@@ -35,45 +35,45 @@ From Android Studio:
 3. Click on ***Build APK(s)*** The APK generated can be loaded and run on any Android phone.
 
 ## Preview on a smartphone
-<img src = "media/P9_RealEstateManager_1.png" height="550"> --- <img src = "media/P9_RealEstateManager_2.png" height="550"> --- <img src = "media/P9_RealEstateManager_3.png" height="550">
+<img src = "media/P9_RealEstateManager_1.png" height="550"> - <img src = "media/P9_RealEstateManager_2.png" height="550"> - <img src = "media/P9_RealEstateManager_3.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_4.png" height="550"> --- <img src = "media/P9_RealEstateManager_5.png" height="550"> --- <img src = "media/P9_RealEstateManager_6.png" height="550">
+<img src = "media/P9_RealEstateManager_4.png" height="550"> - <img src = "media/P9_RealEstateManager_5.png" height="550"> - <img src = "media/P9_RealEstateManager_6.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_7.png" height="550"> --- <img src = "media/P9_RealEstateManager_8.png" height="550"> --- <img src = "media/P9_RealEstateManager_9.png" height="550">
+<img src = "media/P9_RealEstateManager_7.png" height="550"> - <img src = "media/P9_RealEstateManager_8.png" height="550"> - <img src = "media/P9_RealEstateManager_9.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_10.png" height="550"> --- <img src = "media/P9_RealEstateManager_11.png" height="550"> --- <img src = "media/P9_RealEstateManager_12.png" height="550">
+<img src = "media/P9_RealEstateManager_10.png" height="550"> - <img src = "media/P9_RealEstateManager_11.png" height="550"> - <img src = "media/P9_RealEstateManager_12.png" height="550">
 
 ## Preview on a Tablet device
-<img src = "media/P9_RealEstateManager_13.png" height="550"> --- <img src = "media/P9_RealEstateManager_14.png" height="550"> --- <img src = "media/P9_RealEstateManager_15.png" height="550">
+<img src = "media/P9_RealEstateManager_13.png" height="550"> - <img src = "media/P9_RealEstateManager_14.png" height="550"> - <img src = "media/P9_RealEstateManager_15.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_16.png" height="550"> --- <img src = "media/P9_RealEstateManager_17.png" height="550"> --- <img src = "media/P9_RealEstateManager_18.png" height="550">
+<img src = "media/P9_RealEstateManager_16.png" height="550"> - <img src = "media/P9_RealEstateManager_17.png" height="550"> - <img src = "media/P9_RealEstateManager_18.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_19.png" height="550"> --- <img src = "media/P9_RealEstateManager_20.png" height="550"> --- <img src = "media/P9_RealEstateManager_21.png" height="550">
+<img src = "media/P9_RealEstateManager_19.png" height="550"> - <img src = "media/P9_RealEstateManager_20.png" height="550"> - <img src = "media/P9_RealEstateManager_21.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_22.png" height="550"> --- <img src = "media/P9_RealEstateManager_23.png" height="550">
+<img src = "media/P9_RealEstateManager_22.png" height="550"> - <img src = "media/P9_RealEstateManager_23.png" height="550">
 
 ## Preview on a Tablet device
-<img src = "media/P9_RealEstateManager_24.png" height="550"> --- <img src = "media/P9_RealEstateManager_25.png" height="550"> --- <img src = "media/P9_RealEstateManager_26.png" height="550">
+<img src = "media/P9_RealEstateManager_24.png" height="550"> - <img src = "media/P9_RealEstateManager_25.png" height="550"> - <img src = "media/P9_RealEstateManager_26.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_27.png" height="550"> --- <img src = "media/P9_RealEstateManager_28.png" height="550"> --- <img src = "media/P9_RealEstateManager_29.png" height="550">
+<img src = "media/P9_RealEstateManager_27.png" height="550"> - <img src = "media/P9_RealEstateManager_28.png" height="550"> - <img src = "media/P9_RealEstateManager_29.png" height="550">
 
 -
 
-<img src = "media/P9_RealEstateManager_30.png" height="550"> --- <img src = "media/P9_RealEstateManager_31.png" height="550"> --- <img src = "media/P9_RealEstateManager_32.png" height="550">
+<img src = "media/P9_RealEstateManager_30.png" height="550"> - <img src = "media/P9_RealEstateManager_31.png" height="550"> - <img src = "media/P9_RealEstateManager_32.png" height="550">
 
 
 Video_link_coming_soon
