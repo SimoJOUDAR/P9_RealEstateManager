@@ -957,6 +957,7 @@ object DatabaseDemoDataGenerator {
      ** Offers
      **********************************************************************************************/
 
+    private const val day = 24 * 60 * 60 * 1000  // number of milliseconds a day
     val offer1 = Offer(
         UUID.randomUUID().toString(),
         PropertyType.HOUSE,
@@ -972,7 +973,7 @@ object DatabaseDemoDataGenerator {
         address1,
         mutableListOf(POI.PARK, POI.CULTURAL_CENTER),
         agent1.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 2 * day
     )
 
     val offer2 = Offer(
@@ -990,7 +991,7 @@ object DatabaseDemoDataGenerator {
         address2,
         mutableListOf(POI.PARK, POI.SCHOOL, POI.MARKET_MALL),
         agent3.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 5 * day
     )
 
     val offer3 = Offer(
@@ -1008,7 +1009,7 @@ object DatabaseDemoDataGenerator {
         address3,
         mutableListOf(POI.PARK, POI.SPORT_CENTER),
         agent3.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 7 * day
     )
 
     val offer4 = Offer(
@@ -1026,7 +1027,7 @@ object DatabaseDemoDataGenerator {
         address4,
         mutableListOf(POI.PARK, POI.CULTURAL_CENTER),
         agent2.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 1 * day
     )
 
     val offer5 = Offer(
@@ -1044,7 +1045,8 @@ object DatabaseDemoDataGenerator {
         address5,
         mutableListOf(POI.SCHOOL, POI.MEDICAL_CENTER),
         agent1.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 21 * day,
+        System.currentTimeMillis() - 2 * day
     )
 
     val offer6 = Offer(
@@ -1062,7 +1064,7 @@ object DatabaseDemoDataGenerator {
         address6,
         mutableListOf(POI.PARK, POI.CULTURAL_CENTER, POI.SCHOOL, POI.MARKET_MALL),
         agent2.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 15 * day
     )
 
     val offer7 = Offer(
@@ -1080,7 +1082,8 @@ object DatabaseDemoDataGenerator {
         address7,
         mutableListOf(POI.PARK, POI.BUS_STATION),
         agent3.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 23 * day,
+        System.currentTimeMillis() - 12 * day
     )
 
     val offer8 = Offer(
@@ -1098,7 +1101,7 @@ object DatabaseDemoDataGenerator {
         address8,
         mutableListOf(POI.SCHOOL, POI.CULTURAL_CENTER, POI.SPORT_CENTER, POI.MARKET_MALL, POI.BAR_COFFEESHOP),
         agent1.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 3 * day
     )
 
     val offer9 = Offer(
@@ -1116,7 +1119,8 @@ object DatabaseDemoDataGenerator {
         address9,
         mutableListOf(POI.PARK, POI.MARKET_MALL, POI.SCHOOL, POI.BAR_COFFEESHOP, POI.RESTAURANT),
         agent3.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 22 * day,
+        System.currentTimeMillis() - 7 * day
     )
 
     val offer10 = Offer(
@@ -1134,7 +1138,7 @@ object DatabaseDemoDataGenerator {
         address10,
         mutableListOf(POI.PARK, POI.RESTAURANT),
         agent2.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 8 * day
     )
 
     val offer11 = Offer(
@@ -1152,7 +1156,7 @@ object DatabaseDemoDataGenerator {
         address11,
         mutableListOf(POI.PARK, POI.SCHOOL, POI.BAR_COFFEESHOP),
         agent1.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 23 * day
     )
     val offer12 = Offer(
         UUID.randomUUID().toString(),
@@ -1169,7 +1173,8 @@ object DatabaseDemoDataGenerator {
         address12,
         mutableListOf(POI.PARK),
         agent2.id,
-        System.currentTimeMillis().toLong()
+        System.currentTimeMillis() - 23 * day,
+        System.currentTimeMillis() - 4 * day
     )
 
 }

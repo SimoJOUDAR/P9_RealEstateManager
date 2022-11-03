@@ -54,7 +54,6 @@ class OfferDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentOfferDetailsBinding.inflate(inflater, container, false)
-        // binding.lifecycleOwner is used for observing LiveData with Data Binding
         binding.lifecycleOwner = this.viewLifecycleOwner
         initGoogleMap(savedInstanceState)
         return binding.root
@@ -192,40 +191,6 @@ class OfferDetailsFragment : Fragment() {
     private fun clearBackStack() {
         navController.navigate(OfferDetailsFragmentDirections.actionOfferDetailsFragmentToMainViewpagerFragment())
     }
-
-    /***********************************************************************************************
-     ** Memory control
-     **********************************************************************************************/
-
-//    override fun onLowMemory() {
-//        super.onLowMemory()
-//        mapView.onLowMemory()
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        mapView.onStart()
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        mapView.onResume()
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        mapView.onStop()
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        mapView.onDestroy()
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        mapView.onDestroy()
-//    }
 
     companion object {
         const val OFFER_ARG = "offer"

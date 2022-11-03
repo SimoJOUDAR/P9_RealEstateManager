@@ -58,7 +58,7 @@ class ListViewFragment : Fragment() {
     }
 
     private fun columnNumberCalculator() : Int {
-        val recyclerViewItemWidth = 160
+        val recyclerViewItemWidth = 190
         val displayMetrics = requireContext().resources.displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
         return (dpWidth / recyclerViewItemWidth).toInt()
