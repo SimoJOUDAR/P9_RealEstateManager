@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/loadSimulatorFragment"
-        android:name="fr.mjoudar.realestatemanager.ui.loan.LoadSimulatorFragment"
+        android:name="fr.mjoudar.realestatemanager.ui.loan.LoanSimulatorFragment"
         android:label="LoadSimulatorFragment" />
     <activity
         android:id="@+id/homepageActivity"

@@ -6,7 +6,7 @@ import java.util.*
 
 object DateUtils {
 
-    private fun longToDate(long: Long?): Date? {
+    fun longToDate(long: Long?): Date? {
         return if (long != null) Date(long)
         else null
     }

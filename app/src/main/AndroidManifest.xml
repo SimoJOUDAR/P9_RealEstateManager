@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="fr.mjoudar.realestatemanager">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -23,25 +21,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RealEstateManager"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.homepage.HomepageActivity"
             android:exported="true">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="fr.mjoudar.realestatemanager.fileprovider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
+
         </provider>
+
+        <provider
+            android:name=".provider.OfferProvider"
+            android:authorities="fr.mjoudar.realestatemanager.provider"
+            android:enabled="true"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

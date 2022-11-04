@@ -39,37 +39,4 @@ class Converters {
         return gson.fromJson<List<POI>>(string, listType)
     }
 
-
-
-//    @TypeConverter
-//    fun fromParticularitiesToString(enum: List<Particularities>): String? {
-//        if(enum.isEmpty()) return null
-//        val builder = StringBuilder("")
-//        for (i in enum) {
-//            builder.append(i.name)
-//            builder.append(',')
-//        }
-//        builder.setLength(builder.length-1)
-//        return builder.toString()
-//    }
-//
-//    @TypeConverter
-//    fun fromStringToParticularities(string: String?): List<Particularities> {
-//        if (string == null) {
-//            return arrayListOf()
-//        }
-//        var enum: MutableList<Particularities> = mutableListOf()
-//        when {
-//            string.split(",").size > 1 -> {
-//                for (i in string.split(",").indices) {
-//                    enum.add(Particularities.valueOf("\"%${string.split(",")[i]}%\""))
-//                }
-//            }
-//            string.split(",").size  == 1 -> {
-//                enum.add(Particularities.valueOf("\"%$string%\""))
-//            }
-//        }
-//        return enum.toList()
-//    }
-
 }

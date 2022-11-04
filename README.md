@@ -1,4 +1,4 @@
-# Go4Lunch
+# RealEstateManager
 
 ## About
 This is my ninth project for Openclassrooms' **Android App Development program**.
@@ -33,6 +33,9 @@ From Android Studio:
 1. Go to ***Build*** menu
 2. Go to ***Build Bundle(s) / APK(s)***
 3. Click on ***Build APK(s)*** The APK generated can be loaded and run on any Android phone.
+
+## Preview video
+https://user-images.githubusercontent.com/80898080/200023867-53944f3a-af97-4fa9-93ec-9e579499daaf.mp4
 
 ## Preview on a smartphone
 <img src = "media/P9_RealEstateManager_1.png" height="550"> - <img src = "media/P9_RealEstateManager_2.png" height="550"> - <img src = "media/P9_RealEstateManager_3.png" height="550">
@@ -75,6 +78,4 @@ From Android Studio:
 <img src = "media/P9_RealEstateManager_31.png" height="550">
 <img src = "media/P9_RealEstateManager_32.png" height="550">
 
-
-Video_link_coming_soon
 

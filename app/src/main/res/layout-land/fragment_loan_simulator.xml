@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="fr.mjoudar.realestatemanager.ui.loan.LoadSimulatorViewModel" />
+            type="fr.mjoudar.realestatemanager.ui.loan.LoanSimulatorViewModel" />
     </data>
 
     <ScrollView
