@@ -31,6 +31,7 @@ class HomepageViewModel @Inject constructor(
         get() = _offersState
 
     val dataActualized = MutableLiveData<Boolean>(false)
+
     var dataFiltered = false
 
     //var isCurrencyEuro = false
