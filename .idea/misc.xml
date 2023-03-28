@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/drawable/black_tile.xml" value="0.1325" />
+        <entry key="app/src/main/res/drawable/gradient_tile.xml" value="0.1705" />
+        <entry key="app/src/main/res/drawable/grey_tile.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_app_icon.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_bar_coffeeshop_24.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_broken_image_24.xml" value="0.1" />
@@ -15,8 +18,10 @@
         <entry key="app/src/main/res/drawable/ic_school_24.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_shopping_cart_24.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/round_shape_small_button.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/round_top_corners_bg.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/round_top_corners_tile_bg.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/sold_rented_foreground.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/upper_shadow_gradient_bg.xml" value="0.1325" />
         <entry key="app/src/main/res/layout-land/activity_homepage.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout-land/fragment_add_edit_agent.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout-land/fragment_add_edit_offer.xml" value="0.25" />
@@ -48,6 +53,7 @@
         <entry key="app/src/main/res/layout-sw600dp/fragment_sorting_dialog.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_characteristics.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_particularities.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_poi.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout-sw600dp/layout_add_edit_type.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout-sw600dp/layout_filter_sorting.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout-sw600dp/layout_filter_type.xml" value="0.15494791666666666" />
